@@ -1,5 +1,5 @@
 # Web Application Web Project
-# Subject : A social media where pictures are shared after classification
+# Subject : A social media where pictures are shared and classified
 
 ## Functionalities
 - User identification
