@@ -1,0 +1,95 @@
+ html, body {
+   height: 100%;
+   width: 100%;
+   margin: 0;
+   padding: 0;
+   overflow: hidden;
+ }
+   #title-login{
+    font-weight: bold;
+    font-size: 25px;
+    font-weight: 1000;
+    margin-left:-100px;
+    font-style : Poppins;
+   }
+   #underline{
+      border-color:rgba(218, 209, 0, 1);
+      width : 50px;
+      border-style: solid;
+      margin-top:-20px;
+      margin-left : 125px;
+   }
+   .login-box {  
+      margin-top: 300px;
+      margin-left: 950px; 
+      position: absolute;  
+      opacity:80%;
+      width: 400px;  
+      transform: translate(-50%, -50%);  
+      box-sizing: border-box;    
+      border-radius: 10px;  
+     }  
+     
+     .login-box .user-box {  
+      position: relative; 
+      
+     }  
+     .login-box .user-box input {  
+      width: 100%;  
+      padding: 10px 0;  
+      font-size: 16px;  
+      color: black;  
+      margin-bottom: 30px;  
+      border: none;  
+      border-bottom: 1px solid #fff;  
+      outline: none;  
+      background: transparent;  
+     }  
+     .login-box .user-box label {  
+      position: absolute;  
+      padding: 10px 0;  
+      font-size: 15px;  
+      color: black;  
+      pointer-events:none;  
+      transition: .5s;  
+     }  
+
+   
+     #login{ 
+      cursor:pointer;
+      width:250px;
+      height:40px;
+      background-color:rgba(218, 209, 0, 1);
+      border:0;
+      border-radius:30px;
+      margin-top:-200px;
+      margin-left:-100px;
+   }
+     #LOGIN{
+      color:white;
+      font-weight: bold;
+      font-size: 16px;}
+    
+     #Image{
+      box-shadow: 0 15px 25px rgba(0,0,0,.6);
+      margin-left :-200px;
+      width : 1000px;
+      height :700px;
+      float:left;
+      transform: rotate(-65deg);
+      margin-top:-190px;
+   }
+     #forgotpsw{
+      font-size: 10px;
+      margin-left:-325px;
+      margin-top:-45px;
+      margin-bottom:50px;
+      font-style: italic;
+   }
+     hr {
+      border: none;
+      width : 307px;
+      margin-left : 0px;
+      border-top: 1px solid black;
+      margin-top: -30px ;margin-bottom : 50px;
+    }
