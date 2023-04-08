@@ -1,4 +1,4 @@
-import Login from './Components/Login.js';
+import Login from './Components/Login.tsx';
 import './App.css';
 
 function App() {
