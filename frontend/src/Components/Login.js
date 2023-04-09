@@ -2,44 +2,46 @@ import React from "react";
 import "./Login.css";
 
 function Login(props) {
-  const handleSubmit = (event) => {
+
+    const handleSubmit = (event) => {
     event.preventDefault();
+ 
     props.onLogin();
+    
   };
 
   return (
     <>
-      <div>
-        <img id="Image" src="ImageLogin.png" alt="Login" />
+      <div class="container">
+      <div class="screen">
+        <div class="screen__content">
+          <form class="login" onSubmit={handleSubmit}>
+            <div class="screen__title">
+              <h1 class="screen__title-text">Log In</h1>
+            </div>
+            <div class="login__field">
+              <i class="login__icon fas fa-user"></i>
+              <input type="text" class="login__input" placeholder="User name / Email"/>
+            </div>
+            <div class="login__field">
+              <i class="login__icon fas fa-lock"></i>
+              <input type="password" class="login__input" placeholder="Password"/>
+            </div>
+            <button class="button login__submit" type="submit">
+              <i class="fa-solid fa-chevron-right fa-fade"></i>
+              <span class="button__text">Log In Now</span>
+
+            </button>			
+          </form>
+        </div>
+        <div class="screen__background">
+          <span class="screen__background__shape screen__background__shape4"></span>
+          <span class="screen__background__shape screen__background__shape3"></span>		
+          <span class="screen__background__shape screen__background__shape2"></span>
+          <span class="screen__background__shape screen__background__shape1"></span>
+        </div>		
       </div>
-      <div className="login-box">
-        <p id="title-login">Login</p>
-        <hr id="underline" />
-        <form onSubmit={handleSubmit}>
-          <div className="user-box">
-            <input
-              type="text"
-              name="username"
-              className="input-field"
-              placeholder="Username"
-            />
-            <hr/>
-          </div>
-          <div className="user-box">
-            <input
-              type="password"
-              name="password"
-              className="input-field"
-              placeholder="Password"
-            />
-            <hr/>
-          </div>
-          <p id="forgotpsw">Forgot password?</p>
-          <button id="login" type="submit">
-            <strong id="LOGIN">LOGIN</strong>
-          </button>
-        </form>
-      </div>
+    </div>
     </>
   );
 }
