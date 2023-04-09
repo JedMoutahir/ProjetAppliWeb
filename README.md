@@ -4,10 +4,10 @@
 ## Functionalities
 - User identification
 - Post images
-- Add filters and serch bar
+- Add filters and search bar
 - Automated labalelisation of the post through machine learning model
 - Like posts
-- Reinforcement Learning with human feedback
-- Under a post is a feed with similar subject
+- Reinforcement Learning with human's feedbacks
+- Under a post there will be a feed with similar theme
 - Comment section
 - 
