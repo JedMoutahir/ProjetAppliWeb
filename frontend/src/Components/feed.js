@@ -57,7 +57,7 @@ function Feed() {
       <div class="card">
       <div className="profile">
           <img className="profile-pic" src="profile.jpg"/>
-          <h4 className="Name"><b>John Doe</b></h4> 
+          <h4 className="Name"><b>Lena Rose</b></h4> 
       </div> 
       <img className="post" src="Fox.jpg" alt="Avatar" />
       <div className="barre">
@@ -79,7 +79,7 @@ function Feed() {
       <div class="card">
       <div className="profile">
           <img className="profile-pic" src="profile.jpg"/>
-          <h4 className="Name"><b>John Doe</b></h4> 
+          <h4 className="Name"><b>Lena Rose</b></h4> 
       </div> 
       <img className="post" src="ImageLogin.png" alt="Avatar" />
       <div className="barre">
@@ -101,7 +101,7 @@ function Feed() {
       <div class="card">
       <div className="profile">
           <img className="profile-pic" src="profile.jpg"/>
-          <h4 className="Name"><b>John Doe</b></h4> 
+          <h4 className="Name"><b>Lena Rose</b></h4> 
       </div> 
       <img className="post" src="Fox.jpg" alt="Avatar" />
       <div className="barre">
@@ -123,7 +123,7 @@ function Feed() {
       <div class="card">
       <div className="profile">
           <img className="profile-pic" src="profile.jpg"/>
-          <h4 className="Name"><b>John Doe</b></h4> 
+          <h4 className="Name"><b>Lena Rose</b></h4> 
       </div> 
       <img className="post" src="Fox.jpg" alt="Avatar" />
       <div className="barre">
@@ -145,7 +145,7 @@ function Feed() {
       <div class="card">
       <div className="profile">
           <img className="profile-pic" src="profile.jpg"/>
-          <h4 className="Name"><b>John Doe</b></h4> 
+          <h4 className="Name"><b>Lena Rose</b></h4> 
       </div> 
       <img className="post" src="Fox.jpg" alt="Avatar" />
       <div className="barre">
@@ -167,7 +167,7 @@ function Feed() {
       <div class="card">
       <div className="profile">
           <img className="profile-pic" src="profile.jpg"/>
-          <h4 className="Name"><b>John Doe</b></h4> 
+          <h4 className="Name"><b>Lena Rose</b></h4> 
       </div> 
       <img className="post" src="ImageLogin.png" alt="Avatar" />
       <div className="barre">
