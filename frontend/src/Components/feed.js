@@ -3,6 +3,7 @@ import './Feed.css';
 
 
 function Feed() {
+
     return (
      
     <>
@@ -15,7 +16,7 @@ function Feed() {
   <nav>
       <ul>
        <li>
-        <a href="#">
+        <a href='javascript:void(0)'>
         <img className="icon" src="maison.png"/>
         <h6 className="text">Home</h6>
         </a>
@@ -46,7 +47,7 @@ function Feed() {
         </a>
        </li>
        <li>
-        <a href="#" className="logout">
+        <a href="./Login" className="logout">
         <img className="icon" src="logout.png"/>
         <h6 className="text">Log out</h6>
         </a>
@@ -55,33 +56,35 @@ function Feed() {
     </nav>
  <div className="cards">
       <div class="card">
-      <div className="profile">
-          <img className="profile-pic" src="profile.jpg"/>
-          <h4 className="Name"><b>Lena Rose</b></h4> 
-      </div> 
-      <img className="post" src="Fox.jpg" alt="Avatar" />
-      <div className="barre">
-        <div>
-        <button> <img  src="like.png" /></button>
-        <h6>50 likes</h6>
+        <div className="profile">
+            <img className="profile-pic" src="profile.jpg"/>
+            <h4 className="Name"><b>Lena Rose</b></h4> 
         </div>
-        <div >
-        <button><img src="categorization.png" /></button>
-        <h6>Animal: Fox</h6>
+        <img className="post" src="Fox.jpg" alt="Avatar" />
+        <p className="type">FOX</p>
+        <div className="barre">
+          <div>
+          <button> <img  src="like.png" /></button>
+          <h6>50 likes</h6>
+          </div>
+          <div >
+          <button><img src="categorization.png" /></button>
+          <h6>Animal: Fox</h6>
+          </div>
+          <div>
+          <button><img src="bookmark.png" /></button>
+          <h6>save</h6>
+          </div>
         </div>
-        <div>
-        <button><img src="bookmark.png" /></button>
-        <h6>save</h6>
-        </div>
-      </div>
       </div>
     
       <div class="card">
       <div className="profile">
-          <img className="profile-pic" src="profile.jpg"/>
-          <h4 className="Name"><b>Lena Rose</b></h4> 
+          <img className="profile-pic" src="profile2.jpg"/>
+          <h4 className="Name"><b>John Doe</b></h4> 
       </div> 
-      <img className="post" src="ImageLogin.png" alt="Avatar" />
+      <img className="post" src="plant.webp" alt="Avatar" />
+      <p className="type">PLANT</p>
       <div className="barre">
         <div>
         <button><img  src="like.png" /></button>
@@ -89,7 +92,7 @@ function Feed() {
         </div>
         <div >
         <button><img src="categorization.png" /></button>
-        <h6>Animal: Fox</h6>
+        <h6>Plant </h6>
         </div>
         <div>
         <button><img src="bookmark.png" /></button>
@@ -103,7 +106,8 @@ function Feed() {
           <img className="profile-pic" src="profile.jpg"/>
           <h4 className="Name"><b>Lena Rose</b></h4> 
       </div> 
-      <img className="post" src="Fox.jpg" alt="Avatar" />
+      <img className="post" src="avocat.jpg" alt="Avatar" />
+      <p className="type">AVOCAT</p>
       <div className="barre">
         <div>
         <button><img  src="like.png" /></button>
@@ -111,7 +115,7 @@ function Feed() {
         </div>
         <div >
         <button><img src="categorization.png" /></button>
-        <h6>Animal: Fox</h6>
+        <h6>Fruit: Avocat</h6>
         </div>
         <div>
         <button><img src="bookmark.png" /></button>
@@ -121,33 +125,35 @@ function Feed() {
       </div>
 
       <div class="card">
-      <div className="profile">
-          <img className="profile-pic" src="profile.jpg"/>
-          <h4 className="Name"><b>Lena Rose</b></h4> 
-      </div> 
-      <img className="post" src="Fox.jpg" alt="Avatar" />
-      <div className="barre">
-        <div>
-        <button> <img  src="like.png" /></button>
-        <h6>50 likes</h6>
+        <div className="profile">
+            <img className="profile-pic" src="profile.jpg"/>
+            <h4 className="Name"><b>Lena Rose</b></h4> 
         </div>
-        <div >
-        <button><img src="categorization.png" /></button>
-        <h6>Animal: Fox</h6>
+        <img className="post" src="Fox.jpg" alt="Avatar" />
+        <p className="type">FOX</p>
+        <div className="barre">
+          <div>
+          <button> <img  src="like.png" /></button>
+          <h6>50 likes</h6>
+          </div>
+          <div >
+          <button><img src="categorization.png" /></button>
+          <h6>Animal: Fox</h6>
+          </div>
+          <div>
+          <button><img src="bookmark.png" /></button>
+          <h6>save</h6>
+          </div>
         </div>
-        <div>
-        <button><img src="bookmark.png" /></button>
-        <h6>save</h6>
-        </div>
-      </div>
       </div>
     
       <div class="card">
       <div className="profile">
-          <img className="profile-pic" src="profile.jpg"/>
-          <h4 className="Name"><b>Lena Rose</b></h4> 
+          <img className="profile-pic" src="profile2.jpg"/>
+          <h4 className="Name"><b>John Doe</b></h4> 
       </div> 
-      <img className="post" src="Fox.jpg" alt="Avatar" />
+      <img className="post" src="plant.webp" alt="Avatar" />
+      <p className="type">PLANT</p>
       <div className="barre">
         <div>
         <button><img  src="like.png" /></button>
@@ -155,7 +161,7 @@ function Feed() {
         </div>
         <div >
         <button><img src="categorization.png" /></button>
-        <h6>Animal: Fox</h6>
+        <h6>Plant</h6>
         </div>
         <div>
         <button><img src="bookmark.png" /></button>
@@ -169,7 +175,8 @@ function Feed() {
           <img className="profile-pic" src="profile.jpg"/>
           <h4 className="Name"><b>Lena Rose</b></h4> 
       </div> 
-      <img className="post" src="ImageLogin.png" alt="Avatar" />
+      <img className="post" src="avocat.jpg" alt="Avatar" />
+      <p className="type">AVOCAT</p>
       <div className="barre">
         <div>
         <button><img  src="like.png" /></button>
@@ -177,7 +184,7 @@ function Feed() {
         </div>
         <div >
         <button><img src="categorization.png" /></button>
-        <h6>Animal: Fox</h6>
+        <h6>Fruit: Avocat</h6>
         </div>
         <div>
         <button><img src="bookmark.png" /></button>
