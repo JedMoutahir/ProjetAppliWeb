@@ -12,52 +12,180 @@ function Feed() {
         <button id="panel-button"><img id="panel-img" src="panel.png"/></button>
      </div>
 
-<div className="photos-container">
-     <div className="photo-container">
-         <div className="img-name">
-             <img className="profile-img" src="profile.jpg"/>
-             <div className="Name">
-              <p>XXXXX</p>
-             </div>
-          </div>
-          <div className="post-container">
-                <img className="post-img" src="Fox.jpg"/>
-          </div>
-    </div>
+  <nav>
+      <ul>
+       <li>
+        <a href="#">
+        <img className="icon" src="maison.png"/>
+        <h6 className="text">Home</h6>
+        </a>
+       </li>
 
-    <div className="photo-container">
-         <div className="img-name">
-             <img className="profile-img" src="profile.jpg"/>
-             <div className="Name">
-              <p>XXXXX</p>
-             </div>
-          </div>
-          <div className="post-container">
-                <img className="post-img" src="Fox.jpg"/>
-          </div>
-    </div>
-    </div>
+       <li>
+        <a href="#">
+        <img className="icon" src="utilisateur.png"/>
+        <h6 className="text">Profile</h6>
+        </a>
+       </li>
+       <li>
+        <a href="#">
+        <img className="icon" src="bookmark.png"/>
+        <h6 className="text">Saved</h6>
+        </a>
+       </li>
+       <li>
+        <a href="#">
+        <img className="icon" src="gear.png"/>
+        <h6 className="text" >Settings</h6>
+        </a>
+       </li>
+       <li>
+        <a href="#">
+        <img className="icon" src="aidez-moi.png"/>
+        <h6 className="text">Help</h6>
+        </a>
+       </li>
+       <li>
+        <a href="#" className="logout">
+        <img className="icon" src="logout.png"/>
+        <h6 className="text">Log out</h6>
+        </a>
+       </li>
+      </ul>
+    </nav>
+ <div className="cards">
+      <div class="card">
+      <div className="profile">
+          <img className="profile-pic" src="profile.jpg"/>
+          <h4 className="Name"><b>John Doe</b></h4> 
+      </div> 
+      <img className="post" src="Fox.jpg" alt="Avatar" />
+      <div className="barre">
+        <div>
+        <button> <img  src="like.png" /></button>
+        <h6>50 likes</h6>
+        </div>
+        <div >
+        <button><img src="categorization.png" /></button>
+        <h6>Animal: Fox</h6>
+        </div>
+        <div>
+        <button><img src="bookmark.png" /></button>
+        <h6>save</h6>
+        </div>
+      </div>
+      </div>
     
+      <div class="card">
+      <div className="profile">
+          <img className="profile-pic" src="profile.jpg"/>
+          <h4 className="Name"><b>John Doe</b></h4> 
+      </div> 
+      <img className="post" src="ImageLogin.png" alt="Avatar" />
+      <div className="barre">
+        <div>
+        <button><img  src="like.png" /></button>
+        <h6>50 likes</h6>
+        </div>
+        <div >
+        <button><img src="categorization.png" /></button>
+        <h6>Animal: Fox</h6>
+        </div>
+        <div>
+        <button><img src="bookmark.png" /></button>
+        <h6>save</h6>
+        </div>
+      </div>
+      </div>
+
+      <div class="card">
+      <div className="profile">
+          <img className="profile-pic" src="profile.jpg"/>
+          <h4 className="Name"><b>John Doe</b></h4> 
+      </div> 
+      <img className="post" src="Fox.jpg" alt="Avatar" />
+      <div className="barre">
+        <div>
+        <button><img  src="like.png" /></button>
+        <h6>50 likes</h6>
+        </div>
+        <div >
+        <button><img src="categorization.png" /></button>
+        <h6>Animal: Fox</h6>
+        </div>
+        <div>
+        <button><img src="bookmark.png" /></button>
+        <h6>save</h6>
+        </div>
+      </div>
+      </div>
+
+      <div class="card">
+      <div className="profile">
+          <img className="profile-pic" src="profile.jpg"/>
+          <h4 className="Name"><b>John Doe</b></h4> 
+      </div> 
+      <img className="post" src="Fox.jpg" alt="Avatar" />
+      <div className="barre">
+        <div>
+        <button> <img  src="like.png" /></button>
+        <h6>50 likes</h6>
+        </div>
+        <div >
+        <button><img src="categorization.png" /></button>
+        <h6>Animal: Fox</h6>
+        </div>
+        <div>
+        <button><img src="bookmark.png" /></button>
+        <h6>save</h6>
+        </div>
+      </div>
+      </div>
     
-  
-    
-    
-    <div className="sidebar">
-        <img id ="profile" src="camera.png"></img>
-    <ul>
-      <li><a href="#" className ="title-side">My profile</a></li>
-      <li><a href="#" className ="title-side">Bio</a></li>
-      <li><a href="#" className ="title-side">My activity</a></li>
-      <li><a href="#" className ="title-side">Share a picture</a></li>
-      <li><a href="#" className ="title-side">Saved pictures</a></li>
-      <li><a href="#" className ="title-side">Settings &amp; privacy</a></li>
-    </ul>
-  </div>
-  <div class="vertical-line"></div>
-  <div class="search-container">
-    <input type="text" placeholder="Search..."/>
-    <button type="submit"><i class="fa fa-search"></i></button>
-    <button type="button"><i class="fa fa-filter"></i></button>
+      <div class="card">
+      <div className="profile">
+          <img className="profile-pic" src="profile.jpg"/>
+          <h4 className="Name"><b>John Doe</b></h4> 
+      </div> 
+      <img className="post" src="Fox.jpg" alt="Avatar" />
+      <div className="barre">
+        <div>
+        <button><img  src="like.png" /></button>
+        <h6>50 likes</h6>
+        </div>
+        <div >
+        <button><img src="categorization.png" /></button>
+        <h6>Animal: Fox</h6>
+        </div>
+        <div>
+        <button><img src="bookmark.png" /></button>
+        <h6>save</h6>
+        </div>
+      </div>
+      </div>
+
+      <div class="card">
+      <div className="profile">
+          <img className="profile-pic" src="profile.jpg"/>
+          <h4 className="Name"><b>John Doe</b></h4> 
+      </div> 
+      <img className="post" src="ImageLogin.png" alt="Avatar" />
+      <div className="barre">
+        <div>
+        <button><img  src="like.png" /></button>
+        <h6>50 likes</h6>
+        </div>
+        <div >
+        <button><img src="categorization.png" /></button>
+        <h6>Animal: Fox</h6>
+        </div>
+        <div>
+        <button><img src="bookmark.png" /></button>
+        <h6>save</h6>
+        </div>
+      </div>
+      </div>
+
   </div>
 
   </>
