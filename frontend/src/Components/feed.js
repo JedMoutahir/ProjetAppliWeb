@@ -3,20 +3,7 @@ import './Feed.css';
 import { useState } from 'react';
 
 function Feed() {
-  /*to display the popup*/
-  const cameraBtn = document.querySelector('#camera-btn');
-  const popup = document.querySelector('.popup');
-
-  cameraBtn.addEventListener('click', () => {
-    popup.style.display = 'flex';
-  });
-  /**to remove the popup */
-  const camBtn = document.querySelector('#btn-close');
-  const pop = document.querySelector('.popup');
-
-  camBtn.addEventListener('click', () => {
-    pop.style.display = 'none';
-  });
+ 
 
   const [imagePreview, setImagePreview] = useState("");
 
@@ -29,6 +16,23 @@ function Feed() {
     };
 
     reader.readAsDataURL(file);
+  }
+  function handleclick(event){
+   /*to display the popup*/
+   const cameraBtn = document.querySelector('#camera-btn');
+   const popup = document.querySelector('.popup');
+   if(cameraBtn!=null && popup!=null){
+     cameraBtn.addEventListener('click', () => {
+     popup.style.display = 'flex';
+   });}
+  
+   /**to remove the popup */
+   const camBtn = document.querySelector('#btn-close');
+   const pop = document.querySelector('.popup');
+   if(camBtn!=null && pop!=null){
+   camBtn.addEventListener('click', () => {
+     pop.style.display = 'none'; 
+   });}
   }
     return (
     <> 
@@ -79,7 +83,7 @@ function Feed() {
           <input type="text" placeholder="Search"></input>
           <button id="panel-button"><img id="panel-img" src="panel.png"/></button>
       </div>
-    <button id="camera-btn" ><img id="camera" src="camera.png"/></button> 
+    <button id="camera-btn" ><img id="camera" src="camera.png" onClick={handleclick}/></button> 
 
   <div className="popup">
   <div className="wrapper">
