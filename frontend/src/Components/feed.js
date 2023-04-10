@@ -7,12 +7,7 @@ function Feed() {
     return (
      
     <>
-     <div className="search-bar">
-        <button id="search-button"><img id="search-img" src="magnifier.png"/></button>
-        <input type="text" placeholder="Search"></input>
-        <button id="panel-button"><img id="panel-img" src="panel.png"/></button>
-     </div>
-
+   
   <nav>
       <ul>
        <li>
@@ -54,6 +49,14 @@ function Feed() {
        </li>
       </ul>
     </nav>
+
+    <div className="search-bar">
+          <button id="search-button"><img id="search-img" src="magnifier.png"/></button>
+          <input type="text" placeholder="Search"></input>
+          <button id="panel-button"><img id="panel-img" src="panel.png"/></button>
+      </div>
+    <button id="camera-btn" ><img id="camera" src="camera.png"/></button>  
+    
  <div className="cards">
       <div class="card">
         <div className="profile">

@@ -59,6 +59,39 @@
   cursor:pointer;
 }
 
+#camera{
+  width:50px;
+  height:50px;
+}
+#camera-btn{
+  width:70px;
+  height:70px;
+  border-radius:70px;
+  margin-left:1100px;
+  margin-top:-50px;
+  cursor:pointer;
+}
+#camera:hover {
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0); }
+  100% { transform: rotate(360deg); }
+}
+
+#camera-btn:hover::before {
+  content: "Share and classify a photo";
+  position: absolute;
+  background-color: #000;
+  color: #fff;
+  padding: 6px;
+  border-radius: 6px;
+  font-size: 14px;
+  top: 20px;
+  right:100px;
+}
+
 nav{
   position:fixed;
   top:0;
