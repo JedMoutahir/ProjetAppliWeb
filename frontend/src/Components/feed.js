@@ -1,13 +1,37 @@
 import React from "react";
 import './Feed.css';
-
+import { useState } from 'react';
 
 function Feed() {
+  /*to display the popup*/
+  const cameraBtn = document.querySelector('#camera-btn');
+  const popup = document.querySelector('.popup');
 
+  cameraBtn.addEventListener('click', () => {
+    popup.style.display = 'flex';
+  });
+  /**to remove the popup */
+  const camBtn = document.querySelector('#btn-close');
+  const pop = document.querySelector('.popup');
+
+  camBtn.addEventListener('click', () => {
+    pop.style.display = 'none';
+  });
+
+  const [imagePreview, setImagePreview] = useState("");
+
+  function previewImage(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+      setImagePreview(event.target.result);
+    };
+
+    reader.readAsDataURL(file);
+  }
     return (
-     
-    <>
-   
+    <> 
   <nav>
       <ul>
        <li>
@@ -55,8 +79,22 @@ function Feed() {
           <input type="text" placeholder="Search"></input>
           <button id="panel-button"><img id="panel-img" src="panel.png"/></button>
       </div>
-    <button id="camera-btn" ><img id="camera" src="camera.png"/></button>  
-    
+    <button id="camera-btn" ><img id="camera" src="camera.png"/></button> 
+
+  <div className="popup">
+  <div className="wrapper">
+  <button id="btn-close"><img id="img-close" src="cross.png"/></button>
+    <header>Drop & Drag a picture </header> 
+    <button id="dragdrop-btn"><img id="dragdrop-icon" src="cloud-upload.png"/></button>
+    <form id="form1" action="/uploadfile" enctype="multipart/form-data" method="post">
+      <input type="file" id="file-input" className="file-input" accept="image/*" onchange={previewImage}/>
+      <button id="submit1" type="button" >Share & Classify</button>
+    </form>
+    <div id="image-preview"><img src={imagePreview} /></div>
+  </div>
+</div>
+
+   
  <div className="cards">
       <div class="card">
         <div className="profile">
