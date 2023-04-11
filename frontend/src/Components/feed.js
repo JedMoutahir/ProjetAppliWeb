@@ -88,7 +88,7 @@ function Feed() {
   <div className="popup">
   <div className="wrapper">
   <button id="btn-close"><img id="img-close" src="cross.png"/></button>
-    <header>Drop & Drag a picture </header> 
+    <header>Drag & Drop a picture </header> 
     <button id="dragdrop-btn"><img id="dragdrop-icon" src="cloud-upload.png"/></button>
     <form id="form1" action="/uploadfile" enctype="multipart/form-data" method="post">
       <input type="file" id="file-input" className="file-input" accept="image/*" onchange={previewImage}/>
