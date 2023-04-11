@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Login from './Components/Login.js';
 import Feed from './Components/feed.js';
-import DropFileInput from './Components/drop_file.js';
 
 import './App.css';
 
