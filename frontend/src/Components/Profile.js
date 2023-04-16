@@ -5,6 +5,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
 import ListSubheader from '@mui/material/ListSubheader';
+import { useState } from 'react';
 
 
 
@@ -12,6 +13,7 @@ function Profile(props) {
  
     return (
     <> 
+   
   <nav>
       <ul>
        <li>
@@ -53,12 +55,49 @@ function Profile(props) {
        </li>
       </ul>
     </nav>
-    <TitlebarImageList/>
+    <div className='Profile'>
+      <UserProfile user={user} />
+      <TitlebarImageList/>
+    </div>
+   
    
     
 </>
     )
 }
+const user = {
+  name: "Jane Doe",
+  username: "janedoe",
+  bio: "Software engineer and sport lover",
+  avatar: "https://i.pravatar.cc/150?img=11",
+  followers: 1000,
+  following: 500,
+  posts: 50,
+};
+
+const UserProfile = ({ user }) => {
+  const [following, setFollowing] = useState(false);
+
+  return (
+    <div className="user-profile">
+      <img src={user.avatar} alt={user.name} className="avatar" />
+      <h1 className="name">{user.name}</h1>
+      <h2 className="username">@{user.username}</h2>
+      <p className="bio">{user.bio}</p>
+      <ul className="stats">
+        <li>
+          <span className="label">Followers:</span> {user.followers}
+        </li>
+        <li>
+          <span className="label">Following:</span> {user.following}
+        </li>
+        <li>
+          <span className="label">Posts:</span> {user.posts}
+        </li>
+      </ul>
+    </div>
+  );
+};
 
 
 function srcset(image, width, height, rows = 1, cols = 1) {

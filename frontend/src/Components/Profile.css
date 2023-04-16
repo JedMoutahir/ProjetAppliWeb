@@ -1,11 +1,70 @@
-.ListImages {
+
+  .ListImages{
+    width :600px;
+  }
+  .CustomImageList {
+    height: 100%;
+  }
+   .Profile{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   }
+
+  .user-profile {
+    width:600px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   }
   
-  .CustomImageList {
-    height: 100%;
+  .avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .name {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .username {
+    font-size: 20px;
+    color: #666;
+    margin: 0;
+  }
+  
+  .bio {
+    font-size: 16px;
+    margin: 20px 0;
+  }
+  
+  .stats {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+  }
+  
+  .label {
+    font-weight: bold;
+  }
+  
+  .stats li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
