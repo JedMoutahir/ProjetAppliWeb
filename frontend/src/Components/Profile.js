@@ -101,7 +101,7 @@ function TitlebarImageList() {
     <div className ="ListImages">
     <ImageList sx={{
       width: '100%',
-      maxWidth: 900,
+      maxWidth: 1150,
       height: 'auto',
       transform: 'translateZ(0)',
     }}>
@@ -145,22 +145,23 @@ function LabelBottomNavigation() {
         label="Favorites"
         value="favorites"
         icon={<FavoriteIcon />}
-        sx={{ color: 'black' }}
+        sx={{ color: 'white' }}
       />
       <BottomNavigationAction
         label={`${user.followers} followers`}
         value="Followers"
         icon={<PeopleAltIcon />}
-        sx={{ color: 'black' }}
+        sx={{ color: 'white' }}
       />
       <BottomNavigationAction
         label={`${user.posts} posts`}
         value="Posts"
         icon={<DynamicFeedIcon />}
-        sx={{ color: 'black' }}
+        sx={{ color: 'white' }}
+        
       />
 
-      <BottomNavigationAction label="Edit profile" value="Edit profile" icon={<EditIcon />} sx={{ color: 'black' }} />
+      <BottomNavigationAction label="Edit profile" value="Edit profile" icon={<EditIcon />} sx={{ color: 'white' }} />
     </BottomNavigation>
   );
 }
