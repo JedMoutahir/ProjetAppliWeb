@@ -1,0 +1,11 @@
+.ListImages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .CustomImageList {
+    height: 100%;
+  }
+  

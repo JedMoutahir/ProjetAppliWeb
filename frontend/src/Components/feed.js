@@ -2,7 +2,8 @@ import React from "react";
 import './Feed.css';
 import { useState } from 'react';
 
-function Feed() {
+
+function Feed(props) {
  
 
   const [imagePreview, setImagePreview] = useState("");
@@ -39,14 +40,14 @@ function Feed() {
   <nav>
       <ul>
        <li>
-        <a href='javascript:void(0)'>
+        <a onClick={() => props.setShowFeed(true)}>
         <img className="icon" src="maison.png"/>
         <h6 className="text">Home</h6>
         </a>
        </li>
 
        <li>
-        <a href="#">
+        <a onClick={() => props.setShowProfile(true)}>
         <img className="icon" src="utilisateur.png"/>
         <h6 className="text">Profile</h6>
         </a>
