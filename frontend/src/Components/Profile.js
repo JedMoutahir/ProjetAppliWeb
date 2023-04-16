@@ -4,16 +4,19 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
-import ListSubheader from '@mui/material/ListSubheader';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import EditIcon from '@mui/icons-material/Edit';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
 import { useState } from 'react';
 
 
 
 function Profile(props) {
- 
-    return (
+  return (
     <> 
-   
   <nav>
       <ul>
        <li>
@@ -66,15 +69,6 @@ function Profile(props) {
 </>
     )
 }
-const user = {
-  name: "Jane Doe",
-  username: "janedoe",
-  bio: "Software engineer and sport lover",
-  avatar: "https://i.pravatar.cc/150?img=11",
-  followers: 1000,
-  following: 500,
-  posts: 50,
-};
 
 const UserProfile = ({ user }) => {
   const [following, setFollowing] = useState(false);
@@ -86,20 +80,13 @@ const UserProfile = ({ user }) => {
       <h2 className="username">@{user.username}</h2>
       <p className="bio">{user.bio}</p>
       <ul className="stats">
-        <li>
-          <span className="label">Followers:</span> {user.followers}
-        </li>
-        <li>
-          <span className="label">Following:</span> {user.following}
-        </li>
-        <li>
-          <span className="label">Posts:</span> {user.posts}
-        </li>
+      <LabelBottomNavigation/>
       </ul>
     </div>
   );
 };
 
+export default Profile
 
 function srcset(image, width, height, rows = 1, cols = 1) {
   return {
@@ -109,15 +96,12 @@ function srcset(image, width, height, rows = 1, cols = 1) {
     }&fit=crop&auto=format&dpr=2 2x`,
   };
 }
-export default Profile
-
-
 function TitlebarImageList() {
   return (
     <div className ="ListImages">
     <ImageList sx={{
       width: '100%',
-      maxWidth: 800,
+      maxWidth: 900,
       height: 'auto',
       transform: 'translateZ(0)',
     }}>
@@ -138,7 +122,6 @@ function TitlebarImageList() {
                 sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                 aria-label={`info about ${item.title}`}
               >
-                
               </IconButton>
             }
           />
@@ -149,6 +132,49 @@ function TitlebarImageList() {
   );
 }
 
+function LabelBottomNavigation() {
+  const [value, setValue] = React.useState('recents');
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <BottomNavigation sx={{ width: 1000 ,backgroundColor: 'transparent'}} value={value} onChange={handleChange}>
+      <BottomNavigationAction
+        label="Favorites"
+        value="favorites"
+        icon={<FavoriteIcon />}
+        sx={{ color: 'black' }}
+      />
+      <BottomNavigationAction
+        label={`${user.followers} followers`}
+        value="Followers"
+        icon={<PeopleAltIcon />}
+        sx={{ color: 'black' }}
+      />
+      <BottomNavigationAction
+        label={`${user.posts} posts`}
+        value="Posts"
+        icon={<DynamicFeedIcon />}
+        sx={{ color: 'black' }}
+      />
+
+      <BottomNavigationAction label="Edit profile" value="Edit profile" icon={<EditIcon />} sx={{ color: 'black' }} />
+    </BottomNavigation>
+  );
+}
+
+
+const user = {
+  name: "Jane Doe",
+  username: "janedoe",
+  bio: "Software engineer and sport lover",
+  avatar: "https://i.pravatar.cc/150?img=11",
+  followers: 1000,
+  following: 500,
+  posts: 12,
+};
 
 
 const itemData = [

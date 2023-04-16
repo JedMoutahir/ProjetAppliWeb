@@ -23,18 +23,23 @@ function App() {
 }
   return (
     <div className="App">
-      {isLoggedIn ? (
-        <>
-        {showProfile ? (
+  {isLoggedIn ? (
+    <>
+      {showFeed ? (
+        <Feed setShowProfile={setShowProfile} setShowFeed={setShowFeed} />
+      ) : (
+        showProfile ? (
           <Profile setShowProfile={setShowProfile} setShowFeed={setShowFeed} />
         ) : (
-         <Feed setShowProfile={setShowProfile} setShowFeed={setShowFeed}/>
-        )}
-      </>
-      ) : (
-        <Login onLogin={handleLogin} />
+          <Feed setShowProfile={setShowProfile} setShowFeed={setShowFeed} />    
+        )
       )}
-    </div>
+    </>
+  ) : (
+    <Login onLogin={handleLogin} />
+  )}
+</div>
+
   );
 }
 

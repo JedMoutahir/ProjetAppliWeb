@@ -1,26 +1,24 @@
-
   .ListImages{
-    width :600px;
+    width :900px;
   }
-  .CustomImageList {
-    height: 100%;
-  }
-   .Profile{
+
+  .Profile{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-left:60px;
    }
 
   .user-profile {
-    width:600px;
+    width:900px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     padding: 20px;
-    background-color: #f8f8f8;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    background: white;		
+    box-shadow: 0 7px 5px rgba(0, 0, 0, 0.3);
   }
   
   .avatar {
@@ -28,11 +26,13 @@
     height: 150px;
     border-radius: 50%;
     margin-bottom: 10px;
+    cursor :pointer;
   }
   
   .name {
     font-size: 30px;
     font-weight: bold;
+    color: black;
     margin: 0;
   }
   
@@ -45,6 +45,8 @@
   .bio {
     font-size: 16px;
     margin: 20px 0;
+    color: black;
+
   }
   
   .stats {
