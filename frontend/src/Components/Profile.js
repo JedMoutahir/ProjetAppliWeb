@@ -57,6 +57,7 @@ function Profile(props) {
     </nav>
     <div className='Profile'>
       <UserProfile user={user} />
+      <br></br>
       <TitlebarImageList/>
     </div>
    
@@ -120,9 +121,7 @@ function TitlebarImageList() {
       height: 'auto',
       transform: 'translateZ(0)',
     }}>
-      <ImageListItem key="Subheader" cols={2}>
-        <ListSubheader component="div">My activity</ListSubheader>
-      </ImageListItem>
+      
       {itemData.map((item) => (
         <ImageListItem key={item.img}>
           <img
