@@ -46,13 +46,13 @@ function Profile(props) {
        </li>
        <li>
         <a href="#">
-        <img className="icon" src="aidez-moi.png"/>
+        <img className="icon" src="aidez-moi.png" alt="icon"/>
         <h6 className="text">Help</h6>
         </a>
        </li>
        <li>
         <a href="./Login" className="logout">
-        <img className="icon" src="logout.png"/>
+        <img className="icon" src="logout.png" alt="icon"/>
         <h6 className="text">Log out</h6>
         </a>
        </li>
@@ -64,38 +64,30 @@ function Profile(props) {
       <TitlebarImageList/>
     </div>
    
-   
-    
 </>
     )
 }
 
 const UserProfile = ({ user }) => {
-  const [following, setFollowing] = useState(false);
 
   return (
     <div className="user-profile">
-      <img src={user.avatar} alt={user.name} className="avatar" />
+       <ul>
       <h1 className="name">{user.name}</h1>
-      <h2 className="username">@{user.username}</h2>
       <p className="bio">{user.bio}</p>
+      </ul>
       <ul className="stats">
       <LabelBottomNavigation/>
       </ul>
+      
+      <img src={user.avatar} alt={user.name} className="avatar" />
+     
     </div>
   );
 };
 
 export default Profile
 
-function srcset(image, width, height, rows = 1, cols = 1) {
-  return {
-    src: `${image}?w=${width * cols}&h=${height * rows}&fit=crop&auto=format`,
-    srcSet: `${image}?w=${width * cols}&h=${
-      height * rows
-    }&fit=crop&auto=format&dpr=2 2x`,
-  };
-}
 function TitlebarImageList() {
   return (
     <div className ="ListImages">
