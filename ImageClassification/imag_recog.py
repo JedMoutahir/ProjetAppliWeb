@@ -1,28 +1,42 @@
-from transformers import YolosFeatureExtractor, YolosForObjectDetection
+from transformers import DetrImageProcessor, DetrForObjectDetection
+import torch
 from PIL import Image
 import requests
-import matplotlib.pyplot as plt
-url = 'http://images.cocodataset.org/val2017/000000039769.jpg'
-image = Image.open(requests.get(url, stream=True).raw)
 
-feature_extractor = YolosFeatureExtractor.from_pretrained('hustvl/yolos-small')
-model = YolosForObjectDetection.from_pretrained('hustvl/yolos-small')
+# load paysage image   
+image = Image.open("parc.jpeg")
 
-inputs = feature_extractor(images=image, return_tensors="pt")
+processor = DetrImageProcessor.from_pretrained("facebook/detr-resnet-101")
+model = DetrForObjectDetection.from_pretrained("facebook/detr-resnet-101")
+
+inputs = processor(images=image, return_tensors="pt")
 outputs = model(**inputs)
 
-# model predicts bounding boxes and corresponding COCO classes
-logits = outputs.logits
-bboxes = outputs.pred_boxes
+# convert outputs (bounding boxes and class logits) to COCO API
+# let's only keep detections with score > 0.9
+target_sizes = torch.tensor([image.size[::-1]])
+results = processor.post_process_object_detection(outputs, target_sizes=target_sizes, threshold=0.99)[0]
 
-# show results
-fig, ax = plt.subplots(1, figsize=(16, 8))
-ax.imshow(image)
-for bbox, class_idx in zip(bboxes[0], logits[0].argmax(-1)):
-    if class_idx == 0:  # skip background
-        continue
-    ax.add_patch(bbox.to_bbox())
-    ax.text(bbox[0], bbox[1], feature_extractor.coco_labels[class_idx], fontsize=15, color='white',
-            bbox=dict(facecolor='blue', alpha=0.5))
-plt.axis('off')
+for score, label, box in zip(results["scores"], results["labels"], results["boxes"]):
+    box = [round(i, 2) for i in box.tolist()]
+    print(
+            f"Detected {model.config.id2label[label.item()]} with confidence "
+            f"{round(score.item(), 3)} at location {box}"
+    )
+
+# show image with boxes
+
+image = image.convert("RGB")
+from matplotlib import pyplot as plt
+import numpy as np
+
+plt.imshow(np.asarray(image))
+ax = plt.gca()
+
+for box in results["boxes"]:
+    xmin, ymin, xmax, ymax = box.tolist()
+    width, height = xmax - xmin, ymax - ymin
+    rect = plt.Rectangle((xmin, ymin), width, height, fill=False, color="red")
+    ax.add_patch(rect)
+
 plt.show()
