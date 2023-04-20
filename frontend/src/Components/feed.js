@@ -53,7 +53,7 @@ function Feed(props) {
         </a>
        </li>
        <li>
-        <a href="#">
+       <a onClick={() => props.setShowSavedPosts(true)}>
         <img className="icon" src="bookmark.png"/>
         <h6 className="text">Saved</h6>
         </a>

@@ -10,7 +10,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
-import { useState } from 'react';
 
 
 
@@ -33,7 +32,7 @@ function Profile(props) {
         </a>
        </li>
        <li>
-        <a href="#">
+        <a onClick={() => props.setShowSavedPosts(true)}>
         <img className="icon" src="bookmark.png"/>
         <h6 className="text">Saved</h6>
         </a>

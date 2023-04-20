@@ -30,7 +30,7 @@ function Login(props) {
           </div>
 
           <div class = "field button-field">
-            <button>LogIn</button>
+            <button onClick={handleSubmit}>LogIn</button>
 
           </div>
         </form>

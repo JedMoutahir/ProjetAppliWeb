@@ -26,17 +26,3 @@ for score, label, box in zip(results["scores"], results["labels"], results["boxe
 
 # show image with boxes
 
-image = image.convert("RGB")
-from matplotlib import pyplot as plt
-import numpy as np
-
-plt.imshow(np.asarray(image))
-ax = plt.gca()
-
-for box in results["boxes"]:
-    xmin, ymin, xmax, ymax = box.tolist()
-    width, height = xmax - xmin, ymax - ymin
-    rect = plt.Rectangle((xmin, ymin), width, height, fill=False, color="red")
-    ax.add_patch(rect)
-
-plt.show()
