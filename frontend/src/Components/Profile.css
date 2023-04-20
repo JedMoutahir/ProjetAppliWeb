@@ -1,0 +1,79 @@
+  .ListImages{
+    width :1130px;
+  }
+  
+  .Profile{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left:80px;
+    background-color: white;
+   }
+
+  .user-profile {
+    width:1130px;
+    height :250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    background: linear-gradient(90deg, #C7C5F4, #776BCC);		
+	
+    box-shadow: 0 7px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .avatar {
+    display: flex;
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    margin-left:-900px;
+    margin-top:-200px;
+    cursor :pointer;
+  
+  }
+  
+  .name {
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+  }
+  
+  .username {
+    font-size: 20px;
+    color: black;
+    margin: 0;
+  }
+  
+  .bio {
+    font-size: 16px;
+    margin: 20px 0;
+    color: white;
+
+  }
+  
+  .stats {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+  }
+  
+  .label {
+    font-weight: bold;
+  }
+  
+  .stats li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  

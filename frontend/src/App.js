@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import Login from './Components/Login.js';
 import Feed from './Components/feed.js';
-
+import Profile from './Components/Profile.js';
 import './App.css';
 
 function App() {
+  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showDropFileInput, setShowDropFileInput] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
+  const [showFeed, setShowFeed] = useState(false);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
@@ -20,14 +23,23 @@ function App() {
 }
   return (
     <div className="App">
-      {isLoggedIn ? (
-        <>
-          <Feed/>
-        </>
+  {isLoggedIn ? (
+    <>
+      {showFeed ? (
+        <Feed setShowProfile={setShowProfile} setShowFeed={setShowFeed} />
       ) : (
-        <Login onLogin={handleLogin} />
+        showProfile ? (
+          <Profile setShowProfile={setShowProfile} setShowFeed={setShowFeed} />
+        ) : (
+          <Feed setShowProfile={setShowProfile} setShowFeed={setShowFeed} />    
+        )
       )}
-    </div>
+    </>
+  ) : (
+    <Login onLogin={handleLogin} />
+  )}
+</div>
+
   );
 }
 
