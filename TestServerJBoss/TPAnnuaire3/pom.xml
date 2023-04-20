@@ -64,6 +64,9 @@
             <resource>
             <directory>src/</directory>
             </resource>
+            <resource>
+            <directory>WebContent/</directory>
+            </resource>
         </resources>
     </build>
 
