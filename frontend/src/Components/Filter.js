@@ -1,26 +1,34 @@
 import React from 'react'
 
 const FilterOptions = ({keywords,setKeywords}) => {
-    const specialities = [
-        "Dentist",
-        "Heart",
-        "Mental",
-        "Physco",
-        "Physical",
-        "Orthodontist",
-        "Dinasour",
+    const Tag = [
+        "Animals",
+        "Portraits",
+        "Nature", 
+        "cityscape",
+        "Flowers",
+        "Buildings", 
+        "Food",
+        "Family", 
+        "Friends",
+         "Children", 
+         "Couples",
       ];
       const options = [
         {
-          title: "Speciality",
+          title: "Tag",
           options: [
-            "Dentist",
-            "Heart",
-            "Mental",
-            "Physco",
-            "Physical",
-            "Orthodontist",
-            "Dinasour",
+            "Animals",
+            "Portraits",
+            "Nature", 
+            "cityscape",
+            "Flowers",
+            "Buildings", 
+            "Food",
+            "Family", 
+            "Friends",
+             "Children", 
+             "Couples",
           ],
           height : 150
         },
