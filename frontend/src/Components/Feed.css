@@ -1,6 +1,6 @@
 /* base styles */
 body{
-  background:black;		
+  background:#E0E0E0;		
 
 }
 .search-bar {
@@ -8,9 +8,9 @@ body{
   display: flex;
   background-color: white;
   border: 1px solid rgba(217, 217, 217, 0.52);
-  border-radius: 70px;
+  border-radius: 10px;
   padding: 8px;
-  width: 350px;
+  width: 300px;
   height:35px;
   margin-left: 100px;
   margin-right: auto;
@@ -63,21 +63,6 @@ body{
   cursor:pointer;
 }
 
-#camera{
-  width:65px;
-  height:65px;
-}
-#camera-btn {
-  border-radius: 60%;
-  margin-left: 90%;
-  margin-bottom: 2%;
-  background-color: white;
-  cursor: pointer;
-}
-#camera:hover {
-  animation: spin 1s ease-in-out infinite;
-}
-
 @keyframes spin {
   0% { transform: rotate(0); }
   100% { transform: rotate(360deg); }
@@ -100,11 +85,10 @@ nav{
   top:0;
   bottom:0;
   left:0;
-  background:white;
-  width:80px;
+  background:#607D8B;
+  width:65px;
   overflow:hidden;
   transition:width 0.2s linear;
-  box-shadow: 0 30px 35px rgba(0,0,0,0.1);
   z-index: 1;
 }
 nav:hover ~ * {
@@ -131,16 +115,16 @@ nav:hover{
 }
 
 .logout{
- position:flex;
- top:140px;
+ position:absolute;
+ top:89%;
 }
 
 .icon{
   position:relative;
   color : #1E1E1E;
-  width:30px;
-  height:30px;
-  margin-left:-230px;
+  width:20px;
+  height:20px;
+  margin-left:-240px;
   margin-top:25px;
 }
 
@@ -168,10 +152,10 @@ nav:hover{
   position:flex;
   box-shadow: 0 14px 18px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
-  background-color:white;
+  background-color:#78909C;
   width: 340px;
   height:350px;
-  border-radius: 20px;
+  border-radius: 5px;
   margin-bottom:20px;
 }
 
