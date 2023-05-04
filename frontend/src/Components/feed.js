@@ -1,12 +1,14 @@
 import React from "react";
 import './Feed.css';
 import { useState } from 'react';
+import FilterOptions from "./Filter";
 
 
 function Feed(props) {
  
 
   const [imagePreview, setImagePreview] = useState("");
+  const [keywords, setKeywords] = useState([]);
 
   function previewImage(event) {
     const file = event.target.files[0];
@@ -82,8 +84,7 @@ function Feed(props) {
     
     <div className="search-bar">
           <button id="search-button"><img id="search-img" src="magnifier.png"/></button>
-          <input type="text" placeholder="Search"></input>
-          <button id="panel-button"><img id="panel-img" src="panel.png"/></button>
+          <input type="text" placeholder="Search by user's name"></input>
       </div>
     <button id="camera-btn" ><img id="camera" src="camera.png" onClick={handleclick}/></button> 
 
@@ -99,7 +100,7 @@ function Feed(props) {
     <div id="image-preview"><img src={imagePreview} /></div>
   </div>
 </div>
-   
+<FilterOptions keywords={keywords} setKeywords={setKeywords} />
  <div className="cards">
       <div class="card">
         <div className="profile">
