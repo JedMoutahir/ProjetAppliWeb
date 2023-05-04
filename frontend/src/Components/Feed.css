@@ -68,11 +68,10 @@ body{
   height:65px;
 }
 #camera-btn {
-  width: 6%;
-  height: 6%;
-  border-radius: 50%;
+  border-radius: 60%;
   margin-left: 90%;
-  margin-bottom: 20px;
+  margin-bottom: 2%;
+  background-color: white;
   cursor: pointer;
 }
 #camera:hover {
