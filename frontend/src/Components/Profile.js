@@ -71,7 +71,7 @@ const UserProfile = ({ user }) => {
 
   return (
     <div className="user-profile">
-       <ul>
+      <ul>
       <h1 className="name">{user.name}</h1>
       <p className="bio">{user.bio}</p>
       </ul>
@@ -91,9 +91,11 @@ function TitlebarImageList() {
   return (
     <div className ="ListImages">
     <ImageList sx={{
-      width: '100%',
+      width: '90%',
       maxWidth: 1150,
       height: 'auto',
+      marginLeft:'50px',
+      marginTop:'40px',
       transform: 'translateZ(0)',
     }}>
       
@@ -136,23 +138,23 @@ function LabelBottomNavigation() {
         label="Favorites"
         value="favorites"
         icon={<FavoriteIcon />}
-        sx={{ color: 'white' }}
+        sx={{ color: 'black' }}
       />
       <BottomNavigationAction
         label={`${user.followers} followers`}
         value="Followers"
         icon={<PeopleAltIcon />}
-        sx={{ color: 'white' }}
+        sx={{ color: 'black' }}
       />
       <BottomNavigationAction
         label={`${user.posts} posts`}
         value="Posts"
         icon={<DynamicFeedIcon />}
-        sx={{ color: 'white' }}
+        sx={{ color: 'black' }}
         
       />
 
-      <BottomNavigationAction label="Edit profile" value="Edit profile" icon={<EditIcon />} sx={{ color: 'white' }} />
+      <BottomNavigationAction label="Edit profile" value="Edit profile" icon={<EditIcon />} sx={{ color: 'black' }} />
     </BottomNavigation>
   );
 }

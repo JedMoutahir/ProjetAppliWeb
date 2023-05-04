@@ -18,7 +18,8 @@ function Feed(props) {
 
     reader.readAsDataURL(file);
   }
-  function handleclick(event){
+
+  function handleclick(){
    /*to display the popup*/
    const cameraBtn = document.querySelector('#camera-btn');
    const popup = document.querySelector('.popup');
@@ -78,7 +79,7 @@ function Feed(props) {
        </li>
       </ul>
     </nav>
-
+    
     <div className="search-bar">
           <button id="search-button"><img id="search-img" src="magnifier.png"/></button>
           <input type="text" placeholder="Search"></input>
@@ -98,7 +99,6 @@ function Feed(props) {
     <div id="image-preview"><img src={imagePreview} /></div>
   </div>
 </div>
-
    
  <div className="cards">
       <div class="card">

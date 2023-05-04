@@ -1,6 +1,6 @@
 /* base styles */
 body{
-  background: linear-gradient(90deg, #C7C5F4, #776BCC);		
+  background:black;		
 
 }
 .search-bar {
@@ -101,7 +101,7 @@ nav{
   top:0;
   bottom:0;
   left:0;
-  background:#fff;
+  background:white;
   width:80px;
   overflow:hidden;
   transition:width 0.2s linear;
@@ -115,7 +115,7 @@ nav:hover ~ * {
 
 a{
   position:relative;
-  color:rgb(85,83,83);
+  color:#1E1E1E;
   font-size:15px;
   width:300px;
   display:table;
@@ -138,6 +138,7 @@ nav:hover{
 
 .icon{
   position:relative;
+  color : #1E1E1E;
   width:30px;
   height:30px;
   margin-left:-230px;
