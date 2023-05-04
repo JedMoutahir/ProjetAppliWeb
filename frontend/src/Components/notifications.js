@@ -61,23 +61,23 @@ export default function BottomAppBar() {
       <CssBaseline/>
     
 <Paper square sx={{ pb: '50px' , width :'30%',marginLeft:'70%',marginTop:'1%' }}>
-<ListSubheader sx={{ bgcolor: '#9E9E9E', fontSize: '24px',width:'353px' ,}}>
+<ListSubheader sx={{ bgcolor: '#607D8B', fontSize: '24px',width:'353px' ,}}>
   Notifications
 </ListSubheader>
 
 
   <Box sx={{ maxHeight: 'calc(100vh - 100px)', overflowY: 'scroll' ,}}>
-    <List sx={{ mb: 2 ,bgcolor:'#9E9E9E',}}>
+    <List sx={{ mb: 2 ,bgcolor:'#607D8B ',}}>
       {messages.map(({ id, primary, secondary, person }) => (
         <React.Fragment key={id}>
           {id === 1 && (
-            <ListSubheader sx={{ bgcolor: 'background.paper' }}>
+            <ListSubheader sx={{ bgcolor: '#9E9E9E' }}>
               Today
             </ListSubheader>
           )}
 
           {id === 3 && (
-            <ListSubheader sx={{ bgcolor: 'background.paper' }}>
+            <ListSubheader sx={{ bgcolor: '#9E9E9E' }}>
               Yesterday
             </ListSubheader>
           )}

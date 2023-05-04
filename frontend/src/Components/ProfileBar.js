@@ -16,6 +16,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import CameraEnhanceIcon from '@mui/icons-material/CameraEnhance';
+import Profile from './Profile';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -101,26 +102,7 @@ export default function PrimarySearchAppBar() {
     };
 
     const menuId = 'primary-search-account-menu';
-    const renderMenu = (
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-        >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-        </Menu>
-    );
+    
 
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
@@ -248,7 +230,6 @@ export default function PrimarySearchAppBar() {
                 </Toolbar>
             </AppBar>
             {renderMobileMenu}
-            {renderMenu}
         </Box>
     );
 }

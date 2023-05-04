@@ -7,7 +7,6 @@ import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import InfoIcon from '@mui/icons-material/Info';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
-
 function SavedPosts(props) {
   return (
     <> 
@@ -82,7 +81,6 @@ function SavedPosts(props) {
           </li>
         </ul>
       </nav>
-   
 </>
     )
 };
