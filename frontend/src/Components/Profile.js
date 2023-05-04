@@ -1,5 +1,6 @@
 import * as React from 'react';
 import './Profile.css';
+import BottomAppBar from './notifications';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
@@ -10,53 +11,89 @@ import EditIcon from '@mui/icons-material/Edit';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
-
+import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
+import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
+import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
+import InfoIcon from '@mui/icons-material/Info';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 
 function Profile(props) {
   return (
     <> 
-  <nav>
-      <ul>
-       <li>
-        <a onClick={() => props.setShowFeed(true)}>
-        <img className="icon" src="maison.png"/>
-        <h6 className="text">Home</h6>
-        </a>
-       </li>
+ <nav>
+        <ul>
+          <li>
+            <a onClick={() => props.setShowFeed(true)}>
+              <HomeIcon 
+              sx ={{
+                color:'white', marginLeft :'-240px', marginTop :'20px',
+                }}>
 
-       <li>
-        <a onClick={() => props.setShowProfile(true)}>
-        <img className="icon" src="utilisateur.png"/>
-        <h6 className="text">Profile</h6>
-        </a>
-       </li>
-       <li>
-        <a onClick={() => props.setShowSavedPosts(true)}>
-        <img className="icon" src="bookmark.png"/>
-        <h6 className="text">Saved</h6>
-        </a>
-       </li>
-       <li>
-        <a href="#">
-        <img className="icon" src="gear.png"/>
-        <h6 className="text" >Settings</h6>
-        </a>
-       </li>
-       <li>
-        <a href="#">
-        <img className="icon" src="aidez-moi.png" alt="icon"/>
-        <h6 className="text">Help</h6>
-        </a>
-       </li>
-       <li>
-        <a href="./Login" className="logout">
-        <img className="icon" src="logout.png" alt="icon"/>
-        <h6 className="text">Log out</h6>
-        </a>
-       </li>
-      </ul>
-    </nav>
+              </HomeIcon>
+              <h6 className="text">Home</h6>
+            </a>
+          </li>
+
+          <li>
+            <a onClick={() => props.setShowProfile(true)}>
+            <PersonIcon 
+              sx ={{
+                color:'white', marginLeft :'-240px', marginTop :'40px',
+                }}>
+
+              </PersonIcon>
+              <h6 className="text">Profile</h6>
+            </a>
+          </li>
+          <li>
+            <a onClick={() => props.setShowSavedPosts(true)}>
+            <BookmarkAddedIcon 
+              sx ={{
+                color:'white', marginLeft :'-240px', marginTop :'40px',
+                }}>
+
+              </BookmarkAddedIcon>
+              <h6 className="text">Saved</h6>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+            <SettingsSuggestIcon 
+              sx ={{
+                color:'white', marginLeft :'-240px', marginTop :'40px',
+                }}>
+
+              </SettingsSuggestIcon> 
+              <h6 className="text" >Settings</h6>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+            <InfoIcon 
+              sx ={{
+                color:'white', marginLeft :'-240px', marginTop :'40px',
+                }}>
+
+              </InfoIcon>
+             <h6 className="text">Help</h6>
+            </a>
+          </li>
+          <li>
+            <a href="./Login" className="logout">
+            <ExitToAppIcon 
+              sx ={{
+                color:'white', marginLeft :'-240px', marginTop :'10px',
+                }}>
+
+              </ExitToAppIcon>
+              <h6 className="text">Log out</h6>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <BottomAppBar sx={{marginLeft:'300px',}}></BottomAppBar>
     <div className='Profile'>
       <UserProfile user={user} />
       <br></br>
@@ -92,9 +129,9 @@ function TitlebarImageList() {
     <div className ="ListImages">
     <ImageList sx={{
       width: '90%',
-      maxWidth: 1150,
+      maxWidth: 1000,
       height: 'auto',
-      marginLeft:'50px',
+      marginLeft:'35px',
       marginTop:'40px',
       transform: 'translateZ(0)',
     }}>
@@ -133,28 +170,28 @@ function LabelBottomNavigation() {
   };
 
   return (
-    <BottomNavigation sx={{ width: 1000 ,backgroundColor: 'transparent'}} value={value} onChange={handleChange}>
+    <BottomNavigation sx={{ width: 370 ,backgroundColor: 'transparent'}} value={value} onChange={handleChange}>
       <BottomNavigationAction
         label="Favorites"
         value="favorites"
         icon={<FavoriteIcon />}
-        sx={{ color: 'black' }}
+        sx={{ color: 'white' }}
       />
       <BottomNavigationAction
         label={`${user.followers} followers`}
         value="Followers"
         icon={<PeopleAltIcon />}
-        sx={{ color: 'black' }}
+        sx={{ color: 'white' , marginTop:'10px',}}
       />
       <BottomNavigationAction
         label={`${user.posts} posts`}
         value="Posts"
         icon={<DynamicFeedIcon />}
-        sx={{ color: 'black' }}
+        sx={{ color: 'white' }}
         
       />
 
-      <BottomNavigationAction label="Edit profile" value="Edit profile" icon={<EditIcon />} sx={{ color: 'black' }} />
+      <BottomNavigationAction label="Edit profile" value="Edit profile" icon={<EditIcon />} sx={{ color: 'white' }} />
     </BottomNavigation>
   );
 }

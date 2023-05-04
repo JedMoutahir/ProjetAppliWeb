@@ -82,7 +82,7 @@ body{
 
 nav{
   position:fixed;
-  top:0;
+  top:0px;
   bottom:0;
   left:0;
   background:#607D8B;
@@ -91,7 +91,7 @@ nav{
   transition:width 0.2s linear;
   z-index: 1;
 }
-nav:hover ~ * {
+nav:hover ~ *{
   filter: blur(10px);
 }
 
@@ -106,7 +106,7 @@ a{
 }
 
 a:hover{
-  background:#eee;
+  background:#9E9E9E;
 }
 
 nav:hover{
@@ -159,7 +159,7 @@ nav:hover{
   margin-bottom:20px;
 }
 
-.card:is(:hover,:focus)>.post {
+.post:is(:hover,:focus){
   box-shadow: 0 20px 36px 0 rgba(0,0,0,0.2);
   transform:scale(1.1);
   filter:brightness(0.4);
@@ -207,10 +207,13 @@ nav:hover{
     margin-bottom:30px;
   }
   .barre {
-    margin-top:10px;
     display: flex; 
+    margin-top:130px;
     justify-content: space-around; 
     align-items: center; 
+  }
+  .button-barre{
+    margin-top :-20px;
   }
   
   .barre > div {
@@ -291,7 +294,7 @@ header {
 
 #submit1 {
   display: flex;
-  background-color: #bf00ff;
+  background-color: #607D8B;
   color: #fff;
   border: none;
   border-radius: 30px;
@@ -301,8 +304,8 @@ header {
 }
 
 #submit1:hover {
-  background-color: white;
-  color:#bf00ff;
+  background-color: #9E9E9E;
+  color:white;
 }
 
 @media (max-width: 768px) {
@@ -320,7 +323,6 @@ header {
   height:40px;
   border:none;
   border-radius: 70px;
-  background-color: transparent;
   cursor: pointer;
   margin-left: -500px;
 }

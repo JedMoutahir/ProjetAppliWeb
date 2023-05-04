@@ -175,7 +175,7 @@ export default function PrimarySearchAppBar() {
     );
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1,  }}>
             <AppBar sx = {{
                 backgroundColor : '#607D8B',
             }} position="static">
@@ -197,11 +197,12 @@ export default function PrimarySearchAppBar() {
                     >
                 
                     </Typography>
-                    <Search>
+                    <Search >
                         <SearchIconWrapper>
                             <SearchIcon />
                         </SearchIconWrapper>
                         <StyledInputBase
+                            sx ={{marginLeft :'65px',}}
                             placeholder="Search…"
                             inputProps={{ 'aria-label': 'search' }}
                         />
