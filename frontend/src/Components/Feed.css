@@ -91,7 +91,7 @@ nav{
   transition:width 0.2s linear;
   z-index: 1;
 }
-nav:hover ~ *{
+nav:hover ~ * :not(BottomAppBar){
   filter: blur(10px);
 }
 

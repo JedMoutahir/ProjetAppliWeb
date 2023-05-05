@@ -2,7 +2,6 @@ import * as React from 'react';
 import './Profile.css';
 import { Tooltip } from '@mui/material';
 import BottomAppBar from './notifications';
-import DeleteIcon from '@mui/icons-material/Delete';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';

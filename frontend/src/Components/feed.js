@@ -17,35 +17,34 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 function Feed(props) {
 
-
-  const [imagePreview, setImagePreview] = useState("");
-  const [keywords, setKeywords] = useState([]);
   var cards = [
     {
       name: "Lena Rose",
       profile_picture: "profile.jpg",
       post: "Fox.jpg",
-      likes: "50 likes",
+      likes: 50,
       tag: "Fox",
       tag_general : "Animal"
     }, {
       name: "John Doe",
       profile_picture: "profile2.jpg",
       post: "plant.webp",
-      likes: "30 likes",
+      likes: 30,
       tag: "Plant",
       tag_general: "Nature"
     }, {
       name: "Alex Sabatier",
       profile_picture: "profile2.jpg",
       post: "avocat.jpg",
-      likes: "3 likes",
+      likes: 3,
       tag: "Avocat",
       tag_general: "Food"
     }
-
-
   ]
+
+  const [imagePreview, setImagePreview] = useState("");
+  const [keywords, setKeywords] = useState([]);
+
 
   function previewImage(event) {
     const file = event.target.files[0];
@@ -154,8 +153,11 @@ function Feed(props) {
       <FilterOptions keywords={keywords} setKeywords={setKeywords} />
 
       <div className="cards">
+        
         {
           cards.filter(card => keywords.length === 0 || keywords.includes(card.tag_general) ).map(card => {
+            
+
             return (
               <div class="card">
                 <div className="profile">
@@ -173,7 +175,7 @@ function Feed(props) {
                       }}>
                      </ThumbUpIcon>
                      </button>
-                    <h6>{card.likes}</h6>
+                    <h6> {card.likes} {' likes'} </h6>
                   </div>
                   <div >
                     <button className="button-barre">
