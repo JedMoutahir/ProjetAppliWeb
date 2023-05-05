@@ -9,7 +9,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import Avatar from '@mui/material/Avatar';
 
-const messages = [
+const notifications = [
   {
     id: 1,
     primary: 'Lena Rose',
@@ -68,7 +68,7 @@ export default function BottomAppBar() {
 
   <Box sx={{ maxHeight: 'calc(100vh - 100px)', overflowY: 'scroll' ,}}>
     <List sx={{ mb: 2 ,bgcolor:'#607D8B ',}}>
-      {messages.map(({ id, primary, secondary, person }) => (
+      {notifications.map(({ id, primary, secondary, person }) => (
         <React.Fragment key={id}>
           {id === 1 && (
             <ListSubheader sx={{ bgcolor: '#9E9E9E' }}>
