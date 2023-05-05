@@ -1,6 +1,8 @@
 import * as React from 'react';
 import './Profile.css';
+import { Tooltip } from '@mui/material';
 import BottomAppBar from './notifications';
+import DeleteIcon from '@mui/icons-material/Delete';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
@@ -144,18 +146,23 @@ function TitlebarImageList() {
             alt={item.title}
             loading="lazy"
           />
-          <ImageListItemBar
-            title={item.title}
-            subtitle={item.author}
-            actionIcon={
-              <IconButton
-                sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                aria-label={`info about ${item.title}`}
-              >
-              </IconButton>
-            }
-          />
-        </ImageListItem>
+         <ImageListItemBar
+        title={item.title}
+        subtitle={item.author}
+        actionIcon={
+          <Tooltip title={`${item.likes}`} placement="top">
+            <IconButton
+              sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+              aria-label={`info about ${item.title}`}
+            >
+            <FavoriteIcon />
+            </IconButton>
+          </Tooltip>
+          
+          }
+          >
+      </ImageListItemBar>
+    </ImageListItem>
       ))}
     </ImageList>
     </div>
@@ -172,16 +179,10 @@ function LabelBottomNavigation() {
   return (
     <BottomNavigation sx={{ width: 370 ,backgroundColor: 'transparent'}} value={value} onChange={handleChange}>
       <BottomNavigationAction
-        label="Favorites"
-        value="favorites"
-        icon={<FavoriteIcon />}
-        sx={{ color: 'white' }}
-      />
-      <BottomNavigationAction
         label={`${user.followers} followers`}
         value="Followers"
         icon={<PeopleAltIcon />}
-        sx={{ color: 'white' , marginTop:'10px',}}
+        sx={{ color: 'white' ,}}
       />
       <BottomNavigationAction
         label={`${user.posts} posts`}
@@ -212,6 +213,7 @@ const itemData = [
   {
     img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
     title: 'Breakfast',
+    likes : '30 likes',
     rows: 2,
     cols: 2,
     featured: true,
@@ -219,24 +221,31 @@ const itemData = [
   {
     img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
     title: 'Burger',
+    likes : '60 likes',
+
   },
   {
     img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
     title: 'Camera',
+    likes : '8 likes',
+
   },
   {
     img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
     title: 'Coffee',
+    likes : '5 likes',
     cols: 2,
   },
   {
     img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
     title: 'Hats',
+    likes : '50 likes',
     cols: 2,
   },
   {
     img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
     title: 'Honey',
+    likes : '50 likes',
     rows: 2,
     cols: 2,
     featured: true,
@@ -244,28 +253,38 @@ const itemData = [
   {
     img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
     title: 'Basketball',
+    likes : '50 likes',
+
   },
   {
     img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
     title: 'Fern',
+    likes : '50 likes',
+
   },
   {
     img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
     title: 'Mushrooms',
+    likes : '4 likes',
     rows: 2,
     cols: 2,
   },
   {
     img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
     title: 'Tomato basil',
+    likes : '9 likes',
+
   },
   {
     img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
     title: 'Sea star',
+    likes : '10 likes',
+
   },
   {
     img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
     title: 'Bike',
+    likes : '5 likes',
     cols: 2,
   },
 ];
