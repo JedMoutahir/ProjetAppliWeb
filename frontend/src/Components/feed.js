@@ -1,6 +1,7 @@
 import React from "react";
 import './Feed.css';
 import { useState } from 'react';
+import Profile from "./Profile";
 import FilterOptions from "./Filter";
 import PrimarySearchAppBar from "./ProfileBar";
 import HomeIcon from '@mui/icons-material/Home';
@@ -44,6 +45,7 @@ function Feed(props) {
 
   const [imagePreview, setImagePreview] = useState("");
   const [keywords, setKeywords] = useState([]);
+  const [showBarProfile, setShowBarProfile] = useState(false);
 
 
   function previewImage(event) {
@@ -56,11 +58,14 @@ function Feed(props) {
 
     reader.readAsDataURL(file);
   }
-  
-  
   return (
+    
+    <div>
+    {showBarProfile ? (
+       <Profile setShowBarProfile={setShowBarProfile} setShowProfile={props.setShowProfile} setShowFeed={props.setShowFeed} setShowSavedPosts={props.setShowSavedPosts}/>
+       ) : (
     <>
-      <nav>
+    <nav>
         <ul>
           <li>
             <a onClick={() => props.setShowFeed(true)}>
@@ -68,7 +73,6 @@ function Feed(props) {
               sx ={{
                 color:'white', marginLeft :'-240px', marginTop :'20px',
                 }}>
-
               </HomeIcon>
               <h6 className="text">Home</h6>
             </a>
@@ -132,19 +136,22 @@ function Feed(props) {
         </ul>
       </nav>
       <div className = "Search-bar">
-      <PrimarySearchAppBar></PrimarySearchAppBar>
-      </div>
+      <PrimarySearchAppBar
+              showBarProfile={showBarProfile}
+              setShowBarProfile={setShowBarProfile}
+            />
+     </div>
       <div className="popup">
         <div className="wrapper">
           <button id="btn-close">
-            <CancelIcon 
+            <CancelIcon
           sx={{color :'#607D8B',backgroundColor:'white', width:'40px',
               height:'40px',}}>
             </CancelIcon></button>
           <header>Drag & Drop a picture </header>
           <button id="dragdrop-btn"><img id="dragdrop-icon" src="cloud-upload.png" /></button>
-          <form id="form1" action="/uploadfile" enctype="multipart/form-data" method="post">
-            <input type="file" id="file-input" className="file-input" accept="image/*" onchange={previewImage} />
+          <form id="form1" action="/uploadfile" encType="multipart/form-data" method="post">
+            <input type="file" id="file-input" className="file-input" accept="image/*" onChange={previewImage} />
             <button id="submit1" type="button" >Share & Classify</button>
           </form>
           <div id="image-preview"><img src={imagePreview} /></div>
@@ -159,7 +166,7 @@ function Feed(props) {
             
 
             return (
-              <div class="card">
+              <div className="card">
                 <div className="profile">
                   <img className="profile-pic" src={card.profile_picture} />
                   <h4 className="Name"><b>{card.name}</b></h4>
@@ -205,10 +212,11 @@ function Feed(props) {
         }
 
       </div>
-
-
-    </>
+  </>
+   )}
+  </div>
   )
+      
 }
 
 export default Feed

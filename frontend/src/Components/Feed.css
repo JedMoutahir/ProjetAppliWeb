@@ -52,34 +52,6 @@ body{
   margin-left:-5px;
 }
 
-#search-button{
-  background-color: transparent;
-  margin-top:0px;
-  margin-left:5px;
-  width:20px;
-  height:20px;
-  border:none;
-  outline:none;
-  cursor:pointer;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0); }
-  100% { transform: rotate(360deg); }
-}
-
-#camera-btn:hover::before {
-  content: "Share and classify a photo";
-  position: absolute;
-  background-color: #000;
-  color: #fff;
-  padding: 6px;
-  border-radius: 6px;
-  font-size: 14px;
-  top: 20px;
-  right:100px;
-}
-
 nav{
   position:fixed;
   top:0px;
@@ -124,7 +96,6 @@ nav:hover{
   color : #1E1E1E;
   width:20px;
   height:20px;
-  margin-left:-240px;
   margin-top:25px;
 }
 

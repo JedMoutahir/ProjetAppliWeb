@@ -1,6 +1,7 @@
 import * as React from 'react';
 import './Profile.css';
 import { Tooltip } from '@mui/material';
+import Box from '@mui/joy/Box';
 import BottomAppBar from './notifications';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -18,6 +19,7 @@ import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import InfoIcon from '@mui/icons-material/Info';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+
 
 
 function Profile(props) {

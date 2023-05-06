@@ -70,7 +70,7 @@ const FilterOptions = ({ keywords, setKeywords }) => {
                     name = {name} 
                     onChange={handleChange} />
                   } 
-                    label={name} 
+                    label={name } 
                     />
                   </div>
                 </div>

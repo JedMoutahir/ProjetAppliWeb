@@ -12,7 +12,6 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import CameraEnhanceIcon from '@mui/icons-material/CameraEnhance';
@@ -57,7 +56,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -66,39 +65,53 @@ export default function PrimarySearchAppBar() {
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
+    
 
     const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);
     };
 
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-        handleMobileMenuClose();
-    };
+    
     function handleclick() {
         /*to display the popup*/
         const cameraBtn = document.querySelector('#camera-btn');
         const popup = document.querySelector('.popup');
-        if (cameraBtn != null && popup != null) {
             cameraBtn.addEventListener('click', () => {
-                popup.style.display = 'flex';
+            popup.style.display = 'flex';
             });
-        }
+            
+        
 
         /**to remove the popup */
         const camBtn = document.querySelector('#btn-close');
         const pop = document.querySelector('.popup');
-        if (camBtn != null && pop != null) {
             camBtn.addEventListener('click', () => {
                 pop.style.display = 'none';
             });
-        }
+    }
+    function handleclick2() {
+        /*to display the popup*/
+        const cameraBtn = document.querySelector('#camera-btn2');
+        const popup = document.querySelector('.popup');
+            cameraBtn.addEventListener('click', () => {
+            popup.style.display = 'flex';
+            });
+            
+        
+
+        /**to remove the popup */
+        const camBtn = document.querySelector('#btn-close');
+        const pop = document.querySelector('.popup');
+            camBtn.addEventListener('click', () => {
+                pop.style.display = 'none';
+            });
+        
     }
 
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
-
+    
     const menuId = 'primary-search-account-menu';
     
 
@@ -119,13 +132,11 @@ export default function PrimarySearchAppBar() {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem>
-                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="error">
-                        <MailIcon />
-                    </Badge>
-                </IconButton>
-                <p>Messages</p>
+            <MenuItem id ='camera-btn2' onClick = {handleclick2}>
+                  <IconButton size="large" aria-label="show 4 new mails" color="inherit" >
+                            <CameraEnhanceIcon />
+                 </IconButton>
+                 <p>New post</p>
             </MenuItem>
             <MenuItem>
                 <IconButton
@@ -207,8 +218,9 @@ export default function PrimarySearchAppBar() {
                             aria-label="account of current user"
                             aria-controls={menuId}
                             aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
+                            onClick={() => props.setShowBarProfile(true )}
                             color="inherit"
+                           
                         >
                             <AccountCircle />
                         </IconButton>

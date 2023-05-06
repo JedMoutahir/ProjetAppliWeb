@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import Login from './Components/Login.js';
 import Feed from './Components/feed.js';
 import Profile from './Components/Profile.js';
-import SavedPosts from './Components/SavedPost.js';
-
+import SavedPosts from './Components/SavedPost.tsx';
 import './App.css';
 
 function App() {
@@ -17,21 +16,22 @@ function App() {
     setIsLoggedIn(true);
   };
  
-
+console.log(showFeed);
 
   return (
     <div className="App">
       {isLoggedIn ? (
         <>
           {showSavedPosts ? (
-            <SavedPosts setShowProfile={setShowProfile} setShowFeed={setShowFeed} setShowSavedPosts={setShowSavedPosts} />
+              <SavedPosts setShowProfile={setShowProfile}  setShowFeed={setShowFeed} setShowSavedPosts={setShowSavedPosts} />
           ) : (
             showFeed ? (
               <Feed setShowProfile={setShowProfile} setShowFeed={setShowFeed} setShowSavedPosts={setShowSavedPosts}/>
-            ) : (
+              
+             ) : (
               showProfile ? (
-                <Profile setShowProfile={setShowProfile} setShowFeed={setShowFeed} setShowSavedPosts={setShowSavedPosts}/>
-              ) : (
+                <Profile setShowProfile={setShowProfile} setShowFeed={setShowFeed} setShowSavedPosts={setShowSavedPosts}/> 
+                ) : (
                 <Feed setShowProfile={setShowProfile} setShowFeed={setShowFeed} setShowSavedPosts={setShowSavedPosts} />    
               )
             )
