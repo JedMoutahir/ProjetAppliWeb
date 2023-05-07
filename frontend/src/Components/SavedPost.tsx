@@ -25,11 +25,8 @@ import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import InfoIcon from '@mui/icons-material/Info';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-
-// custom
 import filesTheme from './theme.tsx';
-import Menu from './Menu.tsx';
-import Layout from './Layout.tsx';
+import Layout from './Layout.tsx'
 
 function ColorSchemeToggle() {
   const { mode, setMode } = useColorScheme();
