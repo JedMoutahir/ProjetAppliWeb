@@ -405,7 +405,7 @@ export default function PostExample(props) {
           }}
         >
           <Box sx={{ p: 2, display: 'flex', alignItems: 'center', }}>
-            <Typography sx={{ flex: 1 ,color:'black'}}>torres-del-paine.png</Typography>
+            <Typography sx={{ flex: 1 ,color:'black'}}>Last saved post</Typography>
             <IconButton variant="outlined" color="neutral" size="sm">
               <CloseIcon />
             </IconButton>
