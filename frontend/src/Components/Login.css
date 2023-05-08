@@ -161,3 +161,29 @@ a.login__google span{
 	opacity :0.6;
 	color: #232836;
 }
+.eye-icon.show i {
+	display: none;
+  }
+  
+.eye-icon.hide i {
+	display: block;
+  }
+  
+.eye-icon i {
+	font-size: 18px;
+	position: absolute;
+	right: 10px;
+	transform: translateY(-50%);
+	color: #8b8b8b;
+	cursor: pointer;
+	padding: 5px;
+  }
+  
+.eye-icon .bx-show {
+	display: none;
+  }
+  
+.eye-icon .bx-hide {
+	display: block;
+  }
+  
