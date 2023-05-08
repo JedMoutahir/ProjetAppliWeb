@@ -52,8 +52,10 @@ function SignUp(props) {
     }, []);
 
     const [showPassword, setShowPassword] = React.useState(false);
+    const [showPasswordConfirm, setShowPasswordConfirm] = React.useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleClickShowPasswordConfirm = () => setShowPasswordConfirm((show) => !show);
 
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
@@ -102,16 +104,16 @@ function SignUp(props) {
                                 <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                                 <OutlinedInput
                                     id="outlined-adornment-password"
-                                    type={showPassword ? 'text' : 'password'}
+                                    type={showPasswordConfirm ? 'text' : 'password'}
                                     endAdornment={
                                         <InputAdornment position="end">
                                             <IconButton
                                                 aria-label="toggle password visibility"
-                                                onClick={handleClickShowPassword}
+                                                onClick={handleClickShowPasswordConfirm}
                                                 onMouseDown={handleMouseDownPassword}
                                                 edge="end"
                                             >
-                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                {showPasswordConfirm ? <VisibilityOff /> : <Visibility />}
                                             </IconButton>
                                         </InputAdornment>
                                     }
