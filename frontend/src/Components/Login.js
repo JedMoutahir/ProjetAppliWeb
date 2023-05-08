@@ -50,7 +50,7 @@ function Login(props) {
                 width: "100%",
               }}
                 id="outlined-basic"
-                label="email"
+                label="username"
                 variant="outlined"
               />
               <FormControl sx={{ marginTop: "5px", width: '100%' }} variant="outlined">
@@ -81,7 +81,7 @@ function Login(props) {
             </form>
             <div class="form-link">
               <br />
-              <span> Already have an account?</span>
+              <span> Don't have an account yet?</span>
             </div>
             <div class="field button-field">
               <button onClick={handleSignUp}>SignUp</button>

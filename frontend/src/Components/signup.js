@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import './Login.css';
 import 'boxicons/css/boxicons.min.css';
@@ -7,17 +7,22 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
+import Radio from '@mui/material/Radio';
+import { RadioGroup, FormControlLabel,FormLabel  } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import App from '../App';
+
 
 
 
 function SignUp(props) {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -28,30 +33,14 @@ function SignUp(props) {
     const handleLogin = () => {
         setIsLoggedIn(true);
       };
-    useEffect(() => {
-        const pwShowHide = document.querySelectorAll(".eye-icon");
+    const handleBirthDateChange = useCallback((date) => {
+        setBirthDate(date);
+      }, []);
 
-        pwShowHide.forEach((eyeIcon) => {
-
-
-            eyeIcon.addEventListener("click", () => {
-                console.log("Click event fired");
-                let pwFields = eyeIcon.parentElement.parentElement.querySelectorAll(".password");
-
-                pwFields.forEach((password) => {
-                    if (password.type === "password") {
-                        password.type = "text";
-                        eyeIcon.classList.replace("bx-hide", "bx-show");
-                        return;
-                    }
-                    password.type = "password";
-                    eyeIcon.classList.replace("bx-show", "bx-hide");
-                });
-            });
-        });
-    }, []);
+    
 
     const [showPassword, setShowPassword] = React.useState(false);
+    const [birthDate, setBirthDate] = React.useState(false);
     const [showPasswordConfirm, setShowPasswordConfirm] = React.useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -78,7 +67,23 @@ function SignUp(props) {
                     <div class="form-content">
                         <header>Signup</header>
                         <form action="#">
-                            <TextField sx={{ width: "100%", }} id="outlined-basic" label="email" variant="outlined" />
+                           
+                            
+                            <TextField sx={{ marginTop: "5px", width: "100%", }} id="outlined-basic" label="email" variant="outlined" />
+                            <TextField sx={{ width: "100%", marginTop: "5px" }} id="outlined-basic" label="username" variant="outlined" />
+                            
+                            <DatePicker
+                                sx={{ marginTop: "5px", width: "100%", }}
+                                id="birth-date"
+                                selected={birthDate}
+                                onChange={handleBirthDateChange}
+                                dateFormat="dd/MM/yyyy"
+                                showYearDropdown
+                                scrollableYearDropdown
+                                yearDropdownItemNumber={100}
+                                placeholderText="Select your birth date"
+                                withPortal={true}
+                                />
                             <FormControl sx={{ marginTop: "5px", width: '100%' }} variant="outlined">
                                 <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                                 <OutlinedInput
@@ -101,7 +106,7 @@ function SignUp(props) {
                             </FormControl>
 
                             <FormControl sx={{ marginTop: "5px", width: '100%' }} variant="outlined">
-                                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                <InputLabel htmlFor="outlined-adornment-password">Confirm Password</InputLabel>
                                 <OutlinedInput
                                     id="outlined-adornment-password"
                                     type={showPasswordConfirm ? 'text' : 'password'}
@@ -117,8 +122,20 @@ function SignUp(props) {
                                             </IconButton>
                                         </InputAdornment>
                                     }
-                                    label="Password"
+                                    label="Confirm Password"
                                 />
+                            </FormControl>
+                            <FormControl sx={{ marginTop: "5px"}} variant="outlined">
+                                <FormLabel sx={{ marginTop: "5px" }} id="demo-radio-buttons-group-label">Gender</FormLabel>
+                                <RadioGroup
+                                aria-labelledby="demo-radio-buttons-group-label"
+                                defaultValue="female"
+                                name="radio-buttons-group"
+                                row
+                                >
+                                <FormControlLabel value="female" control={<Radio />} label="Female" />
+                                <FormControlLabel value="male" control={<Radio />} label="Male" />
+                                 </RadioGroup>
                             </FormControl>
                             <div class="field button-field">
                                 <button>SignUp</button>
