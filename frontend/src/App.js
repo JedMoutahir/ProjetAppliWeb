@@ -20,7 +20,6 @@ function App() {
 
   return (
     <div className="App" id="root">
-      {isLoggedIn ? (
         <>
           {showSavedPosts ? (
             <SavedPosts setShowProfile={setShowProfile} setShowFeed={setShowFeed} setShowSavedPosts={setShowSavedPosts} />
@@ -37,9 +36,7 @@ function App() {
             )
           )}
         </>
-      ) : (
-        <Login onLogin={handleLogin} />
-      )}
+      }
     </div>
   );
 }
