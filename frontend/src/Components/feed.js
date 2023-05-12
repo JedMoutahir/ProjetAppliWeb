@@ -21,25 +21,25 @@ function Feed(props) {
   var cards = [
     {
       name: "Lena Rose",
-      profile_picture: "profile.jpg",
+      avatar: "profile.jpg",
       post: "Fox.jpg",
       likes: 50,
       tag: "Fox",
-      tag_general : "Animal"
+      general_tag : "Animal"
     }, {
       name: "John Doe",
-      profile_picture: "profile2.jpg",
+      avatar: "profile2.jpg",
       post: "plant.webp",
       likes: 30,
       tag: "Plant",
-      tag_general: "Nature"
+      general_tag: "Nature"
     }, {
       name: "Alex Sabatier",
-      profile_picture: "profile2.jpg",
+      avatar: "profile2.jpg",
       post: "avocat.jpg",
       likes: 3,
       tag: "Avocat",
-      tag_general: "Food"
+      general_tag: "Food"
     }
   ]
 
@@ -162,13 +162,13 @@ function Feed(props) {
       <div className="cards">
         
         {
-          cards.filter(card => keywords.length === 0 || keywords.includes(card.tag_general) ).map(card => {
+          cards.filter(card => keywords.length === 0 || keywords.includes(card.general_tag) ).map(card => {
             
 
             return (
               <div className="card">
                 <div className="profile">
-                  <img className="profile-pic" src={card.profile_picture} />
+                  <img className="profile-pic" src={card.avatar} />
                   <h4 className="Name"><b>{card.name}</b></h4>
                 </div>
                 <img className="post" src={card.post} alt="Avatar"/>
