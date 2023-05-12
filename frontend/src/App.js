@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Login from './Components/Login.tsx';
+import Login from './Components/Login.js';
 import Feed from './Components/feed.js';
 import Profile from './Components/Profile.js';
 import SavedPosts from './Components/SavedPost.tsx';
