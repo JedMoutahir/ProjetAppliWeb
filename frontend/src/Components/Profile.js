@@ -1,7 +1,6 @@
 import * as React from 'react';
 import './Profile.css';
 import { Tooltip } from '@mui/material';
-import Box from '@mui/joy/Box';
 import BottomAppBar from './notifications';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -112,7 +111,7 @@ const UserProfile = ({ user }) => {
   return (
     <div className="user-profile">
       <ul>
-      <h1 className="name">{user.name}</h1>
+      <h1 className="name">{user.username}</h1>
       <p className="bio">{user.bio}</p>
       </ul>
       <ul className="stats">
