@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import './Signup.css';
 import 'boxicons/css/boxicons.min.css';
@@ -20,17 +20,7 @@ import App from '../App';
 
 function SignUp(props) {
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const handleSubmit = (event) => {
-        event.preventDefault();
 
-        props.onLogin();
-
-    };
-
-    const handleLogin = () => {
-        setIsLoggedIn(true);
-      };
     const handleBirthDateChange = useCallback((date) => {
         setBirthDate(date);
       }, []);
@@ -145,9 +135,7 @@ function SignUp(props) {
         </>
     );
 }
-let signupBtn = document.getElementById("signupBtn");
-let nameField = document.getElementById("nameField");
-let title = document.getElementById("title");
+
 
 
 export default SignUp;
