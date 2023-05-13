@@ -132,7 +132,7 @@ export default function PrimarySearchAppBar({ searchInput, setSearchInput }) {
             onClose={handleMobileMenuClose}
         >
             <MenuItem id ='camera-btn2' onClick = {handleclick2}>
-                  <IconButton size="large" aria-label="show 4 new mails" color="inherit" >
+                  <IconButton size="large" color="inherit" >
                             <CameraEnhanceIcon />
                  </IconButton>
                  <p>New post</p>
@@ -153,9 +153,10 @@ export default function PrimarySearchAppBar({ searchInput, setSearchInput }) {
     );
 
     return (
-        <Box sx={{ flexGrow: 1,  }}>
+        <Box sx={{ flexGrow: 1, }}>
             <AppBar sx = {{
                 backgroundColor : '#607D8B',
+                width:'100%',
             }} position="static">
                 <Toolbar>
                     <IconButton
@@ -180,7 +181,7 @@ export default function PrimarySearchAppBar({ searchInput, setSearchInput }) {
                             <SearchIcon />
                         </SearchIconWrapper>
                         <StyledInputBase
-                            sx ={{marginLeft :'65px',}}
+                            sx ={{marginLeft :'80px',}}
                             placeholder="Search…"
                             value={searchInput}
                             onChange={handleSearchInputChange}
@@ -189,7 +190,7 @@ export default function PrimarySearchAppBar({ searchInput, setSearchInput }) {
                     </Search>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                        <IconButton size="large"  color="inherit">
                             <CameraEnhanceIcon id="camera-btn" onClick = {handleclick} />
                         </IconButton>
                         <IconButton
