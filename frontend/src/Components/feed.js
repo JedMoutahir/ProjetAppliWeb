@@ -1,7 +1,6 @@
 import React from "react";
 import './Feed.css';
 import { useState } from 'react';
-import Profile from "./Profile";
 import FilterOptions from "./Filter";
 import PrimarySearchAppBar from "./ProfileBar";
 import HomeIcon from '@mui/icons-material/Home';
@@ -45,8 +44,9 @@ function Feed(props) {
 
   const [imagePreview, setImagePreview] = useState("");
   const [keywords, setKeywords] = useState([]);
-  const [showBarProfile, setShowBarProfile] = useState(false);
+  const [searchInput, setSearchInput] = React.useState('');
 
+  console.log(searchInput);
 
   function previewImage(event) {
     const file = event.target.files[0];
@@ -60,10 +60,8 @@ function Feed(props) {
   }
   return (
     
-    <div>
-    {showBarProfile ? (
-       <Profile setShowBarProfile={setShowBarProfile} setShowProfile={props.setShowProfile} setShowFeed={props.setShowFeed} setShowSavedPosts={props.setShowSavedPosts}/>
-       ) : (
+    <div className ="Feed">
+    
     <>
     <nav>
         <ul>
@@ -136,10 +134,7 @@ function Feed(props) {
         </ul>
       </nav>
       <div className = "Search-bar">
-      <PrimarySearchAppBar
-              showBarProfile={showBarProfile}
-              setShowBarProfile={setShowBarProfile}
-            />
+      <PrimarySearchAppBar searchInput={searchInput} setSearchInput={setSearchInput}/>
      </div>
       <div className="popup">
         <div className="wrapper">
@@ -162,7 +157,7 @@ function Feed(props) {
       <div className="cards">
         
         {
-          cards.filter(card => keywords.length === 0 || keywords.includes(card.general_tag) ).map(card => {
+          cards.filter(card => (keywords.length === 0 || keywords.includes(card.general_tag)) && card.name.toLowerCase().includes(searchInput.toLowerCase())).map(card => {
             
 
             return (
@@ -213,7 +208,6 @@ function Feed(props) {
 
       </div>
   </>
-   )}
   </div>
   )
       

@@ -11,7 +11,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import CameraEnhanceIcon from '@mui/icons-material/CameraEnhance';
@@ -56,16 +55,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function PrimarySearchAppBar(props) {
+export default function PrimarySearchAppBar({ searchInput, setSearchInput }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-    const handleProfileMenuOpen = (event) => {
-        setAnchorEl(event.currentTarget);
+    const handleSearchInputChange = event => {
+      setSearchInput(event.target.value);
     };
-    
+
 
     const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);
@@ -150,18 +149,6 @@ export default function PrimarySearchAppBar(props) {
                 </IconButton>
                 <p>Notifications</p>
             </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                <p>Profile</p>
-            </MenuItem>
         </Menu>
     );
 
@@ -195,6 +182,8 @@ export default function PrimarySearchAppBar(props) {
                         <StyledInputBase
                             sx ={{marginLeft :'65px',}}
                             placeholder="Search…"
+                            value={searchInput}
+                            onChange={handleSearchInputChange}
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
@@ -212,18 +201,7 @@ export default function PrimarySearchAppBar(props) {
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
-                        <IconButton
-                            size="large"
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={() => props.setShowBarProfile(true )}
-                            color="inherit"
-                           
-                        >
-                            <AccountCircle />
-                        </IconButton>
+                       
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
