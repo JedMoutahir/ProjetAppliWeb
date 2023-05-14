@@ -84,17 +84,7 @@ function Profile(props) {
               <h6 className="text" >Settings</h6>
             </a>
           </li>
-          <li>
-            <a href="#">
-            <InfoIcon 
-              sx ={{
-                color:'white', marginLeft :'-240px', marginTop :'40px',
-                }}>
-
-              </InfoIcon>
-             <h6 className="text">Help</h6>
-            </a>
-          </li>
+          
           <li>
             <a href="./Login" className="logout">
             <ExitToAppIcon 

@@ -142,17 +142,7 @@ export default function PostExample(props) {
               <h6 className="text" >Settings</h6>
             </a>
           </li>
-          <li>
-            <a href="#">
-            <InfoIcon 
-              sx ={{
-                color:'white', marginLeft :'-240px', marginTop :'40px',width :'24px', height :'24px',
-                }}>
-
-              </InfoIcon>
-             <h6 className="text">Help</h6>
-            </a>
-          </li>
+          
           <li>
             <a href="./Login" className="logout">
             <ExitToAppIcon 

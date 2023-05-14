@@ -92,7 +92,7 @@ function Feed(props) {
             <a onClick={handleShowProfile}>
             <PersonIcon 
               sx ={{
-                color:'white', marginLeft :'-240px', marginTop :'40px',
+                color:'white', marginLeft :'-240px', marginTop :'48px',
                 }}>
 
               </PersonIcon>
@@ -103,7 +103,7 @@ function Feed(props) {
             <a onClick={handleShowSavedPosts}>
             <BookmarkAddedIcon 
               sx ={{
-                color:'white', marginLeft :'-240px', marginTop :'40px',
+                color:'white', marginLeft :'-240px', marginTop :'48px',
                 }}>
 
               </BookmarkAddedIcon>
@@ -114,24 +114,14 @@ function Feed(props) {
             <a href="#">
             <SettingsSuggestIcon 
               sx ={{
-                color:'white', marginLeft :'-240px', marginTop :'40px',
+                color:'white', marginLeft :'-240px', marginTop :'48px',
                 }}>
 
               </SettingsSuggestIcon> 
               <h6 className="text" >Settings</h6>
             </a>
           </li>
-          <li>
-            <a href="#">
-            <InfoIcon 
-              sx ={{
-                color:'white', marginLeft :'-240px', marginTop :'40px',
-                }}>
-
-              </InfoIcon>
-             <h6 className="text">Help</h6>
-            </a>
-          </li>
+         
           <li>
             <a href="./Login" className="logout">
             <ExitToAppIcon 
