@@ -18,16 +18,29 @@ import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import InfoIcon from '@mui/icons-material/Info';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-
+import ReactDOM from 'react-dom';
+import SavedPost from './SavedPost.tsx'
+import Feed from './feed';
 
 
 function Profile(props) {
+  const handleShowProfile = (event) => {
+    ReactDOM.render(<Profile />, document.getElementById('Feed'));
+   };
+
+   const handleShowFeed = (event) => {
+    ReactDOM.render(<Feed />, document.getElementById('Feed'));
+   }; 
+
+   const handleShowSavedPosts = (event) => {
+    ReactDOM.render(<SavedPost />, document.getElementById('Feed'));
+   };
   return (
     <> 
  <nav>
         <ul>
           <li>
-            <a onClick={() => props.setShowFeed(true)}>
+            <a onClick={handleShowFeed}>
               <HomeIcon 
               sx ={{
                 color:'white', marginLeft :'-240px', marginTop :'20px',
@@ -39,7 +52,7 @@ function Profile(props) {
           </li>
 
           <li>
-            <a onClick={() => props.setShowProfile(true)}>
+            <a onClick={handleShowProfile}>
             <PersonIcon 
               sx ={{
                 color:'white', marginLeft :'-240px', marginTop :'40px',
@@ -50,7 +63,7 @@ function Profile(props) {
             </a>
           </li>
           <li>
-            <a onClick={() => props.setShowSavedPosts(true)}>
+            <a onClick={handleShowSavedPosts}>
             <BookmarkAddedIcon 
               sx ={{
                 color:'white', marginLeft :'-240px', marginTop :'40px',

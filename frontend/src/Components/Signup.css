@@ -40,7 +40,7 @@ margin-top:7%;
     margin-top:-10%;
 	font-weight: 600;
 	color: #20033a;
-	text-align: left;
+	text-align: center;
 }
 .form .field{
 	position: relative;
@@ -216,3 +216,7 @@ a.login__google span{
 	border: 1px solid #ccc;
 	font-size: 16px;
   }
+  .button-field{
+	background-color :white;
+  }
+  

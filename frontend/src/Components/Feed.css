@@ -4,8 +4,6 @@ body{
 
 }
 
-
-
 nav{
   position:fixed;
   top:0px;
@@ -45,13 +43,7 @@ nav:hover{
  top:89%;
 }
 
-.icon{
-  position:relative;
-  color : #1E1E1E;
-  width:20px;
-  height:20px;
-  margin-top:25px;
-}
+
 
 .text{
  margin-top:-25px;

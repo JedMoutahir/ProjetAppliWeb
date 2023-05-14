@@ -50,7 +50,7 @@ function SignUp(props) {
 
                 <div class="form signup">
                     <div class="form-content">
-                        <header className='signupHeader'>Signup</header>
+                        <header className='signupHeader'>Sign up</header>
                         <form action="#">
                            
                             

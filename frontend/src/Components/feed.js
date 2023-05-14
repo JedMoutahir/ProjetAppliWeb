@@ -13,7 +13,9 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import LoyaltyIcon from '@mui/icons-material/Loyalty';
 import CancelIcon from '@mui/icons-material/Cancel';
-
+import Profile from "./Profile";
+import ReactDOM from 'react-dom';
+import SavedPost from './SavedPost.tsx'
 
 function Feed(props) {
 
@@ -58,15 +60,25 @@ function Feed(props) {
 
     reader.readAsDataURL(file);
   }
+  const handleShowProfile = (event) => {
+    ReactDOM.render(<Profile />, document.getElementById('Feed'));
+   };
+
+   const handleShowFeed = (event) => {
+    ReactDOM.render(<Feed />, document.getElementById('Feed'));
+   }; 
+
+   const handleShowSavedPosts = (event) => {
+    ReactDOM.render(<SavedPost />, document.getElementById('Feed'));
+   }; 
   return (
     
-    <div className ="Feed">
-    
+    <div id ="Feed">
     <>
     <nav>
         <ul>
           <li>
-            <a onClick={() => props.setShowFeed(true)}>
+            <a onClick={handleShowFeed}>
               <HomeIcon 
               sx ={{
                 color:'white', marginLeft :'-240px', marginTop :'20px',
@@ -77,7 +89,7 @@ function Feed(props) {
           </li>
 
           <li>
-            <a onClick={() => props.setShowProfile(true)}>
+            <a onClick={handleShowProfile}>
             <PersonIcon 
               sx ={{
                 color:'white', marginLeft :'-240px', marginTop :'40px',
@@ -88,7 +100,7 @@ function Feed(props) {
             </a>
           </li>
           <li>
-            <a onClick={() => props.setShowSavedPosts(true)}>
+            <a onClick={handleShowSavedPosts}>
             <BookmarkAddedIcon 
               sx ={{
                 color:'white', marginLeft :'-240px', marginTop :'40px',

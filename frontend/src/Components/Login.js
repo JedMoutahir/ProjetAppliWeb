@@ -27,8 +27,6 @@ function Login(props) {
 
   };
 
-
-
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -39,11 +37,10 @@ function Login(props) {
 
   return (
     <>
-    
       <section id="container forms" className="container forms">
          <div className="form login">
           <div className="form-content">
-            <header id ='loginHeader'>LogIn</header>
+            <header id ='loginHeader'>Login</header>
             <form  action="#">
               <TextField sx={{
                 width: "100%",
@@ -73,7 +70,7 @@ function Login(props) {
                 />
               </FormControl>
 
-              <div className="field button-field">
+              <div className="field button-field ">
                 <button onClick={handleSubmit}>LogIn</button>
 
               </div>
@@ -82,7 +79,7 @@ function Login(props) {
               <br />
               <span> Don't have an account yet?</span>
             </div>
-            <div className="field button-field">
+            <div className="field button-field ">
               <button onClick={handleSignUp}>SignUp</button>
 
             </div>
