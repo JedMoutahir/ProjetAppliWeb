@@ -1,8 +1,9 @@
 package pack;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
@@ -27,9 +28,9 @@ public class Facade {
     @Consumes({ "multipart/form-data" })
     public void upload(@MultipartForm FileUploadForm form) {
         String fileName = form.getFileName();
-        String completeFilePath = "/tmp/" + fileName;
+        String completeFilePath = "C:/Users/rachi/OneDrive/Bureau/test/" + fileName;
         try {
-            System.out.println(fileName);
+          System.out.println(fileName);
           File file = new File(completeFilePath);
           if (!file.exists()) file.createNewFile();
           FileOutputStream fos = new FileOutputStream(file);
@@ -38,6 +39,49 @@ public class Facade {
           fos.close();
         } catch (Exception e) {
           e.printStackTrace();
+        }
+    }
+	
+	@POST
+    @Path("/analyze")
+    @Consumes({ "multipart/form-data" })
+	@Produces({"application/json"})
+    public String analyze(@MultipartForm FileUploadForm form) {
+        String fileName = form.getFileName();
+        String completeFilePath = "/tmp/" + fileName;
+        String Output = "Error in analyze in Facade.java";
+        try {
+          System.out.println(fileName);
+          File file = new File(completeFilePath);
+          System.out.println(completeFilePath);
+          if (!file.exists()) file.createNewFile();
+          FileOutputStream fos = new FileOutputStream(file);
+          fos.write(form.getFileData());
+          fos.flush();
+          fos.close();
+          System.out.println("File " + fileName + " successfully uploaded. Waiting for AI server.");
+          File fileOutput = new File(completeFilePath + ".labelOutput");
+          Date date = new Date();
+          long timeMilli = date.getTime();
+          while (!file.exists() || date.getTime() - timeMilli < 4000 ) {
+        	  // The image is still processing
+          }
+          FileInputStream fis = new FileInputStream(fileOutput);
+          int content;
+          String fileContent = "";
+          // reads a byte at a time, if it reached end of the file, returns -1
+          System.out.println("Beginning to read : ");
+          while ((content = fis.read()) != -1) {
+              System.out.println((char)content);
+              fileContent += (char) content;
+          }
+          fis.close();
+          System.out.println(fileContent);
+          return fileContent;
+        } catch (Exception e) {
+          e.printStackTrace();
+        } finally {
+        	return Output;
         }
     }
 	
