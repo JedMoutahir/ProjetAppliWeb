@@ -1,7 +1,9 @@
 package pack;
 
 import java.io.File;
+import java.nio.file.*;
 import java.io.*;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +18,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.*;
 
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
@@ -26,24 +29,24 @@ public class Facade {
 	@PersistenceContext
 	EntityManager em;
 	
-	@POST
-    @Path("/upload")
-    @Consumes({ "multipart/form-data" })
-    public void upload(@MultipartForm FileUploadForm form) {
-        String fileName = form.getFileName();
-        String completeFilePath = "C:/Users/rachi/OneDrive/Bureau/test/" + fileName;
-        try {
-          System.out.println(fileName);
-          File file = new File(completeFilePath);
-          if (!file.exists()) file.createNewFile();
-          FileOutputStream fos = new FileOutputStream(file);
-          fos.write(form.getFileData());
-          fos.flush();
-          fos.close();
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-    }
+//	@POST
+//    @Path("/upload")
+//    @Consumes({ "multipart/form-data" })
+//    public void upload(@MultipartForm FileUploadForm form) {
+//        String fileName = form.getFileName();
+//        String completeFilePath = "C:/Users/rachi/OneDrive/Bureau/test/" + fileName;
+//        try {
+//          System.out.println(fileName);
+//          File file = new File(completeFilePath);
+//          if (!file.exists()) file.createNewFile();
+//          FileOutputStream fos = new FileOutputStream(file);
+//          fos.write(form.getFileData());
+//          fos.flush();
+//          fos.close();
+//        } catch (Exception e) {
+//          e.printStackTrace();
+//        }
+//    }
 	
 //	@POST
 //    @Path("/analyze")
@@ -151,6 +154,27 @@ public class Facade {
 	        return response;
 	    }
 	}
+	
+	@GET
+	@Path("/listposts")
+	@Produces({ "application/json" })
+	public JsonArray listPosts() {
+	    List<Post> posts = em.createQuery("SELECT p FROM Post p", Post.class).getResultList();
+
+	    JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+	    for (Post post : posts) {
+	        arrayBuilder.add(Json.createObjectBuilder()
+	            .add("id_post", post.getId_post())
+	            .add("date", post.getDate())
+	            .add("likes", post.getLikes())
+	            .add("tag", post.getTag())
+	            .add("general_tag", post.getGeneral_tag())
+	            .add("title", post.getTitle())
+	        );
+	    }
+
+	    return arrayBuilder.build();
+	}
 
 	@POST
 	@Path("/addperson")
@@ -191,4 +215,48 @@ public class Facade {
 		a.setOwner(p);
 	}
 	
+	@POST
+	@Path("/upload")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response uploadImage(JsonObject json) {
+	    String destinationFolder = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/ImageClassification/bank_images/";
+	    try {
+	        String filename = json.getString("filename");
+	        JsonArray contentArray = json.getJsonArray("content");
+	        JsonObject contentObject = contentArray.getJsonObject(0);
+	        String base64Content = contentObject.getString("stream");
+	        byte[] fileContent = Base64.getDecoder().decode(base64Content);
+	        InputStream fileInputStream = new ByteArrayInputStream(fileContent);
+
+	        // Save the image to the destination folder
+	        saveImage(fileInputStream, destinationFolder, filename);
+
+	        JsonObject response = Json.createObjectBuilder()
+	                .add("success", true)
+	                .add("message", "Image uploaded successfully")
+	                .build();
+
+	        return Response.ok(response).build();
+	    } catch (IOException | NullPointerException e) {
+	        JsonObject response = Json.createObjectBuilder()
+	                .add("success", false)
+	                .add("message", "Error uploading the image")
+	                .build();
+
+	        return Response.serverError().entity(response).build();
+	    }
+	}
+
+	private void saveImage(InputStream inputStream, String destinationFolder, String filename) throws IOException {
+	    File folder = new File(destinationFolder);
+
+	    // If the destination folder doesn't exist, create it
+	    if (!folder.exists()) {
+	        folder.mkdirs();
+	    }
+
+	    // Save the image file to the destination folder
+	    File outputFile = new File(folder, filename);
+	    Files.copy(inputStream, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+	}
 }
