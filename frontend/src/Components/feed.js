@@ -1,7 +1,6 @@
 import React from "react";
 import './Feed.css';
 import { useState } from 'react';
-import Profile from "./Profile";
 import FilterOptions from "./Filter";
 import PrimarySearchAppBar from "./ProfileBar";
 import HomeIcon from '@mui/icons-material/Home';
@@ -14,39 +13,42 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import LoyaltyIcon from '@mui/icons-material/Loyalty';
 import CancelIcon from '@mui/icons-material/Cancel';
-
+import Profile from "./Profile";
+import ReactDOM from 'react-dom';
+import SavedPost from './SavedPost.tsx'
 
 function Feed(props) {
 
   var cards = [
     {
       name: "Lena Rose",
-      profile_picture: "profile.jpg",
+      avatar: "profile.jpg",
       post: "Fox.jpg",
       likes: 50,
       tag: "Fox",
-      tag_general : "Animal"
+      general_tag : "Animal"
     }, {
       name: "John Doe",
-      profile_picture: "profile2.jpg",
+      avatar: "profile2.jpg",
       post: "plant.webp",
       likes: 30,
       tag: "Plant",
-      tag_general: "Nature"
+      general_tag: "Nature"
     }, {
       name: "Alex Sabatier",
-      profile_picture: "profile2.jpg",
+      avatar: "profile2.jpg",
       post: "avocat.jpg",
       likes: 3,
       tag: "Avocat",
-      tag_general: "Food"
+      general_tag: "Food"
     }
   ]
 
   const [imagePreview, setImagePreview] = useState("");
   const [keywords, setKeywords] = useState([]);
-  const [showBarProfile, setShowBarProfile] = useState(false);
+  const [searchInput, setSearchInput] = React.useState('');
 
+  console.log(searchInput);
 
   function previewImage(event) {
     const file = event.target.files[0];
@@ -58,17 +60,25 @@ function Feed(props) {
 
     reader.readAsDataURL(file);
   }
+  const handleShowProfile = (event) => {
+    ReactDOM.render(<Profile />, document.getElementById('Feed'));
+   };
+
+   const handleShowFeed = (event) => {
+    ReactDOM.render(<Feed />, document.getElementById('Feed'));
+   }; 
+
+   const handleShowSavedPosts = (event) => {
+    ReactDOM.render(<SavedPost />, document.getElementById('Feed'));
+   }; 
   return (
     
-    <div>
-    {showBarProfile ? (
-       <Profile setShowBarProfile={setShowBarProfile} setShowProfile={props.setShowProfile} setShowFeed={props.setShowFeed} setShowSavedPosts={props.setShowSavedPosts}/>
-       ) : (
+    <div id ="Feed">
     <>
     <nav>
         <ul>
           <li>
-            <a onClick={() => props.setShowFeed(true)}>
+            <a onClick={handleShowFeed}>
               <HomeIcon 
               sx ={{
                 color:'white', marginLeft :'-240px', marginTop :'20px',
@@ -79,10 +89,10 @@ function Feed(props) {
           </li>
 
           <li>
-            <a onClick={() => props.setShowProfile(true)}>
+            <a onClick={handleShowProfile}>
             <PersonIcon 
               sx ={{
-                color:'white', marginLeft :'-240px', marginTop :'40px',
+                color:'white', marginLeft :'-240px', marginTop :'48px',
                 }}>
 
               </PersonIcon>
@@ -90,10 +100,10 @@ function Feed(props) {
             </a>
           </li>
           <li>
-            <a onClick={() => props.setShowSavedPosts(true)}>
+            <a onClick={handleShowSavedPosts}>
             <BookmarkAddedIcon 
               sx ={{
-                color:'white', marginLeft :'-240px', marginTop :'40px',
+                color:'white', marginLeft :'-240px', marginTop :'48px',
                 }}>
 
               </BookmarkAddedIcon>
@@ -104,24 +114,14 @@ function Feed(props) {
             <a href="#">
             <SettingsSuggestIcon 
               sx ={{
-                color:'white', marginLeft :'-240px', marginTop :'40px',
+                color:'white', marginLeft :'-240px', marginTop :'48px',
                 }}>
 
               </SettingsSuggestIcon> 
               <h6 className="text" >Settings</h6>
             </a>
           </li>
-          <li>
-            <a href="#">
-            <InfoIcon 
-              sx ={{
-                color:'white', marginLeft :'-240px', marginTop :'40px',
-                }}>
-
-              </InfoIcon>
-             <h6 className="text">Help</h6>
-            </a>
-          </li>
+         
           <li>
             <a href="./Login" className="logout">
             <ExitToAppIcon 
@@ -136,10 +136,7 @@ function Feed(props) {
         </ul>
       </nav>
       <div className = "Search-bar">
-      <PrimarySearchAppBar
-              showBarProfile={showBarProfile}
-              setShowBarProfile={setShowBarProfile}
-            />
+      <PrimarySearchAppBar searchInput={searchInput} setSearchInput={setSearchInput}/>
      </div>
       <div className="popup">
         <div className="wrapper">
@@ -162,13 +159,13 @@ function Feed(props) {
       <div className="cards">
         
         {
-          cards.filter(card => keywords.length === 0 || keywords.includes(card.tag_general) ).map(card => {
+          cards.filter(card => (keywords.length === 0 || keywords.includes(card.general_tag)) && card.name.toLowerCase().includes(searchInput.toLowerCase())).map(card => {
             
 
             return (
               <div className="card">
                 <div className="profile">
-                  <img className="profile-pic" src={card.profile_picture} />
+                  <img className="profile-pic" src={card.avatar} />
                   <h4 className="Name"><b>{card.name}</b></h4>
                 </div>
                 <img className="post" src={card.post} alt="Avatar"/>
@@ -213,7 +210,6 @@ function Feed(props) {
 
       </div>
   </>
-   )}
   </div>
   )
       

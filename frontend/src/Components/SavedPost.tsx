@@ -25,6 +25,10 @@ import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import InfoIcon from '@mui/icons-material/Info';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import ReactDOM from 'react-dom';
+import SavedPost from './SavedPost.tsx'
+import Feed from './feed';
+import Profile from './Profile.js';
 import filesTheme from './theme.tsx';
 import Layout from './Layout.tsx'
 
@@ -58,6 +62,17 @@ function ColorSchemeToggle() {
 
 export default function PostExample(props) {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const handleShowProfile = (event) => {
+    ReactDOM.render(<Profile />, document.getElementById('Feed'));
+   };
+
+   const handleShowFeed = (event) => {
+    ReactDOM.render(<Feed />, document.getElementById('Feed'));
+   }; 
+
+   const handleShowSavedPosts = (event) => {
+    ReactDOM.render(<SavedPost />, document.getElementById('Feed'));
+   };
   return (
     <CssVarsProvider disableTransitionOnChange theme={filesTheme}>
       <CssBaseline />
@@ -76,17 +91,17 @@ export default function PostExample(props) {
       >
     <Layout.Header sx={{ backgroundColor:'transparent',width :'90%',marginLeft:'8%',display: 'absolute', }}>
       <Box sx={{ display: 'absolute', marginLeft:'95%'}}>
-        <ColorSchemeToggle />
+        <ColorSchemeToggle/>
       </Box>
     </Layout.Header>
 
         <nav>
         <ul>
           <li>
-            <a onClick={() => props.setShowFeed(true)}>
+            <a onClick={handleShowFeed}>
               <HomeIcon 
               sx ={{
-                color:'white', marginLeft :'-240px', marginTop :'20px',
+                color:'white', marginLeft :'-240px', marginTop :'20px',width :'24px', height :'24px',
                 }}>
 
               </HomeIcon>
@@ -95,10 +110,10 @@ export default function PostExample(props) {
           </li>
 
           <li>
-            <a onClick={() => props.setShowProfile(true)}>
+            <a onClick={handleShowProfile}>
             <PersonIcon 
               sx ={{
-                color:'white', marginLeft :'-240px', marginTop :'40px',
+                color:'white', marginLeft :'-240px', marginTop :'40px',width :'24px', height :'24px',
                 }}>
 
               </PersonIcon>
@@ -106,10 +121,10 @@ export default function PostExample(props) {
             </a>
           </li>
           <li>
-            <a onClick={() => props.setShowSavedPosts(true)}>
+            <a onClick={handleShowSavedPosts}>
             <BookmarkAddedIcon 
               sx ={{
-                color:'white', marginLeft :'-240px', marginTop :'40px',
+                color:'white', marginLeft :'-240px', marginTop :'40px',width :'24px', height :'24px',
                 }}>
 
               </BookmarkAddedIcon>
@@ -120,29 +135,19 @@ export default function PostExample(props) {
             <a href="#">
             <SettingsSuggestIcon 
               sx ={{
-                color:'white', marginLeft :'-240px', marginTop :'40px',
+                color:'white', marginLeft :'-240px', marginTop :'40px',width :'24px', height :'24px',
                 }}>
 
               </SettingsSuggestIcon> 
               <h6 className="text" >Settings</h6>
             </a>
           </li>
-          <li>
-            <a href="#">
-            <InfoIcon 
-              sx ={{
-                color:'white', marginLeft :'-240px', marginTop :'40px',
-                }}>
-
-              </InfoIcon>
-             <h6 className="text">Help</h6>
-            </a>
-          </li>
+          
           <li>
             <a href="./Login" className="logout">
             <ExitToAppIcon 
               sx ={{
-                color:'white', marginLeft :'-240px', marginTop :'10px',
+                color:'white', marginLeft :'-240px', marginTop :'10px',width :'24px', height :'24px',
                 }}>
 
               </ExitToAppIcon>

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import './Profile.css';
 import { Tooltip } from '@mui/material';
-import Box from '@mui/joy/Box';
 import BottomAppBar from './notifications';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -19,16 +18,29 @@ import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import InfoIcon from '@mui/icons-material/Info';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-
+import ReactDOM from 'react-dom';
+import SavedPost from './SavedPost.tsx'
+import Feed from './feed';
 
 
 function Profile(props) {
+  const handleShowProfile = (event) => {
+    ReactDOM.render(<Profile />, document.getElementById('Feed'));
+   };
+
+   const handleShowFeed = (event) => {
+    ReactDOM.render(<Feed />, document.getElementById('Feed'));
+   }; 
+
+   const handleShowSavedPosts = (event) => {
+    ReactDOM.render(<SavedPost />, document.getElementById('Feed'));
+   };
   return (
     <> 
  <nav>
         <ul>
           <li>
-            <a onClick={() => props.setShowFeed(true)}>
+            <a onClick={handleShowFeed}>
               <HomeIcon 
               sx ={{
                 color:'white', marginLeft :'-240px', marginTop :'20px',
@@ -40,7 +52,7 @@ function Profile(props) {
           </li>
 
           <li>
-            <a onClick={() => props.setShowProfile(true)}>
+            <a onClick={handleShowProfile}>
             <PersonIcon 
               sx ={{
                 color:'white', marginLeft :'-240px', marginTop :'40px',
@@ -51,7 +63,7 @@ function Profile(props) {
             </a>
           </li>
           <li>
-            <a onClick={() => props.setShowSavedPosts(true)}>
+            <a onClick={handleShowSavedPosts}>
             <BookmarkAddedIcon 
               sx ={{
                 color:'white', marginLeft :'-240px', marginTop :'40px',
@@ -72,17 +84,7 @@ function Profile(props) {
               <h6 className="text" >Settings</h6>
             </a>
           </li>
-          <li>
-            <a href="#">
-            <InfoIcon 
-              sx ={{
-                color:'white', marginLeft :'-240px', marginTop :'40px',
-                }}>
-
-              </InfoIcon>
-             <h6 className="text">Help</h6>
-            </a>
-          </li>
+          
           <li>
             <a href="./Login" className="logout">
             <ExitToAppIcon 
@@ -112,7 +114,7 @@ const UserProfile = ({ user }) => {
   return (
     <div className="user-profile">
       <ul>
-      <h1 className="name">{user.name}</h1>
+      <h1 className="name">{user.username}</h1>
       <p className="bio">{user.bio}</p>
       </ul>
       <ul className="stats">
@@ -140,10 +142,10 @@ function TitlebarImageList() {
     }}>
       
       {itemData.map((item) => (
-        <ImageListItem key={item.img}>
+        <ImageListItem key={item.image}>
           <img
-            src={`${item.img}?w=248&fit=crop&auto=format`}
-            srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+            src={`${item.image}?w=248&fit=crop&auto=format`}
+            srcSet={`${item.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
             alt={item.title}
             loading="lazy"
           />
@@ -186,7 +188,7 @@ function LabelBottomNavigation() {
         sx={{ color: 'white' ,}}
       />
       <BottomNavigationAction
-        label={`${user.posts} posts`}
+        label={`${user.posts_count} posts`}
         value="Posts"
         icon={<DynamicFeedIcon />}
         sx={{ color: 'white' }}
@@ -200,19 +202,18 @@ function LabelBottomNavigation() {
 
 
 const user = {
-  name: "Jane Doe",
   username: "janedoe",
   bio: "Software engineer and sport lover",
   avatar: "https://i.pravatar.cc/150?img=11",
   followers: 1000,
   following: 500,
-  posts: 12,
+  posts_count: 12,
 };
 
 
 const itemData = [
   {
-    img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
+    image: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
     title: 'Breakfast',
     likes : '30 likes',
     rows: 2,
@@ -220,31 +221,31 @@ const itemData = [
     featured: true,
   },
   {
-    img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
+    image: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
     title: 'Burger',
     likes : '60 likes',
 
   },
   {
-    img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
+    image: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
     title: 'Camera',
     likes : '8 likes',
 
   },
   {
-    img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
+    image: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
     title: 'Coffee',
     likes : '5 likes',
     cols: 2,
   },
   {
-    img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
+    image: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
     title: 'Hats',
     likes : '50 likes',
     cols: 2,
   },
   {
-    img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
+    image: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
     title: 'Honey',
     likes : '50 likes',
     rows: 2,
@@ -252,38 +253,38 @@ const itemData = [
     featured: true,
   },
   {
-    img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
+    image: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
     title: 'Basketball',
     likes : '50 likes',
 
   },
   {
-    img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
+    image: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
     title: 'Fern',
     likes : '50 likes',
 
   },
   {
-    img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
+    image: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
     title: 'Mushrooms',
     likes : '4 likes',
     rows: 2,
     cols: 2,
   },
   {
-    img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
+    image: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
     title: 'Tomato basil',
     likes : '9 likes',
 
   },
   {
-    img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
+    image: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
     title: 'Sea star',
     likes : '10 likes',
 
   },
   {
-    img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
+    image: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
     title: 'Bike',
     likes : '5 likes',
     cols: 2,

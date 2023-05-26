@@ -1,14 +1,12 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import ReactDOM from 'react-dom';
-import './Login.css';
+import './Signup.css';
 import 'boxicons/css/boxicons.min.css';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
-import Radio from '@mui/material/Radio';
-import { RadioGroup, FormControlLabel,FormLabel  } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -22,17 +20,7 @@ import App from '../App';
 
 function SignUp(props) {
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const handleSubmit = (event) => {
-        event.preventDefault();
 
-        props.onLogin();
-
-    };
-
-    const handleLogin = () => {
-        setIsLoggedIn(true);
-      };
     const handleBirthDateChange = useCallback((date) => {
         setBirthDate(date);
       }, []);
@@ -57,15 +45,12 @@ function SignUp(props) {
     };
 
     return (
-        <>
-            <section id="container forms" class="container forms">
-
-
-
+        <> 
+            <section id="containerForm">
 
                 <div class="form signup">
                     <div class="form-content">
-                        <header>Signup</header>
+                        <header className='signupHeader'>Sign up</header>
                         <form action="#">
                            
                             
@@ -125,18 +110,7 @@ function SignUp(props) {
                                     label="Confirm Password"
                                 />
                             </FormControl>
-                            <FormControl sx={{ marginTop: "5px"}} variant="outlined">
-                                <FormLabel sx={{ marginTop: "5px" }} id="demo-radio-buttons-group-label">Gender</FormLabel>
-                                <RadioGroup
-                                aria-labelledby="demo-radio-buttons-group-label"
-                                defaultValue="female"
-                                name="radio-buttons-group"
-                                row
-                                >
-                                <FormControlLabel value="female" control={<Radio />} label="Female" />
-                                <FormControlLabel value="male" control={<Radio />} label="Male" />
-                                 </RadioGroup>
-                            </FormControl>
+                    
                             <div class="field button-field">
                                 <button>SignUp</button>
 
@@ -161,9 +135,7 @@ function SignUp(props) {
         </>
     );
 }
-let signupBtn = document.getElementById("signupBtn");
-let nameField = document.getElementById("nameField");
-let title = document.getElementById("title");
+
 
 
 export default SignUp;

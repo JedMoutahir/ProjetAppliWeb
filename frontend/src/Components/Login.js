@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import 'boxicons/css/boxicons.min.css';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
-import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import SignUp from './signup.js';
-
 
 
 function Login(props) {
@@ -29,8 +27,6 @@ function Login(props) {
 
   };
 
-
-
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -41,11 +37,11 @@ function Login(props) {
 
   return (
     <>
-      <section id="container forms" class="container forms">
-        <div class="form login">
-          <div class="form-content">
-            <header>LogIn</header>
-            <form action="#">
+      <section id="container forms" className="container forms">
+         <div className="form login">
+          <div className="form-content">
+            <header id ='loginHeader'>Login</header>
+            <form  action="#">
               <TextField sx={{
                 width: "100%",
               }}
@@ -74,32 +70,27 @@ function Login(props) {
                 />
               </FormControl>
 
-              <div class="field button-field">
+              <div className="field button-field ">
                 <button onClick={handleSubmit}>LogIn</button>
 
               </div>
             </form>
-            <div class="form-link">
+            <div className="form-link">
               <br />
               <span> Don't have an account yet?</span>
             </div>
-            <div class="field button-field">
+            <div className="field button-field ">
               <button onClick={handleSignUp}>SignUp</button>
 
             </div>
           </div>
 
         </div>
+</section>
 
-
-
-      </section>
     </>
   );
 }
-let signupBtn = document.getElementById("signupBtn");
-let nameField = document.getElementById("nameField");
-let title = document.getElementById("title");
 
 
 export default Login;

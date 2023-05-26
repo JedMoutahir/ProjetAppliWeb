@@ -37,7 +37,6 @@ const FilterOptions = ({ keywords, setKeywords }) => {
     else {
       setKeywords(prev => prev.filter(p => e.target.name !== p));
     }
-    console.log(keywords)
   }
 
   return (
