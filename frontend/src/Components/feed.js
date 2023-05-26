@@ -12,13 +12,39 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import LoyaltyIcon from '@mui/icons-material/Loyalty';
 import CancelIcon from '@mui/icons-material/Cancel';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Profile from "./Profile";
 import ReactDOM from 'react-dom';
-import SavedPost from './SavedPost.tsx'
+import SavedPost from './SavedPost.tsx';
+import Dialog from '@mui/material/Dialog';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
 
 
 
 function Feed(props) {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = (e) => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const user = {
+    username: "janedoe",
+    bio: "Software engineer and sport lover",
+    avatar: "https://i.pravatar.cc/150?img=11",
+    followers: 1000,
+    following: 500,
+    posts_count: 12,
+  };
+
+
   // var [cards, setCards] = React.useState([]);
 
   //  React.useEffect(() => {
@@ -45,28 +71,59 @@ function Feed(props) {
       post: "Fox.jpg",
       likes: 50,
       tag: "Fox",
-      general_tag: "Animal"
+      general_tag: "Animal",
+      user: {
+        username: "Lena Rose",
+        bio: "Software engineer and sport lover",
+        avatar: "profile.jpg",
+        followers: 1000,
+        following: 500,
+        posts_count: 12,
+      }
     }, {
       name: "John Doe",
       avatar: "profile2.jpg",
       post: "plant.webp",
       likes: 30,
       tag: "Plant",
-      general_tag: "Nature"
+      general_tag: "Nature",
+      user: {
+        username: "John Doe",
+        bio: "Software engineer and sport lover",
+        avatar: "profile2.jpg",
+        followers: 1000,
+        following: 500,
+        posts_count: 12,
+      }
     }, {
       name: "Alex Sabatier",
       avatar: "profile2.jpg",
       post: "avocat.jpg",
       likes: 3,
       tag: "Avocat",
-      general_tag: "Food"
+      general_tag: "Food",
+      user: {
+        username: "Alex Sabatier",
+        bio: "Software engineer and sport lover",
+        avatar: "profile2.jpg",
+        followers: 1000,
+        following: 500,
+        posts_count: 12,
+      }
     }
   ]
 
   const [imagePreview, setImagePreview] = useState("");
   const [keywords, setKeywords] = useState([]);
   const [searchInput, setSearchInput] = React.useState('');
-  const [droppedImage, setDroppedImage] = useState(null);
+  const [otherUser, setOtherUser] = React.useState({
+    username: "Alex Sabatier",
+    bio: "Software engineer and sport lover",
+    avatar: "https://i.pravatar.cc/150?img=11",
+    followers: 1000,
+    following: 500,
+    posts_count: 12,
+  });
 
 
   console.log(searchInput);
@@ -74,49 +131,76 @@ function Feed(props) {
   const [image, setImage] = useState(null);
   const [processedImage, setProcessedImage] = useState(null);
 
-  // const handleFileChange = (event) => {
-  //   setImage(event.target.files[0]);
-  // };
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
-  
+
     const imageInput = document.getElementById('file-input'); // Get the "file" input element containing the image
-const file = imageInput.files[0]; // Get the image file
+    const file = imageInput.files[0]; // Get the image file
 
-const fileReader = new FileReader();
+    const fileReader = new FileReader();
 
-fileReader.onload = function (event) {
-  const base64Content = event.target.result.split(',')[1]; // Extract the base64-encoded content
-  const jsonData = {
-    filename: file.name,
-    content: [
-      {
-        stream: base64Content
-      }
-    ]
+    fileReader.onload = function (event) {
+      const base64Content = event.target.result.split(',')[1]; // Extract the base64-encoded content
+      const jsonData = {
+        filename: file.name,
+        content: [
+          {
+            stream: base64Content
+          }
+        ]
+      };
+
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(jsonData)
+      };
+
+      fetch('http://localhost:8080/backend/rest/upload', requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data); // Do something with the JSON response
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    };
+
+    fileReader.readAsDataURL(file);
   };
 
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(jsonData)
+  function LabelBottomNavigation() {
+    const [value, setValue] = React.useState('recents');
+
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
+
+    return (
+      <BottomNavigation sx={{ width: 370, backgroundColor: 'transparent' }} value={value} onChange={handleChange}>
+        <BottomNavigationAction
+          label={`${user.followers} followers`}
+          value="Followers"
+          icon={<PeopleAltIcon />}
+          sx={{ color: 'white', }}
+        />
+        <BottomNavigationAction
+          label={`${user.posts_count} posts`}
+          value="Posts"
+          icon={<DynamicFeedIcon />}
+          sx={{ color: 'white' }}
+
+        />
+
+        <BottomNavigationAction label="Follow profile" value="Follow profile" icon={<PersonAddIcon />} sx={{ color: 'white' }} />
+      </BottomNavigation>
+    );
   };
 
-  fetch('http://localhost:8080/backend/rest/upload', requestOptions)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data); // Do something with the JSON response
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-};
 
-fileReader.readAsDataURL(file);
-  };
-  
 
   function previewImage(event) {
     const file = event.target.files[0];
@@ -131,8 +215,6 @@ fileReader.readAsDataURL(file);
       setImagePreview(null);
     }
   }
-
-
   const handleShowProfile = (event) => {
     ReactDOM.render(<Profile />, document.getElementById('Feed'));
   };
@@ -144,6 +226,12 @@ fileReader.readAsDataURL(file);
   const handleShowSavedPosts = (event) => {
     ReactDOM.render(<SavedPost />, document.getElementById('Feed'));
   };
+
+  // const dialog = (props) => {
+  //   return (
+
+  //   );
+  // }
   return (
 
     <div id="Feed">
@@ -224,7 +312,7 @@ fileReader.readAsDataURL(file);
             <button id="dragdrop-btn">
               {imagePreview ? (
                 <div id='image-preview'>
-                <img id="imageUploaded" src={imagePreview} alt="Dropped" />
+                  <img id="imageUploaded" src={imagePreview} alt="Dropped" />
                 </div>
               ) : (
                 <img id="dragdrop-icon" src="cloud-upload.png" alt="Upload" />
@@ -234,74 +322,105 @@ fileReader.readAsDataURL(file);
               <input type="file" id="file-input" className="file-input" accept="image/*" name='image' value={image} onChange={previewImage} />
               <button id="submit1" type="submit" value="Share & Classify" >Share & Classify</button>
             </form>
-            
+
           </div>
-         
 
-            {processedImage && (
-              <div>
-                <h2>Processed Image</h2>
-                <img src={processedImage} alt="Processed" />
-              </div>
-            )}
+          {processedImage && (
+            <div>
+              <h2>Processed Image</h2>
+              <img src={processedImage} alt="Processed" />
+            </div>
+          )}
         </div>
-        <FilterOptions keywords={keywords} setKeywords={setKeywords} />
+        <div className="MyFeed">
+          <FilterOptions keywords={keywords} setKeywords={setKeywords} />
 
-        <div className="cards">
+          <div className="cards">
 
-          {
-            cards.filter(card => (keywords.length === 0 || keywords.includes(card.general_tag)) && card.name.toLowerCase().includes(searchInput.toLowerCase())).map(card => {
+            {
+              cards.filter(card => (keywords.length === 0 || keywords.includes(card.general_tag)) && card.name.toLowerCase().includes(searchInput.toLowerCase())).map(card => {
 
 
-              return (
-                <div className="card">
-                  <div className="profile">
-                    <img className="profile-pic" src={card.avatar} />
-                    <h4 className="Name"><b>{card.name}</b></h4>
+                return (
+                  <div className="card">
+                    <div className="profile" onClick={
+                      () => {
+                        setOtherUser(card.user);
+                        handleClickOpen();
+                      }
+                    } 
+                    value={card.user}
+                    >
+                      <img className="profile-pic" src={card.avatar} />
+                      <h4 className="Name"><b>{card.name}</b></h4>
+                    </div>
+                    <img className="post" src={card.post} alt="Avatar" />
+                    <p className="type">{card.tag}</p>
+                    <div className="barre">
+                      <div>
+                        <button className="button-barre">
+                          <ThumbUpIcon
+                            sx={{
+                              color: 'white',
+                            }}>
+                          </ThumbUpIcon>
+                        </button>
+                        <h6> {card.likes} {' likes'} </h6>
+                      </div>
+                      <div >
+                        <button className="button-barre">
+                          <LoyaltyIcon
+                            sx={{
+                              color: 'white',
+                            }}>
+                          </LoyaltyIcon>
+                        </button>
+                        <h6>{card.tag}</h6>
+                      </div>
+                      <div>
+                        <button className="button-barre">
+                          <BookmarkAddIcon
+                            sx={{
+                              color: 'white',
+                            }}>
+
+                          </BookmarkAddIcon>
+                        </button>
+                        <h6>save</h6>
+                      </div>
+                    </div>
                   </div>
-                  <img className="post" src={card.post} alt="Avatar" />
-                  <p className="type">{card.tag}</p>
-                  <div className="barre">
-                    <div>
-                      <button className="button-barre">
-                        <ThumbUpIcon
-                          sx={{
-                            color: 'white',
-                          }}>
-                        </ThumbUpIcon>
-                      </button>
-                      <h6> {card.likes} {' likes'} </h6>
-                    </div>
-                    <div >
-                      <button className="button-barre">
-                        <LoyaltyIcon
-                          sx={{
-                            color: 'white',
-                          }}>
-                        </LoyaltyIcon>
-                      </button>
-                      <h6>{card.tag}</h6>
-                    </div>
-                    <div>
-                      <button className="button-barre">
-                        <BookmarkAddIcon
-                          sx={{
-                            color: 'white',
-                          }}>
+                );
+              })
+            }
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+              PaperProps={{
+                style: {
+                  backgroundColor: '#9E9E9E',
+                }
+              }}
+            >
+              <div className="other-user-profile">
+                <ul>
+                  <h1 className="other-name">{otherUser.username}</h1>
+                  <p className="other-bio">{otherUser.bio}</p>
+                </ul>
+                <ul className="stats">
+                  <LabelBottomNavigation />
+                </ul>
 
-                        </BookmarkAddIcon>
-                      </button>
-                      <h6>save</h6>
-                    </div>
-                  </div>
-                </div>
-              );
-            })
-          }
+                <img className='profileAvatar' src={otherUser.avatar} alt={otherUser.username} className="avatar" />
 
+              </div>
+            </Dialog>
+          </div>
         </div>
       </>
-    </div>
+    </div >
   )
 
 }

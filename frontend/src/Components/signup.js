@@ -150,11 +150,8 @@ function SignUp(props) {
 
                         </div>
                     </div>
-
-
-
-                </div>
-
+              </div>
+              
             </section>
         </>
     );

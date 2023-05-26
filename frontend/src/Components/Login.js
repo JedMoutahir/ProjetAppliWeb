@@ -14,6 +14,7 @@ import SignUp from './signup.js';
 function Login(props) {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -23,12 +24,15 @@ function Login(props) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, password}),
     }).then(response => response.json())
+    //return the user's id in the response
       .then(jsonresponse => {
         if (jsonresponse.success === true) {
           e.preventDefault();
           props.onLogin();
+          //localStorage.setItem('user', jsonresponse.id);
+        
         }
       })
       .catch(error => { console.error("error", error) });
@@ -53,17 +57,12 @@ function Login(props) {
   return (
 
     <>
-      <section id="container forms" className="container forms"
-        style={{
-          display: 'flex',
-          backgroundImage: "url('././public/login_dark_mode.jpg')", // Replace with the path to your background image
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-        }}>
+    
+      <section id="container forms" className="container forms">
         <div className="form login">
           <div className="form-content">
-            <header id='loginHeader'>Login</header>
-            <form action="#">
+           <header id='loginHeader'>Login</header>
+           <form action="#">
               <TextField sx={{
                 width: "100%",
               }}
@@ -98,7 +97,6 @@ function Login(props) {
 
               <div className="field button-field ">
                 <button onClick={handleSubmit} id='buttonLogin'>LogIn</button>
-
               </div>
             </form>
             <div className="form-link">
@@ -107,11 +105,13 @@ function Login(props) {
             </div>
             <div className="field button-field ">
               <button onClick={handleSignUp} id='buttonLogin'>SignUp</button>
-
             </div>
           </div>
-
+         
         </div>
+        <div className="image-container" >
+          <img className ='imagebackground' src="login_light_mode.jpg"  alt="Image" />
+          </div>
       </section>
 
     </>

@@ -16,10 +16,9 @@ import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
-import InfoIcon from '@mui/icons-material/Info';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ReactDOM from 'react-dom';
-import SavedPost from './SavedPost.tsx'
+import SavedPost from './SavedPost.tsx';
 import Feed from './feed';
 
 

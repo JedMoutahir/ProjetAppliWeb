@@ -21,9 +21,18 @@
 	margin-top:-2%;
 	padding: 120px;
 	border-radius: 6px;
-	margin-left:-6%;
+	margin-left:41%;
 	background: #FFF;
 
+}
+.image-container{
+	margin-top: -53%;
+	margin-left: -57%;
+	overflow: hidden;
+}
+.imagebackground{
+	width:587px;
+	height :630px;
 }
 .login{
     width :60%;
@@ -222,4 +231,5 @@ a.login__google span{
   .button-field{
 	background-color :white;
   }
+ 
   
