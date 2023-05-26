@@ -6,6 +6,7 @@ import SavedPosts from './Components/SavedPost.tsx';
 import './App.css';
 
 function App() {
+  
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showProfile, setShowProfile] = useState(false);

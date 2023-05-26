@@ -20,6 +20,27 @@ import App from '../App';
 
 function SignUp(props) {
 
+    const [username, setUsername] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+        const response = await fetch('http://localhost:8080/backend/rest/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username, password }),
+        }).then(response=>response.json())
+        .then(jsonresponse=>{
+            console.log(jsonresponse);
+            if (jsonresponse.success === true) {
+                console.log("true");
+                e.preventDefault();
+                props.onLogin();
+            }
+        })
+        .catch(error=>{console.error("error",error)});
+     };
 
     const handleBirthDateChange = useCallback((date) => {
         setBirthDate(date);
@@ -55,7 +76,8 @@ function SignUp(props) {
                            
                             
                             <TextField sx={{ marginTop: "5px", width: "100%", }} id="outlined-basic" label="email" variant="outlined" />
-                            <TextField sx={{ width: "100%", marginTop: "5px" }} id="outlined-basic" label="username" variant="outlined" />
+                            <TextField sx={{ width: "100%", marginTop: "5px" }} id="outlined-basic" label="username" value={username}
+                onChange={(e) => setUsername(e.target.value)}  variant="outlined"  />
                             
                             <DatePicker
                                 sx={{ marginTop: "5px", width: "100%", }}
@@ -74,6 +96,8 @@ function SignUp(props) {
                                 <OutlinedInput
                                     id="outlined-adornment-password"
                                     type={showPassword ? 'text' : 'password'}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     endAdornment={
                                         <InputAdornment position="end">
                                             <IconButton
@@ -112,7 +136,7 @@ function SignUp(props) {
                             </FormControl>
                     
                             <div class="field button-field">
-                                <button>SignUp</button>
+                                <button id ='buttonLogin' onClick={handleSubmit} >SignUp</button>
 
                             </div>
                         </form>
@@ -122,7 +146,7 @@ function SignUp(props) {
                         </div>
 
                         <div class="field button-field">
-                            <button onClick={handleGoLogin} >Login</button>
+                            <button onClick={handleGoLogin} id ='buttonLogin'>Login</button>
 
                         </div>
                     </div>

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'boxicons/css/boxicons.min.css';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -13,13 +12,29 @@ import SignUp from './signup.js';
 
 
 function Login(props) {
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
 
-    props.onLogin();
+    const response = await fetch('http://localhost:8080/backend/rest/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    }).then(response => response.json())
+      .then(jsonresponse => {
+        if (jsonresponse.success === true) {
+          e.preventDefault();
+          props.onLogin();
+        }
+      })
+      .catch(error => { console.error("error", error) });
+  }
 
-  };
+
 
   const handleSignUp = (event) => {
     const rootElement = document.getElementById('container forms');
@@ -36,24 +51,35 @@ function Login(props) {
   };
 
   return (
+
     <>
-      <section id="container forms" className="container forms">
-         <div className="form login">
+      <section id="container forms" className="container forms"
+        style={{
+          display: 'flex',
+          backgroundImage: "url('././public/login_dark_mode.jpg')", // Replace with the path to your background image
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+        }}>
+        <div className="form login">
           <div className="form-content">
-            <header id ='loginHeader'>Login</header>
-            <form  action="#">
+            <header id='loginHeader'>Login</header>
+            <form action="#">
               <TextField sx={{
                 width: "100%",
               }}
                 id="outlined-basic"
                 label="username"
                 variant="outlined"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
               <FormControl sx={{ marginTop: "5px", width: '100%' }} variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-password"
                   type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -71,7 +97,7 @@ function Login(props) {
               </FormControl>
 
               <div className="field button-field ">
-                <button onClick={handleSubmit}>LogIn</button>
+                <button onClick={handleSubmit} id='buttonLogin'>LogIn</button>
 
               </div>
             </form>
@@ -80,13 +106,13 @@ function Login(props) {
               <span> Don't have an account yet?</span>
             </div>
             <div className="field button-field ">
-              <button onClick={handleSignUp}>SignUp</button>
+              <button onClick={handleSignUp} id='buttonLogin'>SignUp</button>
 
             </div>
           </div>
 
         </div>
-</section>
+      </section>
 
     </>
   );

@@ -32,9 +32,12 @@
 }
 #loginHeader{
 margin-top:7%;
+font-size: 30px;
 }
 
-
+#buttonLogin{
+background-color: #607D8B;
+}
 .signupHeader{
     font-size: 28px;
     margin-top:-10%;

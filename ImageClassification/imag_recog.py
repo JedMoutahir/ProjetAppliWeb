@@ -29,9 +29,9 @@ def label_image(image):
 
 
 # # load paysage image from the folder bank_images
-image = Image.open("bank_images/parc.jpeg")
+# image = Image.open("bank_images/parc.jpeg")
 
-print(label_image(image))
+# print(label_image(image))
 
 # processor = DetrImageProcessor.from_pretrained("facebook/detr-resnet-101")
 # model = DetrForObjectDetection.from_pretrained("facebook/detr-resnet-101")
