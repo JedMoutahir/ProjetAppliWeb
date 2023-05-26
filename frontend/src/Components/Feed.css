@@ -226,14 +226,15 @@ header {
   color:white;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 888px) {
   .wrapper {
     width: 90%;
   }
 }
-#image-preview{
-  z-index: 1;
-  height:5px;
+
+#imageUploaded{
+  width:580px;
+  height: 200px;
 }
 #btn-close{
   width:40px;

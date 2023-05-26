@@ -66,6 +66,8 @@ function Feed(props) {
   const [imagePreview, setImagePreview] = useState("");
   const [keywords, setKeywords] = useState([]);
   const [searchInput, setSearchInput] = React.useState('');
+  const [droppedImage, setDroppedImage] = useState(null);
+
 
   console.log(searchInput);
 
@@ -120,11 +122,14 @@ fileReader.readAsDataURL(file);
     const file = event.target.files[0];
     const reader = new FileReader();
 
-    reader.onload = function (event) {
+    reader.onloadend = function (event) {
       setImagePreview(event.target.result);
     };
-
-    reader.readAsDataURL(file);
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      setImagePreview(null);
+    }
   }
 
 
@@ -216,15 +221,22 @@ fileReader.readAsDataURL(file);
                 }}>
               </CancelIcon></button>
             <header>Drag & Drop a picture </header>
-            <button id="dragdrop-btn"><img id="dragdrop-icon" src="cloud-upload.png" /></button>
+            <button id="dragdrop-btn">
+              {imagePreview ? (
+                <div id='image-preview'>
+                <img id="imageUploaded" src={imagePreview} alt="Dropped" />
+                </div>
+              ) : (
+                <img id="dragdrop-icon" src="cloud-upload.png" alt="Upload" />
+              )}
+            </button>
             <form id="form1" onSubmit={handleFormSubmit}>
               <input type="file" id="file-input" className="file-input" accept="image/*" name='image' value={image} onChange={previewImage} />
               <button id="submit1" type="submit" value="Share & Classify" >Share & Classify</button>
             </form>
-
-            <div id="image-preview">
-              <img src={imagePreview} />
-            </div>
+            
+          </div>
+         
 
             {processedImage && (
               <div>
@@ -232,9 +244,6 @@ fileReader.readAsDataURL(file);
                 <img src={processedImage} alt="Processed" />
               </div>
             )}
-
-
-          </div>
         </div>
         <FilterOptions keywords={keywords} setKeywords={setKeywords} />
 
