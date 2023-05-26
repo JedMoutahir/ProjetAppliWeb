@@ -78,25 +78,41 @@ function Feed(props) {
   const handleFormSubmit = (event) => {
     event.preventDefault();
   
-    const imageInput = document.getElementById('file-input');
-    const file = imageInput.files[0];
-  
-    const formData = new FormData();
-    formData.append('image', file);
-  
-    const requestOptions = {
-      method: 'POST',
-      body: formData
-    };
-  
-    fetch('http://localhost:8080/backend/rest/upload', requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data); // Do something with the JSON response
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+    const imageInput = document.getElementById('file-input'); // Get the "file" input element containing the image
+const file = imageInput.files[0]; // Get the image file
+
+const fileReader = new FileReader();
+
+fileReader.onload = function (event) {
+  const base64Content = event.target.result.split(',')[1]; // Extract the base64-encoded content
+  const jsonData = {
+    filename: file.name,
+    content: [
+      {
+        stream: base64Content
+      }
+    ]
+  };
+
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(jsonData)
+  };
+
+  fetch('http://localhost:8080/backend/rest/upload', requestOptions)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data); // Do something with the JSON response
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+};
+
+fileReader.readAsDataURL(file);
   };
   
 
