@@ -30,8 +30,9 @@ function Login(props) {
         if (jsonresponse.success === true) {
           e.preventDefault();
           props.onLogin();
-          //localStorage.setItem('user', jsonresponse.id);
-        
+          localStorage.setItem('userId', jsonresponse.id);
+          const idType = typeof jsonresponse.id;
+          console.log(idType);
         }
       })
       .catch(error => { console.error("error", error) });

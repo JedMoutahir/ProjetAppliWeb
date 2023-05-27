@@ -26,58 +26,6 @@ import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
 
 function Feed(props) {
   
-  var cards = [
-    {
-      id :'1',
-      name: "Lena Rose",
-      avatar: "profile.jpg",
-      post: "Fox.jpg",
-      likes: 50,
-      tag: "Fox",
-      general_tag: "Animal",
-      user: {
-        username: "Lena Rose",
-        bio: "Software engineer and sport lover",
-        avatar: "profile.jpg",
-        followers: 1000,
-        following: 500,
-        posts_count: 12,
-      }
-    }, {
-      id :'2',
-      name: "John Doe",
-      avatar: "profile2.jpg",
-      post: "plant.webp",
-      likes: 30,
-      tag: "Plant",
-      general_tag: "Nature",
-      user: {
-        username: "John Doe",
-        bio: "Software engineer and sport lover",
-        avatar: "profile2.jpg",
-        followers: 1000,
-        following: 500,
-        posts_count: 12,
-      }
-    }, {
-      id :'3',
-      name: "Alex Sabatier",
-      avatar: "profile2.jpg",
-      post: "avocat.jpg",
-      likes: 3,
-      tag: "Avocat",
-      general_tag: "Food",
-      user: {
-        username: "Alex Sabatier",
-        bio: "Software engineer and sport lover",
-        avatar: "profile2.jpg",
-        followers: 1000,
-        following: 500,
-        posts_count: 12,
-      }
-    }
-  ]
-  
   const [imagePreview, setImagePreview] = useState("");
   const [keywords, setKeywords] = useState([]);
   const [searchInput, setSearchInput] = React.useState('');
@@ -101,25 +49,25 @@ function Feed(props) {
     setOpen(false);
   };
   
-  // var [cards, setCards] = React.useState([]);
+  var [cards, setCards] = React.useState([]);
+ 
 
-  //  React.useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch('http://localhost:8080/backend/rest/cards');
-  //       if (response.ok) {
-  //         var { cards } = await response.json(); 
-  //         setCards(cards);
-  //       } else {
-  //         console.error('Error retrieving data:', response.statusText);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error retrieving data:', error);
-  //     }
-  //   };
+   React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/backend/rest/listPosts');
+        const jsonResponse = await response.json();
+        const { posts } = jsonResponse;
+        const cards = posts;
+        setCards(cards);
+        console.log(cards); 
+      } catch (error) {
+        console.error('Error retrieving data:', error);
+      }
+    };
 
-  //   fetchData();
-  // }, []);
+    fetchData();
+  }, []);
 
   const likePost = (postId) => {
   //     // Make a request to the server to update the likes of the post
@@ -151,7 +99,8 @@ function Feed(props) {
           {
             stream: base64Content
           }
-        ]
+        ],
+        id : parseInt(localStorage.getItem('userId'), 10)
       };
       const requestOptions = {
         method: 'POST',
@@ -164,8 +113,7 @@ function Feed(props) {
       fetch('http://localhost:8080/backend/rest/upload', requestOptions)
         .then(response => response.json())
         .then(data => {
-          console.log(data); // Do something with the JSON response
-          // !!!! return to me the id of the post
+          console.log(data); 
         })
         .catch(error => {
           console.error('Error:', error);
@@ -220,6 +168,7 @@ function Feed(props) {
   }
 
   const handleShowProfile = () => {
+    localStorage.getItem('userId');
     ReactDOM.render(<Profile />, document.getElementById('Feed'));
   };
 
@@ -327,7 +276,7 @@ function Feed(props) {
           <div className="cards">
 
             {
-              cards.filter(card => (keywords.length === 0 || keywords.includes(card.general_tag)) && card.name.toLowerCase().includes(searchInput.toLowerCase())).map(card => {
+              cards && cards.filter(card => (keywords.length === 0 || keywords.includes(card.general_tag)) && card.user.username.toLowerCase().includes(searchInput.toLowerCase())).map(card => {
               return (
                   <div className="card">
                     <div className="profile" onClick={
@@ -338,8 +287,8 @@ function Feed(props) {
                     } 
                     value={card.user}
                     >
-                      <img className="profile-pic" src={card.avatar} />
-                      <h4 className="Name"><b>{card.name}</b></h4>
+                      <img className="profile-pic" src='profile.jpg' />
+                      <h4 className="Name"><b>{card.user.username}</b></h4>
                     </div>
                     <img className="post" src={card.post} alt="Avatar" />
                     <p className="type">{card.tag}</p>
