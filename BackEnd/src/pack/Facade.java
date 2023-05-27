@@ -164,6 +164,10 @@ public class Facade {
 
         JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
         for (Post post : posts) {
+            //String imagePath = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/ImageClassification/bank_images/" + post.getTitle();
+    		String imagePath = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/ImageClassification/bank_images/" + post.getTitle();
+            String imageContent = encodeImageContent(imagePath);
+
             JsonObject userObject = Json.createObjectBuilder()
                     .add("username", post.getUser().getUsername())
                     .add("bio", post.getUser().getBio())
@@ -174,8 +178,7 @@ public class Facade {
 
             JsonObject postObject = Json.createObjectBuilder()
                     .add("id", post.getId_post())
-                    .add("name", post.getTitle())
-                    .add("post", post.getId_post())
+                    .add("post", imageContent)
                     .add("likes", post.getLikes())
                     .add("tag", post.getTag())
                     .add("general_tag", post.getGeneral_tag())
@@ -192,12 +195,29 @@ public class Facade {
 
         return Response.ok(responseJson).build();
     }
+
+	private String encodeImageContent(String imagePath) {
+        try {
+            File file = new File(imagePath);
+            FileInputStream fileInputStream = new FileInputStream(file);
+            byte[] imageBytes = new byte[(int) file.length()];
+            fileInputStream.read(imageBytes);
+            fileInputStream.close();
+            
+            String base64Content = Base64.getEncoder().encodeToString(imageBytes);
+            return base64Content;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
 	
 	@POST
 	@Path("/upload")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response uploadImage(JsonObject json) {
-	    String destinationFolder = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/ImageClassification/bank_images/";
+	    //String destinationFolder = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/ImageClassification/bank_images/";
+		String destinationFolder = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/ImageClassification/bank_images/";
 	    try {
 	        String filename = json.getString("filename");
 	        System.out.println("filename : " + filename);
