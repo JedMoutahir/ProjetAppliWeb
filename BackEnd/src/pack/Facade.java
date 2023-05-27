@@ -25,28 +25,25 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 @Singleton
 @Path("/")
 public class Facade {
+	
+	String imagePath;
+	String avatarPath;
+	boolean dev = false;
 
 	@PersistenceContext
 	EntityManager em;
-	
-//	@POST
-//    @Path("/upload")
-//    @Consumes({ "multipart/form-data" })
-//    public void upload(@MultipartForm FileUploadForm form) {
-//        String fileName = form.getFileName();
-//        String completeFilePath = "C:/Users/rachi/OneDrive/Bureau/test/" + fileName;
-//        try {
-//          System.out.println(fileName);
-//          File file = new File(completeFilePath);
-//          if (!file.exists()) file.createNewFile();
-//          FileOutputStream fos = new FileOutputStream(file);
-//          fos.write(form.getFileData());
-//          fos.flush();
-//          fos.close();
-//        } catch (Exception e) {
-//          e.printStackTrace();
-//        }
-//    }
+
+	public Facade() {
+		super();
+		if(this.dev) {
+			this.imagePath = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/ImageClassification/bank_images/";
+			this.avatarPath = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/frontend/avatars/";
+            
+		} else {
+			this.imagePath = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/ImageClassification/bank_images/";
+			this.avatarPath = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/frontend/avatars/";
+		}
+	}
 	
 //	@POST
 //    @Path("/analyze")
@@ -164,13 +161,9 @@ public class Facade {
 
         JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
         for (Post post : posts) {
-            //String imagePath = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/ImageClassification/bank_images/" + post.getTitle();
-    		String imagePath = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/ImageClassification/bank_images/" + post.getTitle();
-            String imageContent = encodeImageContent(imagePath);
-            //String avatarPath = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/frontend/avatars/" + post.getUser().getAvatar_filename();
-            String avatarPath = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/frontend/avatars/" + post.getUser().getAvatar_filename();
-            String avatarContent = encodeImageContent(avatarPath);
-            
+            String imageContent = encodeImageContent(this.imagePath + post.getTitle());
+            String avatarContent = encodeImageContent(avatarPath + post.getUser().getAvatar_filename());
+
             JsonObject userObject = Json.createObjectBuilder()
                     .add("username", post.getUser().getUsername())
                     .add("bio", post.getUser().getBio())
@@ -221,8 +214,6 @@ public class Facade {
 	@Path("/upload")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response uploadImage(JsonObject json) {
-	    //String destinationFolder = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/ImageClassification/bank_images/";
-		String destinationFolder = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/ImageClassification/bank_images/";
 	    try {
 	        String filename = json.getString("filename");
 	        System.out.println("filename : " + filename);
@@ -235,7 +226,7 @@ public class Facade {
 	        
 	        System.out.println("saving the image");
 	        // Save the image to the destination folder
-            saveImage(fileInputStream, destinationFolder, filename);
+            saveImage(fileInputStream, this.imagePath, filename);
 	        System.out.println("image saved");
 
             int userId = json.getInt("id");
@@ -338,8 +329,6 @@ public class Facade {
 	@Path("/changeAvatar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response changeAvatar(JsonObject json) {
-	    //String destinationFolder = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/frontend/avatars/";
-		String destinationFolder = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/frontend/avatars/";
 	    try {
 	        String filename = json.getString("filename");
 	        System.out.println("filename: " + filename);
@@ -351,7 +340,7 @@ public class Facade {
 	        InputStream fileInputStream = new ByteArrayInputStream(fileContent);
 
 	        // Save the image to the destination folder
-	        saveImage(fileInputStream, destinationFolder, filename);
+	        saveImage(fileInputStream, this.avatarPath, filename);
 
 	        int userId = json.getInt("id");
 	        System.out.println("user id: " + userId);
@@ -397,9 +386,7 @@ public class Facade {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUserProfile(JsonObject json) {
-		//String imagePath = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/ImageClassification/bank_images/";
-		String imagePath = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/ImageClassification/bank_images/";
-	    int userId = json.getInt("id_user");
+		int userId = json.getInt("id_user");
 	    System.out.println("user id: " + userId);
 
 	    // Get the user from the database
@@ -415,6 +402,7 @@ public class Facade {
 
 	    // Get the user's posts
 	    List<Post> posts = user.getPosts();
+        String avatarContent = encodeImageContent(avatarPath + user.getAvatar_filename());
 
 	    // Build the JSON response
 	    JsonObjectBuilder userBuilder = Json.createObjectBuilder()
@@ -423,7 +411,8 @@ public class Facade {
 	            .add("followers", user.getFollowers())
 	            .add("following", user.getFollowing())
 	            .add("post_count", user.getPost_count())
-	            .add("avatar", user.getAvatar_filename());
+	            .add("avatar", avatarContent)
+	            .add("filename", user.getAvatar_filename());
 
 	    JsonArrayBuilder postsBuilder = Json.createArrayBuilder();
 	    for (Post post : posts) {
@@ -434,7 +423,7 @@ public class Facade {
 	                .add("likes", post.getLikes())
 	                .add("tag", post.getTag())
 	                .add("general_tag", post.getGeneral_tag())
-	                .add("image", encodeImageContent(imagePath + post.getTitle()));
+	                .add("image", encodeImageContent(this.imagePath + post.getTitle()));
 
 	        postsBuilder.add(postBuilder);
 	    }
@@ -453,7 +442,7 @@ public class Facade {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getSavedPosts(JsonObject json) {
-	    int userId = json.getInt("id_user");
+		int userId = json.getInt("id_user");
 	    System.out.println("user id: " + userId);
 
 	    // Get the user from the database
@@ -480,7 +469,7 @@ public class Facade {
 	                .add("likes", post.getLikes())
 	                .add("tag", post.getTag())
 	                .add("general_tag", post.getGeneral_tag())
-	                .add("image", encodeImageContent(post.getTitle()));
+	                .add("image", encodeImageContent(this.imagePath + post.getTitle()));
 
 	        savedPostsBuilder.add(postBuilder);
 	    }
@@ -493,4 +482,53 @@ public class Facade {
 	    return Response.ok(response).build();
 	}
 	
+	@POST
+	@Path("/save")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response savePost(JsonObject json) {
+	    int userId = json.getInt("id_user");
+	    int postId = json.getInt("id_post");
+
+	    // Get the user from the database
+	    User user = em.find(User.class, userId);
+	    if (user == null) {
+	        JsonObject response = Json.createObjectBuilder()
+	                .add("success", false)
+	                .add("message", "User not found")
+	                .build();
+	        return Response.status(Response.Status.NOT_FOUND).entity(response).build();
+	    }
+
+	    // Get the post from the database
+	    Post post = em.find(Post.class, postId);
+	    if (post == null) {
+	        JsonObject response = Json.createObjectBuilder()
+	                .add("success", false)
+	                .add("message", "Post not found")
+	                .build();
+	        return Response.status(Response.Status.NOT_FOUND).entity(response).build();
+	    }
+
+	    // Check if the post is already saved by the user
+	    List<Post> savedPosts = user.getSavedPosts();
+	    if (savedPosts.contains(post)) {
+	        JsonObject response = Json.createObjectBuilder()
+	                .add("success", false)
+	                .add("message", "Post already saved by the user")
+	                .build();
+	        return Response.ok(response).build();
+	    }
+
+	    // Add the post to the user's saved posts and save the user entity
+	    savedPosts.add(post);
+	    user.setSavedPosts(savedPosts);
+	    em.persist(user);
+
+	    JsonObject response = Json.createObjectBuilder()
+	            .add("success", true)
+	            .add("message", "Post saved successfully")
+	            .build();
+	    return Response.ok(response).build();
+	}
 }
