@@ -23,7 +23,6 @@ import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
-import InfoIcon from '@mui/icons-material/Info';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ReactDOM from 'react-dom';
 import SavedPost from './SavedPost.tsx'
@@ -62,7 +61,8 @@ function ColorSchemeToggle() {
 
 export default function PostExample(props) {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
-  const handleShowProfile = (event) => {
+
+  const handleShowProfile = () => {
     ReactDOM.render(<Profile />, document.getElementById('Feed'));
    };
 
@@ -70,7 +70,7 @@ export default function PostExample(props) {
     ReactDOM.render(<Feed />, document.getElementById('Feed'));
    }; 
 
-   const handleShowSavedPosts = (event) => {
+   const handleShowSavedPosts = () => {
     ReactDOM.render(<SavedPost />, document.getElementById('Feed'));
    };
   return (

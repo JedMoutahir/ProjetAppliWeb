@@ -12,8 +12,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-import App from '../App';
+import Login from './Login';
 
 
 
@@ -22,6 +21,10 @@ function SignUp(props) {
 
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [showPassword, setShowPassword] = React.useState(false);
+    const [birthDate, setBirthDate] = React.useState(false);
+    const [showPasswordConfirm, setShowPasswordConfirm] = React.useState(false);
+
     const handleSubmit = async (e) => {
       e.preventDefault();
         const response = await fetch('http://localhost:8080/backend/rest/signup', {
@@ -46,12 +49,6 @@ function SignUp(props) {
         setBirthDate(date);
       }, []);
 
-    
-
-    const [showPassword, setShowPassword] = React.useState(false);
-    const [birthDate, setBirthDate] = React.useState(false);
-    const [showPasswordConfirm, setShowPasswordConfirm] = React.useState(false);
-
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleClickShowPasswordConfirm = () => setShowPasswordConfirm((show) => !show);
 
@@ -61,7 +58,7 @@ function SignUp(props) {
 
     const handleGoLogin = (event) => {
         const rootElement = document.getElementById('container forms');
-        ReactDOM.createRoot(rootElement).render(<App />);
+        ReactDOM.createRoot(rootElement).render(<Login />);
 
     };
 
@@ -151,7 +148,9 @@ function SignUp(props) {
                         </div>
                     </div>
               </div>
-              
+              <div className="image-containerS" >
+                <img className ='imagebackgroundS' src="login_light_mode.jpg"  alt="Image" />
+                </div>
             </section>
         </>
     );

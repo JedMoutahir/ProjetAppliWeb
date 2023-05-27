@@ -7,6 +7,7 @@
 	font-family: 'Poppins', sans-serif;
 }
 
+
 #containerForm {
 	width: 100%;
 	height: 100%;
@@ -31,6 +32,15 @@
 	overflow: hidden;
 }
 .imagebackground{
+	width:587px;
+	height :630px;
+}
+.image-containerS{
+	margin-top: -0.5%;
+	margin-left: -104%;
+	overflow: hidden;
+}
+.imagebackgroundS{
 	width:587px;
 	height :630px;
 }

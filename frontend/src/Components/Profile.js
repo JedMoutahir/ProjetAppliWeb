@@ -34,9 +34,10 @@ function Profile(props) {
    const handleShowSavedPosts = (event) => {
     ReactDOM.render(<SavedPost />, document.getElementById('Feed'));
    };
+
   return (
     <> 
- <nav>
+    <nav>
         <ul>
           <li>
             <a onClick={handleShowFeed}>
@@ -119,9 +120,7 @@ const UserProfile = ({ user }) => {
       <ul className="stats">
       <LabelBottomNavigation/>
       </ul>
-      
       <img src={user.avatar} alt={user.name} className="avatar" />
-     
     </div>
   );
 };

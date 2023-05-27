@@ -14,11 +14,10 @@ import SignUp from './signup.js';
 function Login(props) {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-
     const response = await fetch('http://localhost:8080/backend/rest/login', {
       method: 'POST',
       headers: {
@@ -38,15 +37,11 @@ function Login(props) {
       .catch(error => { console.error("error", error) });
   }
 
-
-
   const handleSignUp = (event) => {
     const rootElement = document.getElementById('container forms');
     ReactDOM.createRoot(rootElement).render(<SignUp />);
 
   };
-
-  const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 

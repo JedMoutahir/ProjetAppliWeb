@@ -79,8 +79,6 @@ export default function PrimarySearchAppBar({ searchInput, setSearchInput }) {
             popup.style.display = 'flex';
             });
             
-        
-
         /**to remove the popup */
         const camBtn = document.querySelector('#btn-close');
         const pop = document.querySelector('.popup');
@@ -96,8 +94,6 @@ export default function PrimarySearchAppBar({ searchInput, setSearchInput }) {
             popup.style.display = 'flex';
             });
             
-        
-
         /**to remove the popup */
         const camBtn = document.querySelector('#btn-close');
         const pop = document.querySelector('.popup');

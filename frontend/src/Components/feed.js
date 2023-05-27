@@ -25,16 +25,7 @@ import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
 
 
 function Feed(props) {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = (e) => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+  
   const user = {
     username: "janedoe",
     bio: "Software engineer and sport lover",
@@ -44,26 +35,6 @@ function Feed(props) {
     posts_count: 12,
   };
 
-
-  // var [cards, setCards] = React.useState([]);
-
-  //  React.useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch('http://localhost:8080/backend/rest/feed');
-  //       if (response.ok) {
-  //         var { cards } = await response.json(); 
-  //         setCards(cards);
-  //       } else {
-  //         console.error('Error retrieving data:', response.statusText);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error retrieving data:', error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
   var cards = [
     {
       name: "Lena Rose",
@@ -112,7 +83,7 @@ function Feed(props) {
       }
     }
   ]
-
+  
   const [imagePreview, setImagePreview] = useState("");
   const [keywords, setKeywords] = useState([]);
   const [searchInput, setSearchInput] = React.useState('');
@@ -124,20 +95,42 @@ function Feed(props) {
     following: 500,
     posts_count: 12,
   });
-
-
-  console.log(searchInput);
-
   const [image, setImage] = useState(null);
   const [processedImage, setProcessedImage] = useState(null);
+  const [open, setOpen] = React.useState(false);
 
+  const handleClickOpen = (e) => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  
+  // var [cards, setCards] = React.useState([]);
+
+  //  React.useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch('http://localhost:8080/backend/rest/feed');
+  //       if (response.ok) {
+  //         var { cards } = await response.json(); 
+  //         setCards(cards);
+  //       } else {
+  //         console.error('Error retrieving data:', response.statusText);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error retrieving data:', error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-
     const imageInput = document.getElementById('file-input'); // Get the "file" input element containing the image
     const file = imageInput.files[0]; // Get the image file
-
     const fileReader = new FileReader();
 
     fileReader.onload = function (event) {
@@ -150,7 +143,6 @@ function Feed(props) {
           }
         ]
       };
-
       const requestOptions = {
         method: 'POST',
         headers: {
@@ -172,9 +164,9 @@ function Feed(props) {
     fileReader.readAsDataURL(file);
   };
 
+
   function LabelBottomNavigation() {
     const [value, setValue] = React.useState('recents');
-
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
@@ -215,23 +207,19 @@ function Feed(props) {
       setImagePreview(null);
     }
   }
-  const handleShowProfile = (event) => {
+
+  const handleShowProfile = () => {
     ReactDOM.render(<Profile />, document.getElementById('Feed'));
   };
 
-  const handleShowFeed = (event) => {
+  const handleShowFeed = () => {
     ReactDOM.render(<Feed />, document.getElementById('Feed'));
   };
 
-  const handleShowSavedPosts = (event) => {
+  const handleShowSavedPosts = () => {
     ReactDOM.render(<SavedPost />, document.getElementById('Feed'));
   };
 
-  // const dialog = (props) => {
-  //   return (
-
-  //   );
-  // }
   return (
 
     <div id="Feed">
@@ -413,7 +401,7 @@ function Feed(props) {
                   <LabelBottomNavigation />
                 </ul>
 
-                <img className='profileAvatar' src={otherUser.avatar} alt={otherUser.username} className="avatar" />
+                <img className='avatar' src={otherUser.avatar} alt={otherUser.username} />
 
               </div>
             </Dialog>
