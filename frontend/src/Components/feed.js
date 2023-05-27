@@ -58,15 +58,15 @@ function Feed(props) {
         const response = await fetch('http://localhost:8080/backend/rest/listPosts');
         const jsonResponse = await response.json();
         const { posts } = jsonResponse;
-        //const cards =posts;
-        const cards = posts.map(post => ({
-          id : post.id,
-          general_tag : post.general_tag,
-          likes:post.likes,
-          tag :post.tag,
-          post: base64ToImageFile(post.post.stream),
-          user:post.user,
-        }));
+        const cards = posts;
+        // const cards = posts.map(post => ({
+        //   id : post.id,
+        //   general_tag : post.general_tag,
+        //   likes:post.likes,
+        //   tag :post.tag,
+        //   post: base64ToImageFile(post.post),
+        //   user:post.user,
+        // }));
         console.log(cards);
         setCards(cards);
         console.log(cards); 
@@ -78,18 +78,20 @@ function Feed(props) {
     fetchData();
   }, []);
 
-  function base64ToImageFile(base64String) {
-    if (!base64String || typeof base64String !== 'string') {
-      throw new Error('Invalid base64 string');
+  function base64ToImageFile(base64Content) {
+    if (!base64Content || typeof base64Content !== 'string') {
+      throw new Error('Invalid base64 content');
     }
   
-    const base64Parts = base64String.split(',');
+    const base64Parts = base64Content.split(':');
     if (base64Parts.length !== 2) {
-      throw new Error('Invalid base64 string format');
+      throw new Error('Invalid base64 content format');
     }
   
-    const mimeType = base64Parts[0].split(':')[1].split(';')[0];
-    const byteCharacters = atob(base64Parts[1]);
+    const mimeType = base64Parts[0].split(';')[0].split(':')[1];
+    const base64String = base64Parts[1];
+  
+    const byteCharacters = atob(base64String);
     const byteArrays = [];
   
     for (let i = 0; i < byteCharacters.length; i++) {
@@ -100,7 +102,6 @@ function Feed(props) {
     return new File([byteArray], 'image.png', { type: mimeType });
   }
   
-
   const likePost = (postId) => {
   //     // Make a request to the server to update the likes of the post
   //     axios.post('http://localhost:8080/backend/rest/like', { postId })
@@ -165,13 +166,13 @@ function Feed(props) {
     return (
       <BottomNavigation sx={{ width: 370, backgroundColor: 'transparent' }} value={value} onChange={handleChange}>
         <BottomNavigationAction
-          label={`${user.followers} followers`}
+          label={`${otherUser.followers} followers`}
           value="Followers"
           icon={<PeopleAltIcon />}
           sx={{ color: 'white', }}
         />
         <BottomNavigationAction
-          label={`${user.posts_count} posts`}
+          label={`${otherUser.posts_count} posts`}
           value="Posts"
           icon={<DynamicFeedIcon />}
           sx={{ color: 'white' }}
