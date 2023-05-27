@@ -19,7 +19,7 @@ public class User {
 	private int post_count;
 	private String bio;
 
-	@OneToMany
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Post> posts;
 	
 	public User() {
@@ -89,5 +89,9 @@ public class User {
 	}
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
+	}
+	public void incrementPostCount() {
+		// TODO Auto-generated method stub
+		this.post_count ++;
 	}
 }

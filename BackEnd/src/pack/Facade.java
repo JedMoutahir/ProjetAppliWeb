@@ -257,7 +257,7 @@ public class Facade {
             Post post = new Post();
             post.setTitle(filename);
             post.setUser(user);
-
+            post.user.incrementPostCount();
 	        System.out.println("storing the post");
             // Save the post to the database
             em.persist(post);
@@ -390,6 +390,62 @@ public class Facade {
 
 	        return Response.serverError().entity(response).build();
 	    }
+	}
+	
+	@POST
+	@Path("/profile")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getUserProfile(JsonObject json) {
+		//String imagePath = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/ImageClassification/bank_images/";
+		String imagePath = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/ImageClassification/bank_images/";
+	    int userId = json.getInt("id_user");
+	    System.out.println("user id: " + userId);
+
+	    // Get the user from the database
+	    User user = em.find(User.class, userId);
+	    if (user == null) {
+	        System.out.println("user not found");
+	        JsonObject response = Json.createObjectBuilder()
+	                .add("success", false)
+	                .add("message", "User not found")
+	                .build();
+	        return Response.status(Response.Status.NOT_FOUND).entity(response).build();
+	    }
+
+	    // Get the user's posts
+	    List<Post> posts = user.getPosts();
+
+	    // Build the JSON response
+	    JsonObjectBuilder userBuilder = Json.createObjectBuilder()
+	            .add("id_user", user.getId_user())
+	            .add("username", user.getUsername())
+	            .add("followers", user.getFollowers())
+	            .add("following", user.getFollowing())
+	            .add("post_count", user.getPost_count())
+	            .add("avatar", user.getAvatar_filename());
+
+	    JsonArrayBuilder postsBuilder = Json.createArrayBuilder();
+	    for (Post post : posts) {
+	        JsonObjectBuilder postBuilder = Json.createObjectBuilder()
+	                .add("id_post", post.getId_post())
+	                .add("title", post.getTitle())
+	                .add("date", post.getDate())
+	                .add("likes", post.getLikes())
+	                .add("tag", post.getTag())
+	                .add("general_tag", post.getGeneral_tag())
+	                .add("image", encodeImageContent(imagePath + post.getTitle()));
+
+	        postsBuilder.add(postBuilder);
+	    }
+
+	    JsonObject response = Json.createObjectBuilder()
+	            .add("success", true)
+	            .add("user", userBuilder)
+	            .add("posts", postsBuilder)
+	            .build();
+
+	    return Response.ok(response).build();
 	}
 	
 }
