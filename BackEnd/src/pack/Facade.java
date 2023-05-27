@@ -167,13 +167,17 @@ public class Facade {
             //String imagePath = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/ImageClassification/bank_images/" + post.getTitle();
     		String imagePath = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/ImageClassification/bank_images/" + post.getTitle();
             String imageContent = encodeImageContent(imagePath);
-
+            //String avatarPath = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/frontend/avatars/" + post.getUser().getAvatar_filename();
+            String avatarPath = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/frontend/avatars/" + post.getUser().getAvatar_filename();
+            String avatarContent = encodeImageContent(avatarPath);
+            
             JsonObject userObject = Json.createObjectBuilder()
                     .add("username", post.getUser().getUsername())
                     .add("bio", post.getUser().getBio())
                     .add("followers", post.getUser().getFollowers())
                     .add("following", post.getUser().getFollowing())
                     .add("posts_count", post.getUser().getPost_count())
+                    .add("avatar", avatarContent)
                     .build();
 
             JsonObject postObject = Json.createObjectBuilder()
