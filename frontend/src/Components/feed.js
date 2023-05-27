@@ -26,17 +26,9 @@ import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
 
 function Feed(props) {
   
-  const user = {
-    username: "janedoe",
-    bio: "Software engineer and sport lover",
-    avatar: "https://i.pravatar.cc/150?img=11",
-    followers: 1000,
-    following: 500,
-    posts_count: 12,
-  };
-
   var cards = [
     {
+      id :'1',
       name: "Lena Rose",
       avatar: "profile.jpg",
       post: "Fox.jpg",
@@ -52,6 +44,7 @@ function Feed(props) {
         posts_count: 12,
       }
     }, {
+      id :'2',
       name: "John Doe",
       avatar: "profile2.jpg",
       post: "plant.webp",
@@ -67,6 +60,7 @@ function Feed(props) {
         posts_count: 12,
       }
     }, {
+      id :'3',
       name: "Alex Sabatier",
       avatar: "profile2.jpg",
       post: "avocat.jpg",
@@ -112,7 +106,7 @@ function Feed(props) {
   //  React.useEffect(() => {
   //   const fetchData = async () => {
   //     try {
-  //       const response = await fetch('http://localhost:8080/backend/rest/feed');
+  //       const response = await fetch('http://localhost:8080/backend/rest/cards');
   //       if (response.ok) {
   //         var { cards } = await response.json(); 
   //         setCards(cards);
@@ -126,6 +120,22 @@ function Feed(props) {
 
   //   fetchData();
   // }, []);
+
+  const likePost = (postId) => {
+  //     // Make a request to the server to update the likes of the post
+  //     axios.post('http://localhost:8080/backend/rest/like', { postId })
+  //       .then(response => {
+  //         // Handle the response from the server
+  //         console.log('Likes updated:', response.data);
+  //       })
+  //       .catch(error => {
+  //         console.error('Error updating likes:', error);
+  //       });
+   };
+
+  const SavePost =() =>{
+    
+  }
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -155,6 +165,7 @@ function Feed(props) {
         .then(response => response.json())
         .then(data => {
           console.log(data); // Do something with the JSON response
+          // !!!! return to me the id of the post
         })
         .catch(error => {
           console.error('Error:', error);
@@ -187,7 +198,7 @@ function Feed(props) {
 
         />
 
-        <BottomNavigationAction label="Follow profile" value="Follow profile" icon={<PersonAddIcon />} sx={{ color: 'white' }} />
+        <BottomNavigationAction label="Follow profile" value="Follow profile" icon={<PersonAddIcon/>} sx={{ color: 'white' }} />
       </BottomNavigation>
     );
   };
@@ -259,17 +270,7 @@ function Feed(props) {
                 <h6 className="text">Saved</h6>
               </a>
             </li>
-            <li>
-              <a href="#">
-                <SettingsSuggestIcon
-                  sx={{
-                    color: 'white', marginLeft: '-240px', marginTop: '48px',
-                  }}>
-
-                </SettingsSuggestIcon>
-                <h6 className="text" >Settings</h6>
-              </a>
-            </li>
+           
 
             <li>
               <a href="./Login" className="logout">
@@ -327,9 +328,7 @@ function Feed(props) {
 
             {
               cards.filter(card => (keywords.length === 0 || keywords.includes(card.general_tag)) && card.name.toLowerCase().includes(searchInput.toLowerCase())).map(card => {
-
-
-                return (
+              return (
                   <div className="card">
                     <div className="profile" onClick={
                       () => {
@@ -350,7 +349,7 @@ function Feed(props) {
                           <ThumbUpIcon
                             sx={{
                               color: 'white',
-                            }}>
+                            }} onClick={() => likePost(card.id)}>
                           </ThumbUpIcon>
                         </button>
                         <h6> {card.likes} {' likes'} </h6>
@@ -370,7 +369,7 @@ function Feed(props) {
                           <BookmarkAddIcon
                             sx={{
                               color: 'white',
-                            }}>
+                            }} onClick={SavePost}>
 
                           </BookmarkAddIcon>
                         </button>
@@ -414,3 +413,12 @@ function Feed(props) {
 }
 
 export default Feed
+
+const user = {
+  username: "janedoe",
+  bio: "Software engineer and sport lover",
+  avatar: "https://i.pravatar.cc/150?img=11",
+  followers: 1000,
+  following: 500,
+  posts_count: 12,
+};

@@ -73,17 +73,6 @@ function Profile(props) {
               <h6 className="text">Saved</h6>
             </a>
           </li>
-          <li>
-            <a href="#">
-            <SettingsSuggestIcon 
-              sx ={{
-                color:'white', marginLeft :'-240px', marginTop :'40px',
-                }}>
-
-              </SettingsSuggestIcon> 
-              <h6 className="text" >Settings</h6>
-            </a>
-          </li>
           
           <li>
             <a href="./Login" className="logout">
