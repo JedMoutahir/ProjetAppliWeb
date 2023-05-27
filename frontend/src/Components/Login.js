@@ -38,6 +38,8 @@ function Login(props) {
       .catch(error => { console.error("error", error) });
   }
 
+ 
+
   const handleSignUp = (event) => {
     const rootElement = document.getElementById('container forms');
     ReactDOM.createRoot(rootElement).render(<SignUp />);

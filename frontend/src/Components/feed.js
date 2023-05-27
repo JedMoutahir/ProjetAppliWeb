@@ -20,7 +20,6 @@ import SavedPost from './SavedPost.tsx';
 import Dialog from '@mui/material/Dialog';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
-import axios from 'axios';
 
 
 function Feed(props) {
@@ -80,7 +79,7 @@ function Feed(props) {
   }, []);
 
   
-  const likePost = async (postId) =>  {
+  const likePost = async (id_post) =>  {
       // Make a request to the server to update the likes of the post
       console.log('here1');
 
@@ -89,15 +88,17 @@ function Feed(props) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ postId}),
-      }).then(response => {
-         console.log('here2');
-          if (response.success === true) {
-            const { like_count } = response.like_count;
+        body: JSON.stringify({  id_post}),
+      }).then(response => response.json())
+      //return the user's id in the response
+        .then(jsonresponse => {
+          if (jsonresponse.success === true) {
+            const { like_count } = jsonresponse.like_count;
+           
             setCards(prevCards => {
               return prevCards.map(card => {
-                if (card.id === postId) {
-                  return { id : card.postId,
+                if (card.id === id_post) {
+                  return { id : card.id,
                     general_tag : card.general_tag,
                     likes: like_count,
                     tag : card.tag,
@@ -203,7 +204,6 @@ function Feed(props) {
   }
 
   const handleShowProfile = () => {
-    localStorage.getItem('userId');
     ReactDOM.render(<Profile />, document.getElementById('Feed'));
   };
 
@@ -322,7 +322,7 @@ function Feed(props) {
                     } 
                     value={card.user}
                     >
-                      <img className="profile-pic" src={`data:image/${card.type};base64,${card.post}`} />
+                      <img className="profile-pic" src={`data:image/${card.type};base64,${card.user.avatar}`} />
                       <h4 className="Name"><b>{card.user.username}</b></h4>
                     </div>
                     <img className="post" src={`data:image/${card.type};base64,${card.post}`} alt="Base64 Image" />

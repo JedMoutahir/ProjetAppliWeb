@@ -15,7 +15,7 @@ import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
-import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
+import CancelIcon from '@mui/icons-material/Cancel';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ReactDOM from 'react-dom';
 import SavedPost from './SavedPost.tsx';
@@ -25,17 +25,33 @@ import Feed from './feed';
 function Profile(props) {
 
   var [user, setUser] = React.useState();
-   
+  var [UserPosts, setUserPosts] = React.useState([]);
+ 
 
-   React.useEffect(() => {
+  React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:8080/backend/rest/profile');
-        const jsonResponse = await response.json();
+        const id_user = parseInt(localStorage.getItem('userId'), 10);
+        console.log( JSON.stringify({ id_user }));
+        const response = await fetch('http://localhost:8080/backend/rest/profile', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id_user }),
+
+        }).then(response => response.json())
+        //return the user's id in the response
+        .then(jsonResponse => {
+        
         const { profile } = jsonResponse;
-        const user = profile;
+        const user = profile.user;
+        const UserPosts = profile.posts;
+        console.log(user);
         setUser(user);
-        console.log(user); 
+        setUserPosts(UserPosts);
+        console.log(user);
+       })
       } catch (error) {
         console.error('Error retrieving data:', error);
       }
@@ -44,15 +60,15 @@ function Profile(props) {
     fetchData();
   }, []);
 
-  const handleShowProfile = (event) => {
+  const handleShowProfile = () => {
     ReactDOM.render(<Profile />, document.getElementById('Feed'));
    };
 
-   const handleShowFeed = (event) => {
+   const handleShowFeed = () => {
     ReactDOM.render(<Feed />, document.getElementById('Feed'));
    }; 
 
-   const handleShowSavedPosts = (event) => {
+   const handleShowSavedPosts = () => {
     ReactDOM.render(<SavedPost />, document.getElementById('Feed'));
    };
 
@@ -110,19 +126,7 @@ function Profile(props) {
       </nav>
       <BottomAppBar sx={{marginLeft:'300px',}}></BottomAppBar>
     <div className='Profile'>
-      <UserProfile user={user} />
-      <br></br>
-      <TitlebarImageList/>
-    </div>
-   
-</>
-    )
-}
-
-const UserProfile = ({ user }) => {
-
-  return (
-    <div className="user-profile">
+    {/* <div className="user-profile">
       <ul>
       <h1 className="name">{user.username}</h1>
       <p className="bio">{user.bio}</p>
@@ -130,16 +134,10 @@ const UserProfile = ({ user }) => {
       <ul className="stats">
       <LabelBottomNavigation/>
       </ul>
-      <img src={user.avatar} alt={user.name} className="avatar" />
-    </div>
-  );
-};
-
-export default Profile
-
-function TitlebarImageList() {
-  return (
-    <div className ="ListImages">
+      <img src={user.avatar} className="avatar" />
+    </div> */}
+      <br></br>
+      <div className ="ListImages">
     <ImageList sx={{
       width: '90%',
       maxWidth: 1000,
@@ -177,125 +175,187 @@ function TitlebarImageList() {
       ))}
     </ImageList>
     </div>
-  );
+    </div>
+   
+</>
+    )
 }
+
+export default Profile
+
+// function TitlebarImageList(UserPosts) {
+//   return (
+//     <div className ="ListImages">
+//     <ImageList sx={{
+//       width: '90%',
+//       maxWidth: 1000,
+//       height: 'auto',
+//       marginLeft:'35px',
+//       marginTop:'40px',
+//       transform: 'translateZ(0)',
+//     }}>
+      
+//       {UserPosts.map((item) => (
+//         <ImageListItem key={item.image}>
+//           <img
+//             src={`${item.image}?w=248&fit=crop&auto=format`}
+//             srcSet={`${item.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+//             alt={item.title}
+//             loading="lazy"
+//           />
+//          <ImageListItemBar
+//         title={item.title}
+//         subtitle={item.author}
+//         actionIcon={
+//           <Tooltip title={`${item.likes}`} placement="top">
+//             <IconButton
+//               sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+//               aria-label={`info about ${item.title}`}
+//             >
+//             <FavoriteIcon />
+//             </IconButton>
+//           </Tooltip>
+          
+//           }
+//           >
+//       </ImageListItemBar>
+//     </ImageListItem>
+//       ))}
+//     </ImageList>
+//     </div>
+//   );
+// }
 
 function LabelBottomNavigation() {
   const [value, setValue] = React.useState('recents');
+  const [AvatarPreview, setAvatarPreview] = React.useState("");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+ 
+//   function previewAvatar(event) {
+//     const file = event.target.files[0];
+//     const reader = new FileReader();
 
-  return (
-    <BottomNavigation sx={{ width: 370 ,backgroundColor: 'transparent'}} value={value} onChange={handleChange}>
-      <BottomNavigationAction
-        label={`${user.followers} followers`}
-        value="Followers"
-        icon={<PeopleAltIcon />}
-        sx={{ color: 'white' ,}}
-      />
-      <BottomNavigationAction
-        label={`${user.posts_count} posts`}
-        value="Posts"
-        icon={<DynamicFeedIcon />}
-        sx={{ color: 'white' }}
+//     reader.onloadend = function (event) {
+//       setAvatarPreview(event.target.result);
+//     };
+//     if (file) {
+//       reader.readAsDataURL(file);
+//     } else {
+//       setAvatarPreview(null);
+//     }
+//   }
+
+//   function changeAvatar() {
+//     /*to display the popup*/
+//     const Edit = document.querySelector('#EditIcon');
+//     const popup = document.querySelector('.popupAvatar');
+//         Edit.addEventListener('click', () => {
+//         popup.style.display = 'flex';
+//         });
         
-      />
+//     /**to remove the popup */
+//     const close = document.querySelector('#btn-close');
+//     const pop = document.querySelector('.popupAvatar');
+//         close.addEventListener('click', () => {
+//             pop.style.display = 'none';
+//         });
+// }
 
-      <BottomNavigationAction label="Edit profile" value="Edit profile" icon={<EditIcon />} sx={{ color: 'white' }} />
-    </BottomNavigation>
-  );
+// const handleChangeSubmit = (event) => {
+//   event.preventDefault();
+//   const id = localStorage.getItem('userId');
+// const imageInput = document.getElementById('file-input'); // Get the "file" input element containing the image
+//   const file = imageInput.files[0]; // Get the image file
+//   const fileReader = new FileReader();
+
+//   fileReader.onload = function (event) {
+//     const base64Content = event.target.result.split(',')[1]; // Extract the base64-encoded content
+//     const jsonData = {
+//       filename: file.name,
+//       content: [
+//         {
+//           stream: base64Content
+//         }
+//       ],
+//       id : parseInt(localStorage.getItem('userId'), 10)
+//     };
+//     const requestOptions = {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify(jsonData)
+//     };
+
+//     fetch('http://localhost:8080/backend/rest/changeAvatar', requestOptions)
+//       .then(response => response.json())
+//       .then(data => {
+//         console.log(data); 
+//       })
+//       .catch(error => {
+//         console.error('Error:', error);
+//       });
+//   };
+
+//   fileReader.readAsDataURL(file);
+// };
+//   return (
+//     <>
+//     <BottomNavigation sx={{ width: 370 ,backgroundColor: 'transparent'}} value={value} onChange={handleChange}>
+//       <BottomNavigationAction
+//         label={`${user.followers} followers`}
+//         value="Followers"
+//         icon={<PeopleAltIcon />}
+//         sx={{ color: 'white' ,}}
+//       />
+//       <BottomNavigationAction
+//         label={`${user.posts_count} posts`}
+//         value="Posts"
+//         icon={<DynamicFeedIcon />}
+//         sx={{ color: 'white' }}
+        
+//       />
+
+//       <BottomNavigationAction id ='EditIcon' label="Edit profile" value="Edit profile" icon={<EditIcon />} onClick={changeAvatar} sx={{ color: 'white' }} />
+//     </BottomNavigation>
+    
+//     <div className="popupAvatar">
+//           <div className="wrapperAvatar">
+//             <button id="btn-close">
+//               <CancelIcon
+//                 sx={{
+//                   color: '#607D8B', backgroundColor: 'white', width: '40px',
+//                   height: '40px',
+//                 }}>
+//               </CancelIcon></button>
+//             <header>Drag & Drop your new avatar </header>
+//             <button id="dragdrop-btn">
+//                 <div id='image-preview'>
+//                 {AvatarPreview ? (
+//                 <div id='image-preview'>
+//                   <img id="imageUploaded" src={AvatarPreview} alt="Dropped" />
+//                 </div>
+//               ) : (
+//                 <img id="dragdrop-icon" src="cloud-upload.png" alt="Upload" />
+//               )}                
+//               </div>
+             
+//             </button>
+//             <form id="form1" onSubmit={handleChangeSubmit}>
+//               <input type="file" id="file-input" className="file-input" accept="image/*" name='image' value='tocheck' onChange={previewAvatar} />
+//               <button id="change" type="submit" value="Change avatar" > Change avatar</button>
+//             </form>
+//           </div>
+//     </div>
+//     </>
+    
+//   );
 }
 
 
-const user = {
-  username: "janedoe",
-  bio: "Software engineer and sport lover",
-  avatar: "https://i.pravatar.cc/150?img=11",
-  followers: 1000,
-  following: 500,
-  posts_count: 12,
-};
 
 
-const UserPosts = [
-  {
-    image: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-    title: 'Breakfast',
-    likes : '30 likes',
-    rows: 2,
-    cols: 2,
-    featured: true,
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-    title: 'Burger',
-    likes : '60 likes',
-
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-    title: 'Camera',
-    likes : '8 likes',
-
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-    title: 'Coffee',
-    likes : '5 likes',
-    cols: 2,
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-    title: 'Hats',
-    likes : '50 likes',
-    cols: 2,
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-    title: 'Honey',
-    likes : '50 likes',
-    rows: 2,
-    cols: 2,
-    featured: true,
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-    title: 'Basketball',
-    likes : '50 likes',
-
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-    title: 'Fern',
-    likes : '50 likes',
-
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-    title: 'Mushrooms',
-    likes : '4 likes',
-    rows: 2,
-    cols: 2,
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-    title: 'Tomato basil',
-    likes : '9 likes',
-
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-    title: 'Sea star',
-    likes : '10 likes',
-
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-    title: 'Bike',
-    likes : '5 likes',
-    cols: 2,
-  },
-];
 
