@@ -20,7 +20,7 @@ import SavedPost from './SavedPost.tsx';
 import Dialog from '@mui/material/Dialog';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
-
+import axios from 'axios';
 
 
 function Feed(props) {
@@ -80,19 +80,43 @@ function Feed(props) {
   }, []);
 
   
-  const likePost = (postId) => {
-  //     // Make a request to the server to update the likes of the post
-  //     axios.post('http://localhost:8080/backend/rest/like', { postId })
-  //       .then(response => {
-  //         // Handle the response from the server
-  //         console.log('Likes updated:', response.data);
-  //       })
-  //       .catch(error => {
-  //         console.error('Error updating likes:', error);
-  //       });
+  const likePost = async (postId) =>  {
+      // Make a request to the server to update the likes of the post
+      console.log('here1');
+
+      const response = await fetch('http://localhost:8080/backend/rest/like', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId}),
+      }).then(response => {
+         console.log('here2');
+          if (response.success === true) {
+            const { like_count } = response.like_count;
+            setCards(prevCards => {
+              return prevCards.map(card => {
+                if (card.id === postId) {
+                  return { id : card.postId,
+                    general_tag : card.general_tag,
+                    likes: like_count,
+                    tag : card.tag,
+                    post: card.post,
+                    user:card.user,
+                    filename: card.filename,
+                    type: card.filename.split('.')[1], };
+                }
+                return card;
+              });
+            });
+          }
+        })
+        .catch(error => {
+          console.error('Error updating likes:', error);
+        });
    };
 
-  const SavePost =() =>{
+  const SavePost =() => {
     
   }
 
@@ -298,10 +322,10 @@ function Feed(props) {
                     } 
                     value={card.user}
                     >
-                      <img className="profile-pic" src='profile.jpg' />
+                      <img className="profile-pic" src={`data:image/${card.type};base64,${card.post}`} />
                       <h4 className="Name"><b>{card.user.username}</b></h4>
                     </div>
-                    <img className="post" src={`data:image/png;base64,${card.post}`} alt="Base64 Image" />
+                    <img className="post" src={`data:image/${card.type};base64,${card.post}`} alt="Base64 Image" />
                     <p className="type">{card.tag}</p>
                     <div className="barre">
                       <div>
@@ -359,8 +383,7 @@ function Feed(props) {
                 <ul className="stats">
                   <LabelBottomNavigation />
                 </ul>
-                <img className='avatar' src='{otherUser.avatar}' alt={otherUser.username} />
-
+                <img className="avatar" src={`data:image/png;base64,${otherUser.avatar}`} />
               </div>
             </Dialog>
           </div>
