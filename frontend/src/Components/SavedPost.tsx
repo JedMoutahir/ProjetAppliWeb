@@ -22,7 +22,6 @@ import BookRoundedIcon from '@mui/icons-material/BookRounded';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
-import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ReactDOM from 'react-dom';
 import SavedPost from './SavedPost.tsx'
@@ -61,7 +60,39 @@ function ColorSchemeToggle() {
 
 export default function PostExample(props) {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  var [savedPosts, setsavedPosts] = React.useState([]);
+  var [LastPost, setLastPost] = React.useState(null);
 
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const id_user: number = parseInt(localStorage.getItem('userId')!, 10);
+        console.log( JSON.stringify({ id_user }));
+        const response = await fetch('http://localhost:8080/backend/rest/savedPosts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id_user }),
+
+        }).then(response => response.json())
+        //return the user's id in the response
+        .then(jsonResponse => {
+        const savedPosts = jsonResponse.savedPosts;
+        const LastPost = savedPosts.pop();
+        console.log(savedPosts);
+        setsavedPosts(savedPosts);
+        setLastPost(LastPost);
+        console.log(LastPost);
+       })
+      } catch (error) {
+        console.error('Error retrieving data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
   const handleShowProfile = () => {
     ReactDOM.render(<Profile />, document.getElementById('Feed'));
    };
@@ -149,114 +180,16 @@ export default function PostExample(props) {
           <Box
             sx={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))',
               gap: 2,
-              marginLeft :'40%',
+              marginLeft :'70%',
               marginTop:'-8%'
               
             }}
           >
-            <Sheet
-              variant="outlined"
-              sx={{
-                borderRadius: 'sm',
-                gridColumn: '1/-1',
-                display: { xs: 'none', sm: 'grid' },
-                gridTemplateColumns: '1fr 1fr 1fr 1fr',
-                '& > *': {
-                  p: 2,
-                  '&:nth-child(n):not(:nth-last-child(-n+4))': {
-                    borderBottom: '1px solid',
-                    borderColor: 'divider',
-                  },
-                },
-                width :'500px',
-                background:'white',
-              }}
-            >
-              <Typography level="body3" fontWeight="md" noWrap>
-                Folder name
-              </Typography>
-              <Typography level="body3" fontWeight="md" noWrap>
-                Saved on
-              </Typography>
-              <Typography level="body3" fontWeight="md" noWrap>
-                Count
-              </Typography>
-              <Typography level="body3" fontWeight="md" noWrap>
-                Profiles
-              </Typography>
-              <Typography
-                level="body2"
-                startDecorator={<FolderOpenIcon color="primary" />}
-                sx={{ alignItems: 'flex-start' }}
-              >
-                Travel pictures
-              </Typography>
-              <Typography level="body2">21 October 2011</Typography>
-              <Typography level="body2" sx={{ color: 'success.600' }}>
-                9 posts
-              </Typography>
-              <Box>
-                <AvatarGroup
-                  size="sm"
-                  sx={{ '--AvatarGroup-gap': '-8px', '--Avatar-size': '24px' }}
-                >
-                  <Avatar
-                    src="https://i.pravatar.cc/24?img=6"
-                    srcSet="https://i.pravatar.cc/48?img=6 2x"
-                  />
-                  <Avatar
-                    src="https://i.pravatar.cc/24?img=7"
-                    srcSet="https://i.pravatar.cc/48?img=7 2x"
-                  />
-                  <Avatar
-                    src="https://i.pravatar.cc/24?img=8"
-                    srcSet="https://i.pravatar.cc/48?img=8 2x"
-                  />
-                  <Avatar
-                    src="https://i.pravatar.cc/24?img=9"
-                    srcSet="https://i.pravatar.cc/48?img=9 2x"
-                  />
-                </AvatarGroup>
-              </Box>
-              <Typography
-                level="body2"
-                startDecorator={<FolderOpenIcon color="primary" />}
-                sx={{ alignItems: 'flex-start' }}
-              >
-                Important posts
-              </Typography>
-              <Typography level="body2">26 May 2010</Typography>
-              <Typography level="body2" sx={{ color: 'success.600' }}>
-                2 posts
-              </Typography>
-              <Box>
-                <AvatarGroup
-                  size="sm"
-                  sx={{ '--AvatarGroup-gap': '-8px', '--Avatar-size': '24px' }}
-                >
-                  <Avatar
-                    src="https://i.pravatar.cc/24?img=6"
-                    srcSet="https://i.pravatar.cc/48?img=6 2x"
-                  />
-                  <Avatar
-                    src="https://i.pravatar.cc/24?img=7"
-                    srcSet="https://i.pravatar.cc/48?img=7 2x"
-                  />
-                  <Avatar
-                    src="https://i.pravatar.cc/24?img=8"
-                    srcSet="https://i.pravatar.cc/48?img=8 2x"
-                  />
-                  <Avatar
-                    src="https://i.pravatar.cc/24?img=9"
-                    srcSet="https://i.pravatar.cc/48?img=9 2x"
-                  />
-                </AvatarGroup>
-              </Box>
-            </Sheet>
             
-            <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 2 }}>
+            {savedPosts.map((item) => (
+            <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: 2 }}>
              <Card
               sx={{
                 '--Card-radius': (theme) => theme.vars.radius.sm,
@@ -266,7 +199,7 @@ export default function PostExample(props) {
               <CardCover>
                 <img
                   alt=""
-                  src="https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?auto=format&fit=crop&w=774"
+                  src= {item && `data:image/png;base64,${item.image}`}
                 />
               </CardCover>
               <CardCover
@@ -285,107 +218,25 @@ export default function PostExample(props) {
                   alignItems: 'center',
                 }}
               >
-                <Box sx={{ flex: 1 ,marginTop:'80%'}}>
+              <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '80%' }}>
                   <Typography
                     level="body3"
                     mt={0.5}
                     textColor="rgba(255,255,255,0.72)"
+                    sx={{ whiteSpace: 'nowrap', marginLeft: '8px' }}
                   >
-                    Added 5 Aug 2016
+                    Added on {item.date}
                   </Typography>
                 </Box>
-                <IconButton variant="plain" color="neutral" sx={{ color: '#fff',marginTop:'80%', }}>
-                  <BookRoundedIcon />
-                </IconButton>
-              </CardContent>
-            </Card>
-            <Card
-              sx={{
-                '--Card-radius': (theme) => theme.vars.radius.sm,
-                boxShadow: 'none',
-              }}
-            >
-              <CardCover>
-                <img
-                  alt=""
-                  src="https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?auto=format&fit=crop&w=774"
-                />
-              </CardCover>
-              <CardCover
-                sx={{
-                  background:
-                    'linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.12))',
-                }}
-              />
-              <CardContent
-                sx={{
-                  mt: 'auto',
-                  height:'200px',
-                  width :'210px',
-                  flexGrow: 0,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
-                <Box sx={{ flex: 1 ,marginTop:'80%'}}>
-                  <Typography
-                    level="body3"
-                    mt={0.5}
-                    textColor="rgba(255,255,255,0.72)"
-                  >
-                    Added 5 Aug 2016
-                  </Typography>
-                </Box>
-                <IconButton variant="plain" color="neutral" sx={{ color: '#fff',marginTop:'80%', }}>
-                  <BookRoundedIcon />
-                </IconButton>
-              </CardContent>
-            </Card>
-            
-            <Card
-              sx={{
-                '--Card-radius': (theme) => theme.vars.radius.sm,
-                boxShadow: 'none',
-              }}
-            >
-              <CardCover>
-                <img
-                  alt=""
-                  src="https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?auto=format&fit=crop&w=774"
-                />
-              </CardCover>
-              <CardCover
-                sx={{
-                  background:
-                    'linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.12))',
-                }}
-              />
-              <CardContent
-                sx={{
-                  mt: 'auto',
-                  height:'200px',
-                  width :'210px',
-                  flexGrow: 0,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
-                <Box sx={{ flex: 1 ,marginTop:'80%'}}>
-                  <Typography
-                    level="body3"
-                    mt={0.5}
-                    textColor="rgba(255,255,255,0.72)"
-                  >
-                    Added 5 Aug 2016
-                  </Typography>
-                </Box>
-                <IconButton variant="plain" color="neutral" sx={{ color: '#fff',marginTop:'80%', }}>
+
+                <IconButton variant="plain" color="neutral" sx={{ color: '#fff',marginTop:'80%', marginLeft:'150%'}}>
                   <BookRoundedIcon />
                 </IconButton>
               </CardContent>
             </Card>
             </Box>
-          </Box>
+            ))}
+            </Box>
         </Layout.Main>
         <Sheet
           sx={{
@@ -423,7 +274,7 @@ export default function PostExample(props) {
           <AspectRatio ratio="21/9">
             <img
               alt=""
-              src="https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?auto=format&fit=crop&w=774"
+              src={LastPost && `data:image/png;base64,${LastPost.image}`}
             />
           </AspectRatio>
           <Box sx={{ p: 2, display: 'flex', gap: 1, alignItems: 'center', }}>
@@ -461,17 +312,16 @@ export default function PostExample(props) {
           >
            <Typography level="body2">Tag</Typography>
             <Typography level="body2" textColor="black">
-              Nature
-            </Typography>
+            {LastPost &&`${LastPost.general_tag}`}            </Typography>
 
-            <Typography level="body2">Owner</Typography>
+            <Typography level="body2">Number of likes</Typography>
             <Typography level="body2" textColor="black">
-              Michael Scott
+            {LastPost &&`${LastPost.likes}`} 
             </Typography>
 
             <Typography level="body2">Created</Typography>
             <Typography level="body2" textColor="black">
-              5 August 2016
+            {LastPost &&`${LastPost.date}`} 
             </Typography>
           </Box>
           <Divider />

@@ -81,7 +81,6 @@ function Feed(props) {
   
   const likePost = async (id_post) =>  {
       // Make a request to the server to update the likes of the post
-      console.log('here1');
 
       const response = await fetch('http://localhost:8080/backend/rest/like', {
         method: 'POST',
@@ -117,8 +116,26 @@ function Feed(props) {
         });
    };
 
-  const SavePost =() => {
-    
+  const SavePost = async (id_post)=> {
+    // Make a request to the server to update the likes of the post
+    console.log('here1');
+    const id_user = parseInt(localStorage.getItem('userId'), 10);
+    const response = await fetch('http://localhost:8080/backend/rest/save', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({id_user, id_post}),
+    }).then(response => response.json())
+    //return the user's id in the response
+      .then(jsonresponse => {
+        if (jsonresponse.success === true) {
+          console.log(jsonresponse.message);
+        }
+      })
+      .catch(error => {
+        console.error('Error updating likes:', error);
+      });
   }
 
   const handleFormSubmit = (event) => {
@@ -353,7 +370,7 @@ function Feed(props) {
                           <BookmarkAddIcon
                             sx={{
                               color: 'white',
-                            }} onClick={SavePost}>
+                            }} onClick={() => SavePost(card.id)}>
 
                           </BookmarkAddIcon>
                         </button>
