@@ -212,7 +212,7 @@ public class Facade {
             return "";
         }
     }
-	
+
 	@POST
 	@Path("/upload")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -290,5 +290,102 @@ public class Facade {
 	    Files.copy(inputStream, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 	}
 	
+	@POST
+	@Path("/like")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response likePost(JsonObject json) {
+	    int postId = json.getInt("id_post");
+
+	    // Retrieve the post from the database
+	    Post post = em.find(Post.class, postId);
+
+	    if (post == null) {
+	        // Post not found in the database
+	        JsonObject responseJson = Json.createObjectBuilder()
+	                .add("success", false)
+	                .add("message", "Post not found")
+	                .build();
+
+	        return Response.status(Response.Status.NOT_FOUND)
+	                .entity(responseJson)
+	                .build();
+	    }
+
+	    // Increment the like count
+	    int likeCount = post.getLikes();
+	    likeCount++;
+	    post.setLikes(likeCount);
+
+	    // Update the post in the database
+	    em.merge(post);
+
+	    // Build the response JSON
+	    JsonObject responseJson = Json.createObjectBuilder()
+	            .add("success", true)
+	            .add("like_count", likeCount)
+	            .add("message", "Like added successfully")
+	            .build();
+
+	    return Response.ok(responseJson).build();
+	}
+	
+	@POST
+	@Path("/changeAvatar")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response changeAvatar(JsonObject json) {
+	    //String destinationFolder = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/frontend/avatars/";
+		String destinationFolder = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/frontend/avatars/";
+	    try {
+	        String filename = json.getString("filename");
+	        System.out.println("filename: " + filename);
+
+	        JsonArray contentArray = json.getJsonArray("content");
+	        JsonObject contentObject = contentArray.getJsonObject(0);
+	        String base64Content = contentObject.getString("stream");
+	        byte[] fileContent = Base64.getDecoder().decode(base64Content);
+	        InputStream fileInputStream = new ByteArrayInputStream(fileContent);
+
+	        // Save the image to the destination folder
+	        saveImage(fileInputStream, destinationFolder, filename);
+
+	        int userId = json.getInt("id");
+	        System.out.println("user id: " + userId);
+
+	        // Get the user from the database
+	        User user = em.find(User.class, userId);
+	        if (user == null) {
+	            System.out.println("user not found");
+	            JsonObject response = Json.createObjectBuilder()
+	                    .add("success", false)
+	                    .add("message", "User not found")
+	                    .build();
+	            return Response.status(Response.Status.NOT_FOUND).entity(response).build();
+	        }
+
+	        // Update the user's avatar
+	        user.setAvatar_filename(filename);
+
+	        System.out.println("updating the user's avatar");
+	        // Save the updated user to the database
+	        em.merge(user);
+
+	        System.out.println("sending the response");
+	        JsonObject response = Json.createObjectBuilder()
+	                .add("success", true)
+	                .add("message", "Avatar changed successfully")
+	                .build();
+	        return Response.ok(response).build();
+
+	    } catch (IOException | NullPointerException e) {
+	        e.printStackTrace();
+	        JsonObject response = Json.createObjectBuilder()
+	                .add("success", false)
+	                .add("message", "Error changing the avatar")
+	                .build();
+
+	        return Response.serverError().entity(response).build();
+	    }
+	}
 	
 }

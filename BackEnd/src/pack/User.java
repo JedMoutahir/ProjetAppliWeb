@@ -15,7 +15,7 @@ public class User {
 	private String username;
 	private int followers;
 	private int following;
-//	private Image avatar;
+	private String avatar_filename;
 	private int post_count;
 	private String bio;
 
@@ -66,12 +66,12 @@ public class User {
 	public void setFollowing(int following) {
 		this.following = following;
 	}
-//	public Image getAvatar() {
-//		return avatar;
-//	}
-//	public void setAvatar(Image avatar) {
-//		this.avatar = avatar;
-//	}
+	public String getAvatar_filename() {
+		return avatar_filename;
+	}
+	public void setAvatar_filename(String avatar_filename) {
+		this.avatar_filename = avatar_filename;
+	}
 	public int getPost_count() {
 		return post_count;
 	}
