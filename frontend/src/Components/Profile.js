@@ -24,7 +24,7 @@ import Feed from './feed';
 
 function Profile(props) {
 
-  var [user, setUser] = React.useState();
+  var [user, setUser] = React.useState(null);
   var [UserPosts, setUserPosts] = React.useState([]);
  
 
@@ -43,14 +43,12 @@ function Profile(props) {
         }).then(response => response.json())
         //return the user's id in the response
         .then(jsonResponse => {
-        
-        const { profile } = jsonResponse;
-        const user = profile.user;
-        const UserPosts = profile.posts;
+        const user = jsonResponse.user;
+        const UserPosts = jsonResponse.posts;
         console.log(user);
         setUser(user);
         setUserPosts(UserPosts);
-        console.log(user);
+        console.log(UserPosts);
        })
       } catch (error) {
         console.error('Error retrieving data:', error);
@@ -71,9 +69,84 @@ function Profile(props) {
    const handleShowSavedPosts = () => {
     ReactDOM.render(<SavedPost />, document.getElementById('Feed'));
    };
+   const [value, setValue] = React.useState('recents');
+   const [AvatarPreview, setAvatarPreview] = React.useState("");
+ 
+   const handleChange = (event, newValue) => {
+     setValue(newValue);
+   };
+  
+   function previewAvatar(event) {
+     const file = event.target.files[0];
+     const reader = new FileReader();
+ 
+     reader.onloadend = function (event) {
+       setAvatarPreview(event.target.result);
+     };
+     if (file) {
+       reader.readAsDataURL(file);
+     } else {
+       setAvatarPreview(null);
+     }
+   }
+ 
+   function changeAvatar() {
+     /*to display the popup*/
+     const Edit = document.querySelector('#EditIcon');
+     const popup = document.querySelector('.popupAvatar');
+         Edit.addEventListener('click', () => {
+         popup.style.display = 'flex';
+         });
+         
+     /**to remove the popup */
+     const close = document.querySelector('#btn-close');
+     const pop = document.querySelector('.popupAvatar');
+         close.addEventListener('click', () => {
+             pop.style.display = 'none';
+         });
+ }
+ 
+ const handleChangeSubmit = (event) => {
+   event.preventDefault();
+   const imageInput = document.getElementById('file-input'); // Get the "file" input element containing the image
+   const file = imageInput.files[0]; // Get the image file
+   const fileReader = new FileReader();
+ 
+   fileReader.onload = function (event) {
+     const base64Content = event.target.result.split(',')[1]; // Extract the base64-encoded content
+     const jsonData = {
+       filename: file.name,
+       content: [
+         {
+           stream: base64Content
+         }
+       ],
+       id : parseInt(localStorage.getItem('userId'), 10)
+     };
+     const requestOptions = {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json'
+       },
+       body: JSON.stringify(jsonData)
+     };
+ 
+     fetch('http://localhost:8080/backend/rest/changeAvatar', requestOptions)
+       .then(response => response.json())
+       .then(data => {
+         console.log(data); 
+       })
+       .catch(error => {
+         console.error('Error:', error);
+       });
+   };
+ 
+   fileReader.readAsDataURL(file);
+ };
 
   return (
-    <> 
+    < > 
+    <div className="Allprofile">
     <nav>
         <ul>
           <li>
@@ -126,16 +199,63 @@ function Profile(props) {
       </nav>
       <BottomAppBar sx={{marginLeft:'300px',}}></BottomAppBar>
     <div className='Profile'>
-    {/* <div className="user-profile">
+    <div className="user-profile">
       <ul>
-      <h1 className="name">{user.username}</h1>
-      <p className="bio">{user.bio}</p>
+      <h1 className="name"> {user && `${user.username} `}</h1>
+      <p className="name"> </p>
+      
+      </ul>
+      <ul>
+      <img src= {user && `data:image/png;base64,${user.avatar}`} className="avatar" />
       </ul>
       <ul className="stats">
-      <LabelBottomNavigation/>
+      <BottomNavigation sx={{ width: 370 ,backgroundColor: 'transparent',marginTop:'-30%'}} value={value} onChange={handleChange}>
+//       <BottomNavigationAction
+        label={user && `${user.followers} followers`}
+        value="Followers"
+        icon={<PeopleAltIcon />}
+        sx={{ color: 'white' ,}}
+      />
+      <BottomNavigationAction
+        label={user && `${user.post_count} posts`}
+        value="Posts"
+        icon={<DynamicFeedIcon />}
+        sx={{ color: 'white' }}
+        
+      />
+      <BottomNavigationAction id ='EditIcon' label="Edit profile" value="Edit profile" icon={<EditIcon />} onClick={changeAvatar} sx={{ color: 'white' }} />
+    </BottomNavigation>
+    
+    <div className="popupAvatar">
+          <div className="wrapperAvatar">
+            <button id="btn-close">
+              <CancelIcon
+                sx={{
+                  color: '#607D8B', backgroundColor: 'white', width: '40px',
+                  height: '40px',
+                }}>
+              </CancelIcon></button>
+            <header>Drag & Drop your new avatar </header>
+            <button id="dragdrop-btn">
+                <div id='image-preview'>
+                {AvatarPreview ? (
+                <div id='image-preview'>
+                  <img id="imageUploaded" src={AvatarPreview} alt="Dropped" />
+                </div>
+              ) : (
+                <img id="dragdrop-icon" src="cloud-upload.png" alt="Upload" />
+              )}                
+              </div>
+             
+            </button>
+            <form id="form1" onSubmit={handleChangeSubmit}>
+              <input type="file" id="file-input" className="file-input" accept="image/*" name='image' onChange={previewAvatar} />
+              <button id="change" type="submit" value="Change avatar" > Change avatar</button>
+            </form>
+          </div>
+    </div>
       </ul>
-      <img src={user.avatar} className="avatar" />
-    </div> */}
+    </div>
       <br></br>
       <div className ="ListImages">
     <ImageList sx={{
@@ -150,8 +270,7 @@ function Profile(props) {
       {UserPosts.map((item) => (
         <ImageListItem key={item.image}>
           <img
-            src={`${item.image}?w=248&fit=crop&auto=format`}
-            srcSet={`${item.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+            src={`data:image/png;base64,${item.image}`}
             alt={item.title}
             loading="lazy"
           />
@@ -176,184 +295,14 @@ function Profile(props) {
     </ImageList>
     </div>
     </div>
-   
+    </div>
 </>
     )
 }
 
 export default Profile
 
-// function TitlebarImageList(UserPosts) {
-//   return (
-//     <div className ="ListImages">
-//     <ImageList sx={{
-//       width: '90%',
-//       maxWidth: 1000,
-//       height: 'auto',
-//       marginLeft:'35px',
-//       marginTop:'40px',
-//       transform: 'translateZ(0)',
-//     }}>
-      
-//       {UserPosts.map((item) => (
-//         <ImageListItem key={item.image}>
-//           <img
-//             src={`${item.image}?w=248&fit=crop&auto=format`}
-//             srcSet={`${item.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
-//             alt={item.title}
-//             loading="lazy"
-//           />
-//          <ImageListItemBar
-//         title={item.title}
-//         subtitle={item.author}
-//         actionIcon={
-//           <Tooltip title={`${item.likes}`} placement="top">
-//             <IconButton
-//               sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-//               aria-label={`info about ${item.title}`}
-//             >
-//             <FavoriteIcon />
-//             </IconButton>
-//           </Tooltip>
-          
-//           }
-//           >
-//       </ImageListItemBar>
-//     </ImageListItem>
-//       ))}
-//     </ImageList>
-//     </div>
-//   );
-// }
 
-function LabelBottomNavigation() {
-  const [value, setValue] = React.useState('recents');
-  const [AvatarPreview, setAvatarPreview] = React.useState("");
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
- 
-//   function previewAvatar(event) {
-//     const file = event.target.files[0];
-//     const reader = new FileReader();
-
-//     reader.onloadend = function (event) {
-//       setAvatarPreview(event.target.result);
-//     };
-//     if (file) {
-//       reader.readAsDataURL(file);
-//     } else {
-//       setAvatarPreview(null);
-//     }
-//   }
-
-//   function changeAvatar() {
-//     /*to display the popup*/
-//     const Edit = document.querySelector('#EditIcon');
-//     const popup = document.querySelector('.popupAvatar');
-//         Edit.addEventListener('click', () => {
-//         popup.style.display = 'flex';
-//         });
-        
-//     /**to remove the popup */
-//     const close = document.querySelector('#btn-close');
-//     const pop = document.querySelector('.popupAvatar');
-//         close.addEventListener('click', () => {
-//             pop.style.display = 'none';
-//         });
-// }
-
-// const handleChangeSubmit = (event) => {
-//   event.preventDefault();
-//   const id = localStorage.getItem('userId');
-// const imageInput = document.getElementById('file-input'); // Get the "file" input element containing the image
-//   const file = imageInput.files[0]; // Get the image file
-//   const fileReader = new FileReader();
-
-//   fileReader.onload = function (event) {
-//     const base64Content = event.target.result.split(',')[1]; // Extract the base64-encoded content
-//     const jsonData = {
-//       filename: file.name,
-//       content: [
-//         {
-//           stream: base64Content
-//         }
-//       ],
-//       id : parseInt(localStorage.getItem('userId'), 10)
-//     };
-//     const requestOptions = {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify(jsonData)
-//     };
-
-//     fetch('http://localhost:8080/backend/rest/changeAvatar', requestOptions)
-//       .then(response => response.json())
-//       .then(data => {
-//         console.log(data); 
-//       })
-//       .catch(error => {
-//         console.error('Error:', error);
-//       });
-//   };
-
-//   fileReader.readAsDataURL(file);
-// };
-//   return (
-//     <>
-//     <BottomNavigation sx={{ width: 370 ,backgroundColor: 'transparent'}} value={value} onChange={handleChange}>
-//       <BottomNavigationAction
-//         label={`${user.followers} followers`}
-//         value="Followers"
-//         icon={<PeopleAltIcon />}
-//         sx={{ color: 'white' ,}}
-//       />
-//       <BottomNavigationAction
-//         label={`${user.posts_count} posts`}
-//         value="Posts"
-//         icon={<DynamicFeedIcon />}
-//         sx={{ color: 'white' }}
-        
-//       />
-
-//       <BottomNavigationAction id ='EditIcon' label="Edit profile" value="Edit profile" icon={<EditIcon />} onClick={changeAvatar} sx={{ color: 'white' }} />
-//     </BottomNavigation>
-    
-//     <div className="popupAvatar">
-//           <div className="wrapperAvatar">
-//             <button id="btn-close">
-//               <CancelIcon
-//                 sx={{
-//                   color: '#607D8B', backgroundColor: 'white', width: '40px',
-//                   height: '40px',
-//                 }}>
-//               </CancelIcon></button>
-//             <header>Drag & Drop your new avatar </header>
-//             <button id="dragdrop-btn">
-//                 <div id='image-preview'>
-//                 {AvatarPreview ? (
-//                 <div id='image-preview'>
-//                   <img id="imageUploaded" src={AvatarPreview} alt="Dropped" />
-//                 </div>
-//               ) : (
-//                 <img id="dragdrop-icon" src="cloud-upload.png" alt="Upload" />
-//               )}                
-//               </div>
-             
-//             </button>
-//             <form id="form1" onSubmit={handleChangeSubmit}>
-//               <input type="file" id="file-input" className="file-input" accept="image/*" name='image' value='tocheck' onChange={previewAvatar} />
-//               <button id="change" type="submit" value="Change avatar" > Change avatar</button>
-//             </form>
-//           </div>
-//     </div>
-//     </>
-    
-//   );
-}
 
 
 

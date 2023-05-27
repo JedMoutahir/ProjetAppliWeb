@@ -376,14 +376,18 @@ function Feed(props) {
               }}
             >
               <div className="other-user-profile">
+                
                 <ul>
                   <h1 className="other-name">{otherUser.username}</h1>
-                  <p className="other-bio">{otherUser.bio}</p>
+                  <p className="other-bio">"I'm a new user here"</p>
+                </ul>
+                <ul>
+                <img className="Avatar" src={otherUser && `data:image/png;base64,${otherUser.avatar}`} />
                 </ul>
                 <ul className="stats">
                   <LabelBottomNavigation />
                 </ul>
-                <img className="avatar" src={`data:image/png;base64,${otherUser.avatar}`} />
+                
               </div>
             </Dialog>
           </div>

@@ -34,7 +34,6 @@ nav:hover~* :not(BottomAppBar) {
   filter: blur(10px);
 }
 
-
 a {
   position: relative;
   color: #1E1E1E;
@@ -292,7 +291,10 @@ header {
   border-radius : 70%;
 
 }
-.stats{
-  margin-left: 28%;
+.Avatar{
+  border-radius: 50%;
+  width:150px;
+  height:150px;
+  margin-left:-130%;
+  margin-top:-80%;
 }
-
