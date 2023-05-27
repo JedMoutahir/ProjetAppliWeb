@@ -19,6 +19,16 @@ public class Post {
 	@ManyToOne
 	User user;
 	
+	
+	
+	public Post() {
+		super();
+		date = "";
+		tag = "";
+		general_tag = "";
+		title = "";
+	}
+
 	//Getters / Setters
 
 	public int getId_post() {

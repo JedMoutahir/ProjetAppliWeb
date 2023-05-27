@@ -108,6 +108,7 @@ public class Facade {
 
 	        JsonObject response = Json.createObjectBuilder()
 	                                  .add("success", success)
+	                                  .add("id", user.getId_user())
 	                                  .build();
 
 	        return response;
@@ -156,25 +157,36 @@ public class Facade {
 	}
 	
 	@GET
-	@Path("/listposts")
+	@Path("/listPosts")
 	@Produces({ "application/json" })
-	public JsonArray listPosts() {
-	    List<Post> posts = em.createQuery("SELECT p FROM Post p", Post.class).getResultList();
+    public JsonArray listPosts() {
+        List<Post> posts = em.createQuery("SELECT p FROM Post p", Post.class)
+                .getResultList();
 
-	    JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
-	    for (Post post : posts) {
-	        arrayBuilder.add(Json.createObjectBuilder()
-	            .add("id_post", post.getId_post())
-	            .add("date", post.getDate())
-	            .add("likes", post.getLikes())
-	            .add("tag", post.getTag())
-	            .add("general_tag", post.getGeneral_tag())
-	            .add("title", post.getTitle())
-	        );
-	    }
+        JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
 
-	    return arrayBuilder.build();
-	}
+        for (Post post : posts) {
+            JsonObject postJson = Json.createObjectBuilder()
+                    .add("id", String.valueOf(post.getId_post()))
+                    .add("name", post.getUser().getUsername())
+                    //.add("post", post.getPost())
+                    .add("likes", post.getLikes())
+                    .add("tag", post.getTag())
+                    .add("general_tag", post.getGeneral_tag())
+                    .add("user", Json.createObjectBuilder()
+                            .add("username", post.getUser().getUsername())
+                            .add("bio", post.getUser().getBio())
+                            .add("followers", post.getUser().getFollowers())
+                            .add("following", post.getUser().getFollowing())
+                            .add("posts_count", post.getUser().getPost_count())
+                            .build())
+                    .build();
+
+            jsonArrayBuilder.add(postJson);
+        }
+
+        return jsonArrayBuilder.build();
+    }
 
 	@POST
 	@Path("/addperson")
@@ -219,33 +231,64 @@ public class Facade {
 	@Path("/upload")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response uploadImage(JsonObject json) {
-	    String destinationFolder = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/ImageClassification/bank_images/";
+	    String destinationFolder = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/ImageClassification/bank_images/";
 	    try {
 	        String filename = json.getString("filename");
+	        System.out.println("filename : " + filename);
 	        JsonArray contentArray = json.getJsonArray("content");
+	        System.out.println("content : " + contentArray);
 	        JsonObject contentObject = contentArray.getJsonObject(0);
 	        String base64Content = contentObject.getString("stream");
 	        byte[] fileContent = Base64.getDecoder().decode(base64Content);
 	        InputStream fileInputStream = new ByteArrayInputStream(fileContent);
-
+	        
+	        System.out.println("saving the image");
 	        // Save the image to the destination folder
-	        saveImage(fileInputStream, destinationFolder, filename);
+            saveImage(fileInputStream, destinationFolder, filename);
+	        System.out.println("image saved");
 
-	        JsonObject response = Json.createObjectBuilder()
-	                .add("success", true)
-	                .add("message", "Image uploaded successfully")
-	                .build();
+            int userId = json.getInt("id");
+	        System.out.println("user id : " + userId);
 
-	        return Response.ok(response).build();
-	    } catch (IOException | NullPointerException e) {
-	        JsonObject response = Json.createObjectBuilder()
-	                .add("success", false)
-	                .add("message", "Error uploading the image")
-	                .build();
+            // Get the user from the database
+            User user = em.find(User.class, userId);
+            if (user == null) {
+    	        System.out.println("user not found");
+                JsonObject response = Json.createObjectBuilder()
+                        .add("success", false)
+                        .add("message", "User not found")
+                        .build();
+                return Response.status(Response.Status.NOT_FOUND).entity(response).build();
+            }
 
-	        return Response.serverError().entity(response).build();
-	    }
-	}
+	        System.out.println("creating the post");
+            // Create a new post and link it to the user
+            Post post = new Post();
+            post.setTitle(filename);
+            post.setUser(user);
+
+	        System.out.println("storing the post");
+            // Save the post to the database
+            em.persist(post);
+
+	        System.out.println("Sending the answer");
+            JsonObject response = Json.createObjectBuilder()
+                    .add("success", true)
+                    .add("id", post.getId_post())
+                    .add("message", "Image uploaded successfully")
+                    .build();
+            return Response.ok(response).build();
+
+        } catch (IOException | NullPointerException e) {
+        	e.printStackTrace();
+            JsonObject response = Json.createObjectBuilder()
+                    .add("success", false)
+                    .add("message", "Error uploading the image")
+                    .build();
+
+            return Response.serverError().entity(response).build();
+        }
+    }
 
 	private void saveImage(InputStream inputStream, String destinationFolder, String filename) throws IOException {
 	    File folder = new File(destinationFolder);

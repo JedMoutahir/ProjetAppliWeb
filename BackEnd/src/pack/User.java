@@ -22,6 +22,13 @@ public class User {
 	@OneToMany
 	private List<Post> posts;
 	
+	public User() {
+		super();
+		email = "";
+		password = "";
+		username ="";
+		bio = "";
+	}
 	// Getters / Setters
 	public int getId_user() {
 		return id_user;
