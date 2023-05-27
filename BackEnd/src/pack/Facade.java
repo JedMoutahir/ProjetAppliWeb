@@ -178,6 +178,7 @@ public class Facade {
 
             JsonObject postObject = Json.createObjectBuilder()
                     .add("id", post.getId_post())
+                    .add("filename", post.getTitle())
                     .add("post", imageContent)
                     .add("likes", post.getLikes())
                     .add("tag", post.getTag())
