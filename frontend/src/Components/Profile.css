@@ -1,11 +1,12 @@
 
-  .ListImages{
-    width :700px;
-    border-radius: 1%;
-    margin-left:-25%;
-    height:500px;
-    background-color : #9E9E9E;
-  }
+.ListImages {
+  width: 700px;
+  border-radius: 1%;
+  margin-left: -25%;
+  height: auto;
+  background-color: #9E9E9E;
+}
+
   
   .Profile{
     display: flex;

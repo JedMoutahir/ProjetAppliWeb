@@ -1,5 +1,6 @@
 import React from "react";
 import './Feed.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useState } from 'react';
 import FilterOptions from "./Filter";
 import PrimarySearchAppBar from "./ProfileBar";
@@ -81,7 +82,6 @@ function Feed(props) {
   
   const likePost = async (id_post) =>  {
       // Make a request to the server to update the likes of the post
-
       const response = await fetch('http://localhost:8080/backend/rest/like', {
         method: 'POST',
         headers: {
@@ -107,14 +107,16 @@ function Feed(props) {
                     type: card.filename.split('.')[1], };
                 }
                 return card;
-              });
-            });
+                
+         });
+      });
           }
         })
         .catch(error => {
           console.error('Error updating likes:', error);
         });
    };
+  
 
   const SavePost = async (id_post)=> {
     // Make a request to the server to update the likes of the post
@@ -416,12 +418,3 @@ function Feed(props) {
 }
 
 export default Feed
-
-const user = {
-  username: "janedoe",
-  bio: "Software engineer and sport lover",
-  avatar: "https://i.pravatar.cc/150?img=11",
-  followers: 1000,
-  following: 500,
-  posts_count: 12,
-};
