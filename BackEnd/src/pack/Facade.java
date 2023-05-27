@@ -158,74 +158,40 @@ public class Facade {
 	
 	@GET
 	@Path("/listPosts")
-	@Produces({ "application/json" })
-    public JsonArray listPosts() {
-        List<Post> posts = em.createQuery("SELECT p FROM Post p", Post.class)
-                .getResultList();
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listPosts() {
+        List<Post> posts = em.createQuery("SELECT p FROM Post p", Post.class).getResultList();
 
         JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
-
         for (Post post : posts) {
-            JsonObject postJson = Json.createObjectBuilder()
-                    .add("id", String.valueOf(post.getId_post()))
-                    .add("name", post.getUser().getUsername())
-                    //.add("post", post.getPost())
+            JsonObject userObject = Json.createObjectBuilder()
+                    .add("username", post.getUser().getUsername())
+                    .add("bio", post.getUser().getBio())
+                    .add("followers", post.getUser().getFollowers())
+                    .add("following", post.getUser().getFollowing())
+                    .add("posts_count", post.getUser().getPost_count())
+                    .build();
+
+            JsonObject postObject = Json.createObjectBuilder()
+                    .add("id", post.getId_post())
+                    .add("name", post.getTitle())
+                    .add("post", post.getId_post())
                     .add("likes", post.getLikes())
                     .add("tag", post.getTag())
                     .add("general_tag", post.getGeneral_tag())
-                    .add("user", Json.createObjectBuilder()
-                            .add("username", post.getUser().getUsername())
-                            .add("bio", post.getUser().getBio())
-                            .add("followers", post.getUser().getFollowers())
-                            .add("following", post.getUser().getFollowing())
-                            .add("posts_count", post.getUser().getPost_count())
-                            .build())
+                    .add("user", userObject)
                     .build();
 
-            jsonArrayBuilder.add(postJson);
+            jsonArrayBuilder.add(postObject);
         }
 
-        return jsonArrayBuilder.build();
+        JsonArray jsonArray = jsonArrayBuilder.build();
+        JsonObject responseJson = Json.createObjectBuilder()
+                .add("posts", jsonArray)
+                .build();
+
+        return Response.ok(responseJson).build();
     }
-
-	@POST
-	@Path("/addperson")
-    @Consumes({ "application/json" })
-	public void addPerson(Person p) {
-		System.out.println("coucou");
-		em.persist(p);
-	}
-
-	@POST
-	@Path("/addaddress")
-    @Consumes({ "application/json" })
-	public void addAddress(Address a) {
-		em.persist(a);
-	}
-	
-	@GET
-	@Path("/listpersons")
-    @Produces({ "application/json" })
-	public Collection<Person> listPersons() {
-		return em.createQuery("from Person", Person.class).getResultList();
-	}
-	
-	@GET
-	@Path("/listaddresses")
-    @Produces({ "application/json" })
-	public Collection<Address> listAddress() {
-		return em.createQuery("from Address", Address.class).getResultList();	
-	}
-	
-	@POST
-	@Path("/associate")
-    @Consumes({ "application/json" })
-	public void associate(Association as) {
-		System.out.println(as.getPersonId() +" "+ as.getAddressId());
-		Person p = em.find(Person.class, as.getPersonId());
-		Address a = em.find(Address.class, as.getAddressId());
-		a.setOwner(p);
-	}
 	
 	@POST
 	@Path("/upload")
@@ -302,4 +268,6 @@ public class Facade {
 	    File outputFile = new File(folder, filename);
 	    Files.copy(inputStream, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 	}
+	
+	
 }
