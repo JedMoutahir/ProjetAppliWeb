@@ -48,9 +48,9 @@ function Feed(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  
+
   var [cards, setCards] = React.useState([]);
- 
+   
 
    React.useEffect(() => {
     const fetchData = async () => {
@@ -58,7 +58,16 @@ function Feed(props) {
         const response = await fetch('http://localhost:8080/backend/rest/listPosts');
         const jsonResponse = await response.json();
         const { posts } = jsonResponse;
-        const cards = posts;
+        //const cards =posts;
+        const cards = posts.map(post => ({
+          id : post.id,
+          general_tag : post.general_tag,
+          likes:post.likes,
+          tag :post.tag,
+          post: base64ToImageFile(post.post.stream),
+          user:post.user,
+        }));
+        console.log(cards);
         setCards(cards);
         console.log(cards); 
       } catch (error) {
@@ -68,6 +77,29 @@ function Feed(props) {
 
     fetchData();
   }, []);
+
+  function base64ToImageFile(base64String) {
+    if (!base64String || typeof base64String !== 'string') {
+      throw new Error('Invalid base64 string');
+    }
+  
+    const base64Parts = base64String.split(',');
+    if (base64Parts.length !== 2) {
+      throw new Error('Invalid base64 string format');
+    }
+  
+    const mimeType = base64Parts[0].split(':')[1].split(';')[0];
+    const byteCharacters = atob(base64Parts[1]);
+    const byteArrays = [];
+  
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteArrays.push(byteCharacters.charCodeAt(i));
+    }
+  
+    const byteArray = new Uint8Array(byteArrays);
+    return new File([byteArray], 'image.png', { type: mimeType });
+  }
+  
 
   const likePost = (postId) => {
   //     // Make a request to the server to update the likes of the post
@@ -290,7 +322,7 @@ function Feed(props) {
                       <img className="profile-pic" src='profile.jpg' />
                       <h4 className="Name"><b>{card.user.username}</b></h4>
                     </div>
-                    <img className="post" src={card.post} alt="Avatar" />
+                    <img className="post" src={card.post} alt="Post" />
                     <p className="type">{card.tag}</p>
                     <div className="barre">
                       <div>
