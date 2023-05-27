@@ -448,4 +448,49 @@ public class Facade {
 	    return Response.ok(response).build();
 	}
 	
+	@POST
+	@Path("/savedPosts")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getSavedPosts(JsonObject json) {
+	    int userId = json.getInt("id_user");
+	    System.out.println("user id: " + userId);
+
+	    // Get the user from the database
+	    User user = em.find(User.class, userId);
+	    if (user == null) {
+	        System.out.println("user not found");
+	        JsonObject response = Json.createObjectBuilder()
+	                .add("success", false)
+	                .add("message", "User not found")
+	                .build();
+	        return Response.status(Response.Status.NOT_FOUND).entity(response).build();
+	    }
+
+	    // Get the saved posts for the user
+	    List<Post> savedPosts = user.getSavedPosts();
+
+	    // Build the JSON response
+	    JsonArrayBuilder savedPostsBuilder = Json.createArrayBuilder();
+	    for (Post post : savedPosts) {
+	        JsonObjectBuilder postBuilder = Json.createObjectBuilder()
+	                .add("id_post", post.getId_post())
+	                .add("title", post.getTitle())
+	                .add("date", post.getDate())
+	                .add("likes", post.getLikes())
+	                .add("tag", post.getTag())
+	                .add("general_tag", post.getGeneral_tag())
+	                .add("image", encodeImageContent(post.getTitle()));
+
+	        savedPostsBuilder.add(postBuilder);
+	    }
+
+	    JsonObject response = Json.createObjectBuilder()
+	            .add("success", true)
+	            .add("savedPosts", savedPostsBuilder)
+	            .build();
+
+	    return Response.ok(response).build();
+	}
+	
 }

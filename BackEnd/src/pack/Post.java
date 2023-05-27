@@ -2,6 +2,7 @@ package pack;
 
 import javax.persistence.*;
 import java.awt.Image;
+import java.util.List;
 
 @Entity
 public class Post {
@@ -20,7 +21,8 @@ public class Post {
 	@JoinColumn(name = "user_id")
 	User user;
 	
-	
+	@ManyToMany(mappedBy = "savedPosts")
+    private List<User> users;
 	
 	public Post() {
 		super();

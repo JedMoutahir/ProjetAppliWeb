@@ -22,12 +22,21 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Post> posts;
 	
+	@ManyToMany
+    @JoinTable(
+            name = "user_saved_posts",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id")
+    )
+    private List<Post> savedPosts;
+	
 	public User() {
 		super();
-		email = "";
-		password = "";
-		username ="";
-		bio = "";
+		this.email = "";
+		this.password = "";
+		this.username ="";
+		this.bio = "";
+		this.avatar_filename = "";
 	}
 	// Getters / Setters
 	public int getId_user() {
@@ -89,6 +98,12 @@ public class User {
 	}
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
+	}
+	public List<Post> getSavedPosts() {
+		return savedPosts;
+	}
+	public void setSavedPosts(List<Post> posts) {
+		this.savedPosts = posts;
 	}
 	public void incrementPostCount() {
 		// TODO Auto-generated method stub
