@@ -6,7 +6,6 @@ import PrimarySearchAppBar from "./ProfileBar";
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
-import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
@@ -58,15 +57,17 @@ function Feed(props) {
         const response = await fetch('http://localhost:8080/backend/rest/listPosts');
         const jsonResponse = await response.json();
         const { posts } = jsonResponse;
-        const cards = posts;
-        // const cards = posts.map(post => ({
-        //   id : post.id,
-        //   general_tag : post.general_tag,
-        //   likes:post.likes,
-        //   tag :post.tag,
-        //   post: base64ToImageFile(post.post),
-        //   user:post.user,
-        // }));
+        //const cards = posts;
+        const cards = posts.map(post => ({
+          id : post.id,
+          general_tag : post.general_tag,
+          likes:post.likes,
+          tag :post.tag,
+          post: post.post,
+          user:post.user,
+          filename: post.filename,
+          type: post.filename.split('.')[1],
+        }));
         console.log(cards);
         setCards(cards);
         console.log(cards); 
@@ -78,29 +79,6 @@ function Feed(props) {
     fetchData();
   }, []);
 
-  function base64ToImageFile(base64Content) {
-    if (!base64Content || typeof base64Content !== 'string') {
-      throw new Error('Invalid base64 content');
-    }
-  
-    const base64Parts = base64Content.split(':');
-    if (base64Parts.length !== 2) {
-      throw new Error('Invalid base64 content format');
-    }
-  
-    const mimeType = base64Parts[0].split(';')[0].split(':')[1];
-    const base64String = base64Parts[1];
-  
-    const byteCharacters = atob(base64String);
-    const byteArrays = [];
-  
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteArrays.push(byteCharacters.charCodeAt(i));
-    }
-  
-    const byteArray = new Uint8Array(byteArrays);
-    return new File([byteArray], 'image.png', { type: mimeType });
-  }
   
   const likePost = (postId) => {
   //     // Make a request to the server to update the likes of the post
@@ -323,7 +301,7 @@ function Feed(props) {
                       <img className="profile-pic" src='profile.jpg' />
                       <h4 className="Name"><b>{card.user.username}</b></h4>
                     </div>
-                    <img className="post" src={card.post} alt="Post" />
+                    <img className="post" src={`data:image/png;base64,${card.post}`} alt="Base64 Image" />
                     <p className="type">{card.tag}</p>
                     <div className="barre">
                       <div>
@@ -381,8 +359,7 @@ function Feed(props) {
                 <ul className="stats">
                   <LabelBottomNavigation />
                 </ul>
-
-                <img className='avatar' src={otherUser.avatar} alt={otherUser.username} />
+                <img className='avatar' src='{otherUser.avatar}' alt={otherUser.username} />
 
               </div>
             </Dialog>

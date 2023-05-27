@@ -23,6 +23,27 @@ import Feed from './feed';
 
 
 function Profile(props) {
+
+  var [user, setUser] = React.useState();
+   
+
+   React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/backend/rest/profile');
+        const jsonResponse = await response.json();
+        const { profile } = jsonResponse;
+        const user = profile;
+        setUser(user);
+        console.log(user); 
+      } catch (error) {
+        console.error('Error retrieving data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleShowProfile = (event) => {
     ReactDOM.render(<Profile />, document.getElementById('Feed'));
    };
@@ -128,7 +149,7 @@ function TitlebarImageList() {
       transform: 'translateZ(0)',
     }}>
       
-      {itemData.map((item) => (
+      {UserPosts.map((item) => (
         <ImageListItem key={item.image}>
           <img
             src={`${item.image}?w=248&fit=crop&auto=format`}
@@ -198,7 +219,7 @@ const user = {
 };
 
 
-const itemData = [
+const UserPosts = [
   {
     image: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
     title: 'Breakfast',
