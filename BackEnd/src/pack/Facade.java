@@ -704,5 +704,53 @@ public class Facade {
 	    return Response.ok(response).build();
 	}
 
+	@POST
+	@Path("/unpost")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response unpost(JsonObject json) {
+	    try {
+	        int userId = json.getInt("id_user");
+	        int postId = json.getInt("id_post");
+
+	        User user = em.find(User.class, userId);
+	        Post post = em.find(Post.class, postId);
+
+	        if (user == null || post == null) {
+	            JsonObject response = Json.createObjectBuilder()
+	                    .add("success", false)
+	                    .add("message", "User or post not found")
+	                    .build();
+
+	            return Response.status(Response.Status.NOT_FOUND).entity(response).build();
+	        }
+
+	        if (!user.getPosts().contains(post)) {
+	            JsonObject response = Json.createObjectBuilder()
+	                    .add("success", false)
+	                    .add("message", "Post does not belong to the user")
+	                    .build();
+
+	            return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
+	        }
+
+	        // Remove the post from the user and the database
+	        user.getPosts().remove(post);
+	        em.remove(post);
+
+	        JsonObject response = Json.createObjectBuilder()
+	                .add("success", true)
+	                .add("message", "Post successfully removed")
+	                .build();
+
+	        return Response.ok(response).build();
+	    } catch (Exception e) {
+	        JsonObject response = Json.createObjectBuilder()
+	                .add("success", false)
+	                .add("message", "Error removing the post")
+	                .build();
+
+	        return Response.serverError().entity(response).build();
+	    }
+	}
 
 }
