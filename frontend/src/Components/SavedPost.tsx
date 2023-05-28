@@ -65,23 +65,23 @@ export default function PostExample(props) {
 
   const Unsave = async (id_post) =>  {
     // Make a request to the server to update the likes of the post
-    // const id_user: number = parseInt(localStorage.getItem('userId')!, 10);
-    // const response = await fetch('http://localhost:8080/backend/rest/unsave', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ id_user,id_post}),
-    // }).then(response => response.json())
-    // //return the user's id in the response
-    //   .then(jsonresponse => {
-    //     if (jsonresponse.success === true) {
-    //       console.log("post unsaved successfully")
-    //      }
-    //   })
-    //   .catch(error => {
-    //     console.error('Error updating likes:', error);
-    //   });
+    const id_user: number = parseInt(localStorage.getItem('userId')!, 10);
+    const response = await fetch('http://localhost:8080/backend/rest/unsave', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id_user,id_post}),
+    }).then(response => response.json())
+    //return the user's id in the response
+      .then(jsonresponse => {
+        if (jsonresponse.success === true) {
+          console.log("post unsaved successfully")
+         }
+      })
+      .catch(error => {
+        console.error('Error unsaving post:', error);
+      });
  };
 
 

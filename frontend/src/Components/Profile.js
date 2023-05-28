@@ -1,6 +1,10 @@
 import * as React from 'react';
 import './Profile.css';
 import { Tooltip } from '@mui/material';
+import List from '@mui/material/List';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import BottomAppBar from './notifications';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -26,6 +30,7 @@ function Profile(props) {
 
   var [user, setUser] = React.useState(null);
   var [UserPosts, setUserPosts] = React.useState([]);
+
  
 
   React.useEffect(() => {
@@ -150,6 +155,37 @@ function Profile(props) {
         });
  };
 
+ const handleDelete = async (idpost) =>  {
+  // Make a request to the server to update the likes of the post
+  const id_user = parseInt(localStorage.getItem('userId'), 10);
+  const id_post = parseInt(idpost, 10);
+  const response = await fetch('http://localhost:8080/backend/rest/unpost', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id_user,id_post}),
+  }).then(response => response.json())
+  //return the user's id in the response
+    .then(jsonresponse => {
+      console.log(jsonresponse);
+      if (jsonresponse.success === true) {
+        console.log("post deleted successfully")
+       }
+    })
+    .catch(error => {
+      console.error('Error deleting post:', error);
+    });
+};
+
+const showFollowers = (event)  => {
+  const show = document.querySelector('#showFollowers');
+  const popup = document.querySelector('.popupFollowers');
+  show.addEventListener('click', () => {
+      popup.style.display = 'flex';
+      });
+}
+
   return (
     < > 
     <div className="Allprofile">
@@ -209,7 +245,6 @@ function Profile(props) {
       <ul>
       <h1 className="name"> {user && `${user.username} `}</h1>
       <p className="name"> </p>
-      
       </ul>
       <ul>
       <img src= {user && `data:image/png;base64,${user.avatar}`} className="avatar" />
@@ -217,10 +252,12 @@ function Profile(props) {
       <ul className="stats">
       <BottomNavigation sx={{ width: 370 ,backgroundColor: 'transparent',marginTop:'-30%'}} value={value} onChange={handleChange}>
 //       <BottomNavigationAction
+        id='showFollowers'
         label={user && `${user.followers} followers`}
         value="Followers"
         icon={<PeopleAltIcon />}
         sx={{ color: 'white' ,}}
+        onClick={showFollowers}
       />
       <BottomNavigationAction
         label={user && `${user.post_count} posts`}
@@ -231,7 +268,37 @@ function Profile(props) {
       />
       <BottomNavigationAction id ='EditIcon' label="Edit profile" value="Edit profile" icon={<EditIcon />} onClick={changeAvatar} sx={{ color: 'white' }} />
     </BottomNavigation>
-    
+    </ul>
+    </div>
+    <ul>
+    <List className ='popupFollowers'
+      sx={{
+        display:'none',
+        width: '100%',
+        maxWidth: 360,
+        marginLeft:'-50%',
+        marginTop:'-20%',
+        bgcolor: '#E0E0E0',
+        position: 'relative',
+        overflow: 'auto',
+        maxHeight: 300,
+        '& ul': { padding: 0 },
+      }}
+      subheader={<li />}
+    >       <ul>
+            { user && user.following_list && user.following_list.map(follower => (
+              
+              <ListItem key={`${follower.username} `}>
+                <img className='follower' src={user && `data:image/png;base64,${follower.avatar}`}/>
+                <ListItemText primary={`   ${follower.username} is following you`} />
+              </ListItem>
+              
+            ))}
+            </ul>
+      
+    </List>
+    </ul>
+
     <div className="popupAvatar">
           <div className="wrapperAvatar">
             <button id="btn-close">
@@ -260,8 +327,7 @@ function Profile(props) {
             </form>
           </div>
     </div>
-      </ul>
-    </div>
+    
       <br></br>
       <div className ="ListImages">
     <ImageList sx={{
@@ -284,18 +350,31 @@ function Profile(props) {
         title={item.general_tag}
         subtitle={item.author}
         actionIcon={
+          <>
           <Tooltip title={`${item.likes}`} placement="top">
             <IconButton
               sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
               aria-label={`info about ${item.title}`}
             >
-            <FavoriteIcon />
+              <FavoriteIcon />
             </IconButton>
           </Tooltip>
           
-          }
-          >
-      </ImageListItemBar>
+          {/* Add the delete icon */}
+          <Tooltip title="Delete" placement="top">
+            <IconButton
+              sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+              aria-label="delete"
+              onClick={() => handleDelete(item.id_post)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+        </>
+      }
+    >
+    </ImageListItemBar>
+  
     </ImageListItem>
       ))}
     </ImageList>

@@ -357,7 +357,7 @@ function Feed(props) {
           <div className="cards">
 
             {
-              cards && cards.filter(card => (keywords.length === 0 || keywords.includes(card.general_tag)) && card.user.username.toLowerCase().includes(searchInput.toLowerCase())).map(card => {
+              cards && cards.filter(card => (keywords.length === 0 || keywords.includes(card.general_tag)) && (card.user.username.toLowerCase().includes(searchInput.toLowerCase()) || card.general_tag.toLowerCase().includes(searchInput.toLowerCase()))).map(card => {
               return (
                   <div className="card">
                     <div className="profile" onClick={
