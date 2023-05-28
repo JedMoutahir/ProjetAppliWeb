@@ -163,7 +163,9 @@ Output example (JSON):
         "filename": "example.jpg",
         "following_list": [{
             "id_user": 2,
-            "username": "oezrifdrhgegni"
+            "username": "oezrifdrhgegni",
+            "avatar": "base64-encoded-image-content",
+            "filename": "example.jpg"
         }]
     },
     "posts": [{
