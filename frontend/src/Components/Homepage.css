@@ -1,0 +1,31 @@
+.slogan {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    margin-left:-35%;
+    margin-top: 10%;
+  }
+  
+  .slogan h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-left: 32%;
+    margin-top: 0%;
+  }
+  
+  .slogan .highlight {
+    color: #607D8B;
+    margin-top: -10%;
+  }
+  
+  .slogan p {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-top: 5%;
+    margin-left: -29%;
+  }
+  #welcome{
+    font-weight: bold;
+    margin-left: 25%;
+  }
+  

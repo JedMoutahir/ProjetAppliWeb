@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Login from './Components/Login.js';
 import Feed from './Components/feed.js';
-import Profile from './Components/Profile.js';
 import SavedPosts from './Components/SavedPost.tsx';
+import HomePage from './Components/Homepage.js';
 import './App.css';
 
 function App() {
@@ -31,12 +31,12 @@ function App() {
 
             ) : (
               
-                <Feed setShowProfile={setShowProfile} setShowFeed={setShowFeed} setShowSavedPosts={setShowSavedPosts} />
-              
+           <Login />              
             )
           )}
         </>
-      ):(<Login onLogin={handleLogin}></Login>)
+      ):(  <HomePage onLogin={handleLogin} />
+      )
          }
       
     </div>
@@ -44,3 +44,4 @@ function App() {
 }
 
 export default App;
+

@@ -9,6 +9,7 @@ import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import SignUp from './signup.js';
+import Feed from './feed.js';
 
 
 function Login(props) {
@@ -29,7 +30,9 @@ function Login(props) {
       .then(jsonresponse => {
         if (jsonresponse.success === true) {
           e.preventDefault();
-          props.onLogin();
+         // props.onLogin();
+          const rootElement = document.getElementById('container forms');
+          ReactDOM.createRoot(rootElement).render(<Feed />);
           localStorage.setItem('userId', jsonresponse.id);
           const idType = typeof jsonresponse.id;
           console.log(idType);

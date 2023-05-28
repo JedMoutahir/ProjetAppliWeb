@@ -289,10 +289,9 @@ const showFollowers = (event)  => {
             { user && user.following_list && user.following_list.map(follower => (
               
               <ListItem key={`${follower.username} `}>
-                <img className='follower' src={user && `data:image/png;base64,${follower.avatar}`}/>
+                <img className='follower' src={user && `data:image/png;base64,${follower.avatar}`}/> &nbsp;
                 <ListItemText primary={`   ${follower.username} is following you`} />
               </ListItem>
-              
             ))}
             </ul>
       
