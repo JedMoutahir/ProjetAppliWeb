@@ -178,6 +178,7 @@ public class Facade {
                     .add("following", post.getUser().getFollowing())
                     .add("posts_count", post.getUser().getPost_count())
                     .add("avatar", avatarContent)
+                    .add("id_user", post.getUser().getId_user())
                     .build();
 
             JsonObject postObject = Json.createObjectBuilder()
