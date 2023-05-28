@@ -7,6 +7,7 @@ import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.ejb.Singleton;
 import javax.json.*;
@@ -25,8 +26,10 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 @Singleton
 @Path("/")
 public class Facade {
-	
+
 	String imagePath;
+	String imageUploadPath;
+	String outputPath;
 	String avatarPath;
 	boolean dev = false;
 
@@ -36,15 +39,19 @@ public class Facade {
 	public Facade() {
 		super();
 		if(this.dev) {
-			this.imagePath = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/ImageClassification/bank_images/";
+			this.imagePath = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/ImageClassification/deleted_images/";
+			this.imageUploadPath = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/ImageClassification/bank_images/";
+			this.outputPath = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/ImageClassification/output/";
 			this.avatarPath = "C:/Users/Jed/Desktop/cours_ENSEEIHT/Web/Projet/ProjetAppliWeb/frontend/avatars/";
             
 		} else {
-			this.imagePath = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/ImageClassification/bank_images/";
+			this.imagePath = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/ImageClassification/deleted_images/";
+			this.imageUploadPath = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/ImageClassification/bank_images/";
+			this.outputPath = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/ImageClassification/output/";
 			this.avatarPath = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/frontend/avatars/";
 		}
 	}
-	
+
 //	@POST
 //    @Path("/analyze")
 //    @Consumes({ "multipart/form-data" })
@@ -226,7 +233,7 @@ public class Facade {
 	        
 	        System.out.println("saving the image");
 	        // Save the image to the destination folder
-            saveImage(fileInputStream, this.imagePath, filename);
+            saveImage(fileInputStream, this.imageUploadPath, filename);
 	        System.out.println("image saved");
 
             int userId = json.getInt("id");
@@ -242,13 +249,31 @@ public class Facade {
                         .build();
                 return Response.status(Response.Status.NOT_FOUND).entity(response).build();
             }
-
+            
+            System.out.println("Waiting for the python deamon to generate the tags");
+            
+            while(existFile(this.imageUploadPath, filename)) {
+            	// wait
+            	System.out.println("waiting");
+            	try {
+					TimeUnit.MILLISECONDS.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+            
+            System.out.println("Searching the output file");
+            
+            String generalTag = getTag(this.outputPath, filename);
+            
 	        System.out.println("creating the post");
             // Create a new post and link it to the user
             Post post = new Post();
             post.setTitle(filename);
             post.setUser(user);
             post.user.incrementPostCount();
+            post.setGeneral_tag(generalTag);
 	        System.out.println("storing the post");
             // Save the post to the database
             em.persist(post);
@@ -257,6 +282,7 @@ public class Facade {
             JsonObject response = Json.createObjectBuilder()
                     .add("success", true)
                     .add("id", post.getId_post())
+                    .add("general_tag", generalTag)
                     .add("message", "Image uploaded successfully")
                     .build();
             return Response.ok(response).build();
@@ -271,6 +297,43 @@ public class Facade {
             return Response.serverError().entity(response).build();
         }
     }
+
+	private String getTag(String path, String filename) {
+		// TODO Auto-generated method stub
+		String generalTag = "";
+		File outputFile = new File(path + filename + ".output");
+		if(outputFile.exists()) {
+			System.out.println("output file found");
+			try {
+                BufferedReader reader = new BufferedReader(new FileReader(outputFile));
+                String line = reader.readLine();
+                if (line != null) {
+                    String[] words = line.split("\n");
+                    if (words.length > 0) {
+                        String firstWord = words[0];
+                        System.out.println("First word: " + firstWord);
+                        generalTag = firstWord;
+                    } else {
+                        System.out.println("No words found in the file.");
+                    }
+                } else {
+                    System.out.println("Empty file.");
+                }
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Output file not found.");
+        }
+		return generalTag;
+	}
+
+	private boolean existFile(String path, String filename) {
+		// TODO Auto-generated method stub
+        File file = new File(path + filename);
+        return file.exists();
+	}
 
 	private void saveImage(InputStream inputStream, String destinationFolder, String filename) throws IOException {
 	    File folder = new File(destinationFolder);
@@ -531,4 +594,53 @@ public class Facade {
 	            .build();
 	    return Response.ok(response).build();
 	}
+	
+	@POST
+	@Path("/unsave")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response unsavePost(JsonObject json) {
+	    int userId = json.getInt("id_user");
+	    int postId = json.getInt("id_post");
+
+	    // Get the user from the database
+	    User user = em.find(User.class, userId);
+	    if (user == null) {
+	        JsonObject response = Json.createObjectBuilder()
+	                .add("success", false)
+	                .add("message", "User not found")
+	                .build();
+	        return Response.status(Response.Status.NOT_FOUND).entity(response).build();
+	    }
+
+	    // Get the post from the user's saved posts
+	    List<Post> savedPosts = user.getSavedPosts();
+	    Post postToRemove = null;
+	    for (Post savedPost : savedPosts) {
+	        if (savedPost.getId_post() == postId) {
+	            postToRemove = savedPost;
+	            break;
+	        }
+	    }
+
+	    if (postToRemove == null) {
+	        JsonObject response = Json.createObjectBuilder()
+	                .add("success", false)
+	                .add("message", "Post not found in the user's saved posts")
+	                .build();
+	        return Response.status(Response.Status.NOT_FOUND).entity(response).build();
+	    }
+
+	    // Remove the post from the user's saved posts and update the user entity
+	    savedPosts.remove(postToRemove);
+	    user.setSavedPosts(savedPosts);
+	    em.merge(user);
+
+	    JsonObject response = Json.createObjectBuilder()
+	            .add("success", true)
+	            .add("message", "Post removed from saved posts successfully")
+	            .build();
+	    return Response.ok(response).build();
+	}
+
 }
