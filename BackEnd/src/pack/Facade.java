@@ -481,9 +481,12 @@ public class Facade {
 		 // Add the list of creators the user is following
 	    JsonArrayBuilder followingBuilder = Json.createArrayBuilder();
 	    for (User creator : user.getFollowingList()) {
+	        String creatorAvatarContent = encodeImageContent(avatarPath + creator.getAvatar_filename());
 	        JsonObjectBuilder creatorBuilder = Json.createObjectBuilder()
 	                .add("id_user", creator.getId_user())
-	                .add("username", creator.getUsername());
+	                .add("username", creator.getUsername())
+		            .add("avatar", creatorAvatarContent)
+		            .add("filename", creator.getAvatar_filename());
 	        followingBuilder.add(creatorBuilder);
 	    }
 	    userBuilder.add("following_list", followingBuilder);
