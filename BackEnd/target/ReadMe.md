@@ -284,3 +284,34 @@ Output example (JSON):
     "message": "User is already following the creator"
 }
 ```
+
+- http://localhost:8080/backend/rest/unpost
+
+Input example (JSON):
+```
+{
+  "id_user": 1,
+  "id_post": 2
+}
+```
+
+Output example (JSON):
+```
+{
+  "success": true,
+  "message": "Post successfully removed"
+}
+
+```
+```
+{
+  "success": false,
+  "message": "User or post not found"
+}
+```
+```
+{
+  "success": false,
+  "message": "Post does not belong to the user"
+}
+```
