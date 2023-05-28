@@ -23,7 +23,8 @@
 - Python Machine Learning Deamon
 
 ## Content
-- BackEnd folder : contains the backend of the project
-- FrontEnd folder : contains the frontend of the project
-- ImageClassification folder : contains the machine learning model
-- 
+- `Rapport.pdf` : the report of the project
+- `presentation_projet.pdf` : the presentation of the project
+- `BackEnd` folder : contains the backend of the project
+- `FrontEnd` folder : contains the frontend of the project
+- `ImageClassification` folder : contains the machine learning model
