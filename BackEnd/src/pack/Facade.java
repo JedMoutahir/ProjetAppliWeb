@@ -736,6 +736,9 @@ public class Facade {
 	        // Remove the post from the user and the database
 	        user.getPosts().remove(post);
 	        em.remove(post);
+	        
+	        user.decrementPostCount();
+	        em.merge(user);
 
 	        JsonObject response = Json.createObjectBuilder()
 	                .add("success", true)

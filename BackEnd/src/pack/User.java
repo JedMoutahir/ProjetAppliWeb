@@ -117,6 +117,10 @@ public class User {
 		// TODO Auto-generated method stub
 		this.post_count ++;
 	}
+	public void decrementPostCount() {
+		// TODO Auto-generated method stub
+		this.post_count --;
+	}
 	public List<User> getFollowingList() {
 		return followingList;
 	}
