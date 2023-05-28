@@ -744,6 +744,7 @@ public class Facade {
 
 	        return Response.ok(response).build();
 	    } catch (Exception e) {
+	    	e.printStackTrace();
 	        JsonObject response = Json.createObjectBuilder()
 	                .add("success", false)
 	                .add("message", "Error removing the post")
