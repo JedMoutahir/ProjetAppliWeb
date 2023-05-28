@@ -159,7 +159,7 @@ Output example (JSON):
         "followers": 0,
         "following": 0,
         "post_count": 5,
-        "avatar": "base64-encoded-image-content"",
+        "avatar": "base64-encoded-image-content",
         "filename": "example.jpg",
         "following_list": [{
             "id_user": 2,
