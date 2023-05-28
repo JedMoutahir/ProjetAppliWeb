@@ -30,6 +30,14 @@ public class User {
     )
     private List<Post> savedPosts;
 	
+	@ManyToMany
+    @JoinTable(
+            name = "user_following",
+            joinColumns = @JoinColumn(name = "follower_id"),
+            inverseJoinColumns = @JoinColumn(name = "followed_id")
+    )
+    private List<User> followingList;
+	
 	public User() {
 		super();
 		this.email = "";
@@ -108,5 +116,11 @@ public class User {
 	public void incrementPostCount() {
 		// TODO Auto-generated method stub
 		this.post_count ++;
+	}
+	public List<User> getFollowingList() {
+		return followingList;
+	}
+	public void setFollowingList(List<User> followingList) {
+		this.followingList = followingList;
 	}
 }
