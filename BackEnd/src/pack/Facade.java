@@ -476,6 +476,16 @@ public class Facade {
 	            .add("post_count", user.getPost_count())
 	            .add("avatar", avatarContent)
 	            .add("filename", user.getAvatar_filename());
+	    
+		 // Add the list of creators the user is following
+	    JsonArrayBuilder followingBuilder = Json.createArrayBuilder();
+	    for (User creator : user.getFollowingList()) {
+	        JsonObjectBuilder creatorBuilder = Json.createObjectBuilder()
+	                .add("id_user", creator.getId_user())
+	                .add("username", creator.getUsername());
+	        followingBuilder.add(creatorBuilder);
+	    }
+	    userBuilder.add("following_list", followingBuilder);
 
 	    JsonArrayBuilder postsBuilder = Json.createArrayBuilder();
 	    for (Post post : posts) {
@@ -642,5 +652,53 @@ public class Facade {
 	            .build();
 	    return Response.ok(response).build();
 	}
+
+	@POST
+	@Path("/follow")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response followUser(JsonObject json) {
+	    int userId = json.getInt("id_user");
+	    int creatorId = json.getInt("id_creator");
+
+	    // Get the user and creator from the database
+	    User user = em.find(User.class, userId);
+	    User creator = em.find(User.class, creatorId);
+
+	    if (user == null || creator == null) {
+	        JsonObject response = Json.createObjectBuilder()
+	                .add("success", false)
+	                .add("message", "Invalid user or creator")
+	                .build();
+	        return Response.status(Response.Status.NOT_FOUND).entity(response).build();
+	    }
+
+	    // Check if the user is already following the creator
+	    List<User> following = user.getFollowingList();
+	    if (following.contains(creator)) {
+	        JsonObject response = Json.createObjectBuilder()
+	                .add("success", false)
+	                .add("message", "User is already following the creator")
+	                .build();
+	        return Response.ok(response).build();
+	    }
+
+	    // Add the creator to the user's following list and update the user entity
+	    following.add(creator);
+	    user.setFollowingList(following);
+	    user.setFollowing(user.getFollowing() + 1); // Increment following count
+	    em.merge(user);
+
+	    // Increment the follower count of the creator and update the creator entity
+	    creator.setFollowers(creator.getFollowers() + 1); // Increment follower count
+	    em.merge(creator);
+
+	    JsonObject response = Json.createObjectBuilder()
+	            .add("success", true)
+	            .add("message", "User is now following the creator")
+	            .build();
+	    return Response.ok(response).build();
+	}
+
 
 }
