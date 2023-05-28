@@ -160,7 +160,11 @@ Output example (JSON):
         "following": 0,
         "post_count": 5,
         "avatar": "base64-encoded-image-content"",
-        "filename": "example.jpg"
+        "filename": "example.jpg",
+        "following_list": [{
+            "id_user": 2,
+            "username": "oezrifdrhgegni"
+        }]
     },
     "posts": [{
         "id_post": 1,
@@ -252,5 +256,29 @@ Output example (JSON):
 {
     "success": false,
     "message": "Post not saved by the user"
+}
+```
+
+- http://localhost:8080/backend/rest/follow
+
+Input example (JSON):
+```
+{
+  "id_user": 1,
+  "id_creator": 2
+}
+```
+
+Output example (JSON):
+```
+{
+    "success": true,
+    "message": "User followed successfully"
+}
+```
+```
+{
+    "success": false,
+    "message": "User is already following the creator"
 }
 ```
