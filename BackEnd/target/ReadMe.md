@@ -14,7 +14,7 @@ Output example (JSON):
         "post": "base64-encoded-image-content",
         "likes": 5,
         "tag": "",
-        "general_tag": "",
+        "general_tag": "example",
         "user": {
             "username": "tzsedgfu",
             "bio": "",
@@ -94,6 +94,7 @@ Output example (JSON):
 {
     "success": true,
     "id": 5,
+    "general_tag" : "example",
     "message": "Image uploaded successfully"
 }
 ```
@@ -167,7 +168,7 @@ Output example (JSON):
         "date": "",
         "likes": 5,
         "tag": "",
-        "general_tag": "",
+        "general_tag": "example",
         "image": "base64-encoded-image-content"
     },
 
@@ -196,7 +197,7 @@ Output example (JSON):
         "date": "",
         "likes": 0,
         "tag": "",
-        "general_tag": "",
+        "general_tag": "example",
         "image": "base64-encoded-image-content"
     },
     
@@ -227,5 +228,29 @@ Output example (JSON):
 {
     "success": false,
     "message": "Post already saved by the user"
+}
+```
+
+- http://localhost:8080/backend/rest/unsave
+
+Input example (JSON):
+```
+{
+  "id_user": 1,
+  "id_post": 1
+}
+```
+
+Output example (JSON):
+```
+{
+    "success": true,
+    "message": "Post removed from saved posts successfully"
+}
+```
+```
+{
+    "success": false,
+    "message": "Post not saved by the user"
 }
 ```
