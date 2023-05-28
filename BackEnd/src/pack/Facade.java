@@ -51,7 +51,7 @@ public class Facade {
 			this.avatarPath = "C:/Users/rachi/OneDrive/Bureau/2A N7/S8/Appli web/ProjetAppliWeb/frontend/avatars/";
 		}
 	}
-	
+
 //	@POST
 //    @Path("/analyze")
 //    @Consumes({ "multipart/form-data" })
@@ -594,4 +594,53 @@ public class Facade {
 	            .build();
 	    return Response.ok(response).build();
 	}
+	
+	@POST
+	@Path("/unsave")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response unsavePost(JsonObject json) {
+	    int userId = json.getInt("id_user");
+	    int postId = json.getInt("id_post");
+
+	    // Get the user from the database
+	    User user = em.find(User.class, userId);
+	    if (user == null) {
+	        JsonObject response = Json.createObjectBuilder()
+	                .add("success", false)
+	                .add("message", "User not found")
+	                .build();
+	        return Response.status(Response.Status.NOT_FOUND).entity(response).build();
+	    }
+
+	    // Get the post from the user's saved posts
+	    List<Post> savedPosts = user.getSavedPosts();
+	    Post postToRemove = null;
+	    for (Post savedPost : savedPosts) {
+	        if (savedPost.getId_post() == postId) {
+	            postToRemove = savedPost;
+	            break;
+	        }
+	    }
+
+	    if (postToRemove == null) {
+	        JsonObject response = Json.createObjectBuilder()
+	                .add("success", false)
+	                .add("message", "Post not found in the user's saved posts")
+	                .build();
+	        return Response.status(Response.Status.NOT_FOUND).entity(response).build();
+	    }
+
+	    // Remove the post from the user's saved posts and update the user entity
+	    savedPosts.remove(postToRemove);
+	    user.setSavedPosts(savedPosts);
+	    em.merge(user);
+
+	    JsonObject response = Json.createObjectBuilder()
+	            .add("success", true)
+	            .add("message", "Post removed from saved posts successfully")
+	            .build();
+	    return Response.ok(response).build();
+	}
+
 }
