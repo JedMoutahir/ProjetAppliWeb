@@ -7,6 +7,13 @@
 - Steven ZHENG
 - Yasmine CHARIFI
 
+## Content
+- `Rapport.pdf` : the report of the project
+- `presentation_projet.pdf` : the presentation of the project
+- `BackEnd` folder : contains the backend of the project
+- `FrontEnd` folder : contains the frontend of the project
+- `ImageClassification` folder : contains the machine learning model
+
 ## Functionalities
 - User identification
 - Post images
@@ -21,10 +28,3 @@
 - JEE/Jboss Backend
 - React Frontend
 - Python Machine Learning Deamon
-
-## Content
-- `Rapport.pdf` : the report of the project
-- `presentation_projet.pdf` : the presentation of the project
-- `BackEnd` folder : contains the backend of the project
-- `FrontEnd` folder : contains the frontend of the project
-- `ImageClassification` folder : contains the machine learning model
