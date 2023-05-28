@@ -1,6 +1,19 @@
 # Web Application Web Project
 # Subject : A social media where pictures are shared and classified
 
+## Team
+- Jed MOUTAHIR
+- Rachida OUSSAKEL
+- Steven ZHENG
+- Yasmine CHARIFI
+
+## Content
+- `Rapport.pdf` : the report of the project
+- `presentation_projet.pdf` : the presentation of the project
+- `BackEnd` folder : contains the backend of the project
+- `FrontEnd` folder : contains the frontend of the project
+- `ImageClassification` folder : contains the machine learning model
+
 ## Functionalities
 - User identification
 - Post images
@@ -10,4 +23,8 @@
 - Reinforcement Learning with human's feedbacks
 - Under a post there will be a feed with similar theme
 - Comment section
-- 
+
+## Technologies
+- JEE/Jboss Backend
+- React Frontend
+- Python Machine Learning Deamon
