@@ -24,22 +24,25 @@ while True:
             # Vérifie si le fichier est une image
             if fichier.endswith((".png", ".jpg", ".jpeg")):
                 
+                print("Image trouvée: " + fichier)
                 # Ouvre l'image
                 image = Image.open(dossier_images + fichier)
 
                 # Analyse l'image
                 tags = imag_recog.label_image(image)
+                print("Tags trouvés: " + str(tags))
 
                 # Crée le fichier .output et écrit les tags dedans
+                print("Création du fichier .output")
                 with open(dossier_images + fichier + ".output", "w") as f:
                     for tag in tags:
                         f.write(tag + "\n")
+                    f.write("end of file")
 
                 # Déplace le fichier .output dans le dossier output
+                print("Déplacement du fichier .output")
                 shutil.move(dossier_images + fichier + ".output", "output/" + fichier + ".output")
 
                 # Déplace l'image dans le dossier deleted_images
+                print("Déplacement de l'image")
                 shutil.move(dossier_images + fichier, "deleted_images/" + fichier)
-
-
-
