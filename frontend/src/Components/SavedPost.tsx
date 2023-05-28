@@ -63,6 +63,27 @@ export default function PostExample(props) {
   var [savedPosts, setsavedPosts] = React.useState([]);
   var [LastPost, setLastPost] = React.useState(null);
 
+  const Unsave = async (id_post) =>  {
+    // Make a request to the server to update the likes of the post
+    // const id_user: number = parseInt(localStorage.getItem('userId')!, 10);
+    // const response = await fetch('http://localhost:8080/backend/rest/unsave', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({ id_user,id_post}),
+    // }).then(response => response.json())
+    // //return the user's id in the response
+    //   .then(jsonresponse => {
+    //     if (jsonresponse.success === true) {
+    //       console.log("post unsaved successfully")
+    //      }
+    //   })
+    //   .catch(error => {
+    //     console.error('Error updating likes:', error);
+    //   });
+ };
+
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -221,15 +242,15 @@ export default function PostExample(props) {
               <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '80%' }}>
                   <Typography
                     level="body3"
-                    mt={0.5}
+                    mt={0.8}
                     textColor="rgba(255,255,255,0.72)"
                     sx={{ whiteSpace: 'nowrap', marginLeft: '8px' }}
                   >
-                    Added on {item.date}
+                    Tag : &nbsp;  {item.tag} &nbsp;&nbsp; Likes : &nbsp; {item.likes}
                   </Typography>
                 </Box>
 
-                <IconButton variant="plain" color="neutral" sx={{ color: '#fff',marginTop:'80%', marginLeft:'150%'}}>
+                <IconButton variant="plain" color="neutral" sx={{ color: '#fff',marginTop:'80%', marginLeft:'120%'}} onClick={() => Unsave(item.id_post)}>
                   <BookRoundedIcon />
                 </IconButton>
               </CardContent>

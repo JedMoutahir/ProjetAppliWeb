@@ -142,6 +142,12 @@ function Profile(props) {
    };
  
    fileReader.readAsDataURL(file);
+    /*to remove the popup*/
+    const change = document.querySelector('#change');
+    const popup = document.querySelector('.popupAvatar');
+    change.addEventListener('click', () => {
+        popup.style.display = 'none';
+        });
  };
 
   return (
@@ -275,7 +281,7 @@ function Profile(props) {
             loading="lazy"
           />
          <ImageListItemBar
-        title={item.title}
+        title={item.tag}
         subtitle={item.author}
         actionIcon={
           <Tooltip title={`${item.likes}`} placement="top">
