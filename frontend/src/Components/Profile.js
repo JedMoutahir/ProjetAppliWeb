@@ -281,7 +281,7 @@ function Profile(props) {
             loading="lazy"
           />
          <ImageListItemBar
-        title={item.tag}
+        title={item.general_tag}
         subtitle={item.author}
         actionIcon={
           <Tooltip title={`${item.likes}`} placement="top">

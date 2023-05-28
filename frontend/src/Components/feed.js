@@ -120,7 +120,6 @@ function Feed(props) {
 
   const SavePost = async (id_post)=> {
     // Make a request to the server to update the likes of the post
-    console.log('here1');
     const id_user = parseInt(localStorage.getItem('userId'), 10);
     const response = await fetch('http://localhost:8080/backend/rest/save', {
       method: 'POST',
@@ -191,6 +190,28 @@ function Feed(props) {
       setValue(newValue);
     };
 
+    const FollowProfile = async (Id_creator)=> {
+      // Make a request to the server to update the likes of the post
+      const id_user = parseInt(localStorage.getItem('userId'), 10);
+      const id_creator = parseInt(Id_creator, 10);
+      console.log(id_creator);
+      const response = await fetch('http://localhost:8080/backend/rest/follow', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({id_user, id_creator}),
+      }).then(response => response.json())
+      //return the user's id in the response
+        .then(jsonresponse => {
+          if (jsonresponse.success === true) {
+            console.log(jsonresponse.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error updating followers:', error);
+        });
+    }
     return (
       <BottomNavigation sx={{ width: 370, backgroundColor: 'transparent' }} value={value} onChange={handleChange}>
         <BottomNavigationAction
@@ -207,7 +228,7 @@ function Feed(props) {
 
         />
 
-        <BottomNavigationAction label="Follow profile" value="Follow profile" icon={<PersonAddIcon/>} sx={{ color: 'white' }} />
+        <BottomNavigationAction label="Follow profile" onClick={()=>FollowProfile(otherUser.id_user)} value="Follow profile" icon={<PersonAddIcon/>} sx={{ color: 'white' }} />
       </BottomNavigation>
     );
   };
@@ -351,7 +372,7 @@ function Feed(props) {
                       <h4 className="Name"><b>{card.user.username}</b></h4>
                     </div>
                     <img className="post" src={`data:image/${card.type};base64,${card.post}`} alt="Base64 Image" />
-                    <p className="type">{card.tag}</p>
+                    <p className="type">{card.general_tag}</p>
                     <div className="barre">
                       <div>
                         <button className="button-barre">
@@ -371,7 +392,7 @@ function Feed(props) {
                             }}>
                           </LoyaltyIcon>
                         </button>
-                        <h6>{card.tag}</h6>
+                        <h6>{card.general_tag}</h6>
                       </div>
                       <div>
                         <button className="button-barre">

@@ -246,7 +246,7 @@ export default function PostExample(props) {
                     textColor="rgba(255,255,255,0.72)"
                     sx={{ whiteSpace: 'nowrap', marginLeft: '8px' }}
                   >
-                    Tag : &nbsp;  {item.tag} &nbsp;&nbsp; Likes : &nbsp; {item.likes}
+                    Tag : &nbsp;  {item.general_tag} &nbsp;&nbsp; Likes : &nbsp; {item.likes}
                   </Typography>
                 </Box>
 
