@@ -168,15 +168,21 @@ function Feed(props) {
       fetch('http://localhost:8080/backend/rest/upload', requestOptions)
         .then(response => response.json())
         .then(data => {
-          console.log(data); 
-        })
+          console.log(data);
+         })
         .catch(error => {
           console.error('Error:', error);
         });
     };
 
     fileReader.readAsDataURL(file);
-  };
+      /*to remove the popup*/
+      const submit = document.querySelector('#submit1');
+      const popup = document.querySelector('.popup');
+      submit.addEventListener('click', () => {
+          popup.style.display = 'none';
+          });
+   };
 
 
   function LabelBottomNavigation() {

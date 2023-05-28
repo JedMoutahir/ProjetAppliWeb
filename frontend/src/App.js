@@ -30,11 +30,9 @@ function App() {
               <Feed setShowProfile={setShowProfile} setShowFeed={setShowFeed} setShowSavedPosts={setShowSavedPosts} />
 
             ) : (
-              showProfile ? (
-                <Profile setShowProfile={setShowProfile} setShowFeed={setShowFeed} setShowSavedPosts={setShowSavedPosts} />
-              ) : (
+              
                 <Feed setShowProfile={setShowProfile} setShowFeed={setShowFeed} setShowSavedPosts={setShowSavedPosts} />
-              )
+              
             )
           )}
         </>
